@@ -1,0 +1,15 @@
+{
+	"require": {
+		"phpunit/phpunit": "^6",
+		"predis/predis": "^1.0",
+		"phpunit/php-token-stream": "^1.4",
+		"level-2/dice": "^2.0"
+	},
+
+    "autoload": {
+        "psr-4": {
+            "mvcr\\": "mvcr/"
+        }
+    }
+
+}
