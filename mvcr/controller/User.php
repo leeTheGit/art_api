@@ -111,6 +111,7 @@ class User extends Base_controller
 
 	public function post($input)
 	{
+		\mvcr\service\l::og($input);
 		$resource 	= $this->getResourceFromUrl();
 
 		$accepts = [
@@ -122,6 +123,8 @@ class User extends Base_controller
 
 		$this->input_init($accepts, $input);
 
+		\mvcr\service\l::og($this->auth_user);
+		
 
 		if ($this->auth_user->access == 'admin' && !empty($input['group'])) {
 

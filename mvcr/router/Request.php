@@ -46,7 +46,8 @@ class Request
                 $headers = getallheaders();
                 $data = file_get_contents('php://input') ?? '';
 
-                parse_str($data, []);
+                $result = array();
+                parse_str($data, $result);
                 return $result;
 
             case 'delete':

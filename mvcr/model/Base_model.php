@@ -1,6 +1,8 @@
 <?php
 namespace mvcr\model;
 
+use \mvcr\service\l;
+
 abstract class Base_model
 {
 	protected $allowed_columns  = array();
@@ -117,9 +119,7 @@ abstract class Base_model
 			$sql = str_replace(", WHERE", " WHERE", $sql);
 			// sqlLog($sql, $params);
 			$result = $this->db->execute($sql, $params);
-			// logThis($result);
 			if (!$result) {
-				// sqlLog($sql, $params);
 			}
 			return $result;
 		}
@@ -155,13 +155,8 @@ abstract class Base_model
 			$sql = str_replace(", )", ")", $sql);
 
 			$create = $this->db->insert($sql, $params);
-			// sqlLog($sql, $params);
 			if (!$create) {
-				logThis('Did NOT INSERT');
-				// logThis($sql);
-				// logThis($params);
-				sqlLog($sql, $params);
-				// exit();
+				\mvcr\service\l::og('Did NOT INSERT');
 			}
 			return $create;
 		} else {

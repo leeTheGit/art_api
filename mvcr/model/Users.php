@@ -1,6 +1,6 @@
 <?php
 namespace mvcr\model;
-
+use \mvcr\service\l;
 use mvcr\router\Request;
 
 class Users extends Base_model

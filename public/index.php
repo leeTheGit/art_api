@@ -54,7 +54,6 @@ try { // real hard little API!!
 		*/
 
 	$auth_user = $login->auth();
-	\mvcr\service\l::og('in the index');
 
 	
 	$rule = [		  'shared' => true,
@@ -82,6 +81,8 @@ try { // real hard little API!!
 	/**
 		Process the request
 	*/
+
+
 	$request->process();
 
 
