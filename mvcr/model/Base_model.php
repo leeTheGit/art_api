@@ -35,7 +35,6 @@ abstract class Base_model
 		$array  = array_key_exists( $access, $this->data_view) ? $this->data_view[$access] : $this->data_view['default'];
 
 		$this->allowed_columns = array_flip(  $array );
-		// logThis($array);
 	}
 
 	public function getColumns($view = NULL)
@@ -112,12 +111,11 @@ abstract class Base_model
 
 			}
 			if (isset($this->last_modified) && $this->last_modified === true) {
-				$sql .= "last_modified = timezone('Australia/Melbourne'::text, now()) ";
+				$sql .= "last_modified = timezone(".DB_TIMEZONE."::text, now()) ";
 			}
 
 			$sql .= "WHERE id = :id";
 			$sql = str_replace(", WHERE", " WHERE", $sql);
-			// sqlLog($sql, $params);
 			$result = $this->db->execute($sql, $params);
 			if (!$result) {
 			}
@@ -129,6 +127,10 @@ abstract class Base_model
 	public function create($data)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
+		if ($this->table === 'plantdata') {
+			l::og($data);
+		}
+		
 		$required = $this->required ? array_flip($this->required) : array();
 
 		$permitted_columns = !empty($this->data_view['edit']) ? array_intersect_key($this->getColumns(), array_flip($this->data_view['edit'])) : $this->getColumns();
@@ -154,7 +156,12 @@ abstract class Base_model
 			$sql .= $keys . $values;
 			$sql = str_replace(", )", ")", $sql);
 
+			if ($this->table === 'plantdata') {
+				l::og($sql);
+				l::og($params);
+			}
 			$create = $this->db->insert($sql, $params);
+
 			if (!$create) {
 				\mvcr\service\l::og('Did NOT INSERT');
 			}

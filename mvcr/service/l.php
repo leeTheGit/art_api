@@ -61,7 +61,7 @@ class l
                 $text . '"'. 
                 '¡' . PHP_EOL . PHP_EOL;
 
-        $f = fopen(DIR_LOG.'/logfile.txt', $mode);
+        $f = fopen(DIR_LOG.'/log.txt', $mode);
         fwrite ($f, $output);
         fclose($f);
     }

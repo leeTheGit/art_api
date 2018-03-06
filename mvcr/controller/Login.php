@@ -2,6 +2,8 @@
 namespace mvcr\controller;
 
 use \mvcr\model\Database;
+use \mvcr\service\l;
+
 // UPDATE users SET "password" = crypt('new password', gen_salt('bf')) where name = 'test';
 // insert into users(id, name, password) values (uuid_generate_v4(),'bob',crypt('new password', gen_salt('bf')))
 // SELECT "password" = crypt('new password', "password") success, id FROM users
@@ -16,12 +18,12 @@ class Login
 	{
 
 		$this->server = $_SERVER;
-
 		if (!isset($_GET['token'])) {
 			if (!isset($this->server['PHP_AUTH_PW'])) {
 				header('WWW-Authenticate: Basic realm="Pagemasters Racing API"');
 				header('HTTP/1.0 401 Unauthorized');
 				print "Login failed!\n";
+				l::og('auth faileded');
 				exit;
 			}
 		}
@@ -56,7 +58,7 @@ class Login
 					LEFT JOIN groups ON groups.id = users.usergroup
 					WHERE users.password = crypt(:password, users.password)
 					AND users.name = :user";
-
+			\mvcr\service\l::og($sql);
 			$params = ["password" => $this->server['PHP_AUTH_PW'], "user" => $this->server['PHP_AUTH_USER']];
 		}
 

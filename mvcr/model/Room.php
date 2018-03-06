@@ -6,8 +6,8 @@ use mvcr\router\Request;
 class Plant extends Base_model
 {
 
-	protected $table 	= 'plant';
-	protected $required = [ "serial"];
+	protected $table 	= 'room';
+	protected $required = [ "id"];
 
 
 	public function __construct(Request $request)
@@ -16,18 +16,14 @@ class Plant extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "serial", "mortality"],
-		'edit' 	  => [ "serial", "mortality"]
+		'default' => [ "name"],
+		'edit' 	  => [ "name"]
 	);
 
-	public function getPlants()
+	public function getRooms()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  plant.*, 
-						plantdata.* 
-					FROM plant 
-					LEFT JOIN plantdata ON plant.id = plantdata.plant_id
-					ORDER BY serial";
+		$sql = "SELECT room.* FROM room";
 
 		$plants = $this->db->fetchAll($sql, $params);
 
@@ -35,19 +31,14 @@ class Plant extends Base_model
 		return $plants;
 	}
 
-	public function getPlantById($id)
+	public function getRoomById($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  plant.*, 
-						plantdata.* 
-					FROM plant 
-					LEFT JOIN plantdata ON plant.id = plantdata.plant_id
-					WHERE plant.id = :id";
+		$sql = "SELECT  room.*
+					FROM room 
+					WHERE room.id = :id";
 		$params = ["id" => $id];
-		// l::og($sql);
-		// l::og($params);
 		$plants = $this->db->fetch($sql, $params);
-
 
 		return $plants;
 	}

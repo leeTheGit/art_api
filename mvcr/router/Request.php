@@ -3,6 +3,7 @@ namespace mvcr\router;
 
 use mvcr\model\Database;
 use mvcr\model\Cache;
+use mvcr\service\l;
 
 class Request
 {
@@ -19,6 +20,7 @@ class Request
 
     public function __construct(Database $db, Cache $mc, $auth_user, $redis, $di)
     {
+        l::og('in the request object');
         $this->method    = strtolower( $_SERVER['REQUEST_METHOD']);
         $this->uri       = rawurldecode( $_SERVER['REQUEST_URI'] );
         $this->data      = $this->getData();
@@ -76,6 +78,7 @@ class Request
             header('HTTP/1.0 404 Not found');
             throw new \Exception('Resource does\'t exist');
         }
+        \mvcr\service\l::og($class);
 
         $controller = $this->di->create($class);
 

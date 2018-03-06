@@ -1,6 +1,8 @@
 <?php
 namespace mvcr\model;
 
+use \mvcr\service\l;
+
 class Database  {
 
 	private $PDO;
@@ -9,13 +11,16 @@ class Database  {
 	public function __construct($config)
 	{
 		$this->config = $config;
-
 		$this->connect();
 	}
 
 	private function connect()
 	{
+		// $this->PDO = new \PDO($this->config['connect'], $this->config['user'], $this->config['password']);
 		$this->PDO = new \PDO($this->config['connect'], $this->config['user'], $this->config['password']);
+		// $this->PDO = new \PDO('pgsql:user=vagrant dbname=vagrant password=vagrant');
+
+
 
 		$this->PDO->setAttribute( \PDO::ATTR_ERRMODE, DB_ATTR_VAL );
 

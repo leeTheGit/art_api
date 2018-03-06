@@ -34,7 +34,7 @@ class Base_controller
 	}
 
 
-	protected function input_init($input_list, &$input)
+	protected function set_input_defaults($input_list, &$input)
 	{
 		foreach ($input_list as $param => $default) {
 
@@ -47,14 +47,6 @@ class Base_controller
 				$input[$param] = !empty( $input[$param] ) ? $input[$param] : $default;
 			}
 
-		}
-
-		if (!empty($input['tipster'])) {
-			$input['user'] = $input['tipster'];
-		}
-
-		if (!empty($input['publication'])) {
-			$input['group'] = $input['publication'];
 		}
 	}
 

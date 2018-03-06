@@ -12,6 +12,8 @@ $di = new \Dice\Dice;
 // Allow authorized cross origin requests;
 // $origin = $di->create('mvcr\model\Origins');
 
+\mvcr\service\l::og('in the index');
+
 
 $rule = [         'shared' => true,
          'constructParams' => [dbConfig_pg()]
@@ -46,12 +48,16 @@ try { // real hard little API!!
 			Login the user
 		*/
 
+	\mvcr\service\l::og('creating login');
 
 	$login = $di->create('mvcr\controller\Login');
+	\mvcr\service\l::og('created login');
 
 		/**
 			Authorise the user for request
 		*/
+
+	\mvcr\service\l::og('authing user');
 
 	$auth_user = $login->auth();
 
@@ -89,6 +95,9 @@ try { // real hard little API!!
 
 
 } catch( Exception $e ) {
+
+	\mvcr\service\l::og($e->getMessage());
+
 	exit(json_encode( 
 		[
 			"error"   => $e->getMessage(),

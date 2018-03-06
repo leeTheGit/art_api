@@ -22,7 +22,7 @@ class Group extends Base_controller {
 		$resource = $this->getResourceFromUrl();
 
 		$accepts = ['users' => "true", 'panels' => "false"];
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
 
 		if (($this->auth_user->access == 'admin') || ($this->auth_user->groupid == PAGEMASTERS)) {
 
@@ -56,7 +56,7 @@ class Group extends Base_controller {
 
 		$accepts = ['group' => '', 'access' => ''];
 
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
 
 		if ($this->auth_user->access == 'admin') {
 
@@ -77,7 +77,7 @@ class Group extends Base_controller {
 
 		$accepts = ['group' => '', 'access' => ''];
 
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
 
 		if ($this->auth_user->access == 'admin') {
 			return $this->users->createGroup($input);

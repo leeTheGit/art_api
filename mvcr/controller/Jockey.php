@@ -22,7 +22,7 @@ class Jockey extends Base_controller
 
 		$accepts = [];
 
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
 
 		if ($resource['id']) {
 			$jockeys = $this->jockey->getById($resource['id']);

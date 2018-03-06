@@ -25,7 +25,7 @@ class User extends Base_controller
 		$accepts = ['group' 		=> null,
 					];
 
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
 
 		$races = array();
 
@@ -111,17 +111,16 @@ class User extends Base_controller
 
 	public function post($input)
 	{
-		\mvcr\service\l::og($input);
 		$resource 	= $this->getResourceFromUrl();
 
-		$accepts = [
-						'name' 		=> false,
-						'password' 	=> false,
-						'group'     => false,
-						'access' 	=> false,
-					];
+		$defaults = [
+			'name' 		=> false,
+			'password' 	=> false,
+			'group'     => false,
+			'access' 	=> false,
+		];
 
-		$this->input_init($accepts, $input);
+		$this->set_input_defaults($defaults, $input);
 
 		\mvcr\service\l::og($this->auth_user);
 		

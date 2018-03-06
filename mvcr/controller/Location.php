@@ -5,17 +5,17 @@ use mvcr\router\Request;
 use \mvcr\service\l;
 
 
-class Plant extends Base_controller
+class Location extends Base_controller
 {
 
 	protected $resourceArray = ['domain', 'class', 'id'];
 	protected $users = null;
 
-	public function __construct(Request $request, \mvcr\model\Plant $plant)
+	public function __construct(Request $request, \mvcr\model\Location $location)
 	{
 		parent::__construct($request);
 
-		$this->model = $plant;
+		$this->model = $location;
 	}
 
 
@@ -29,10 +29,10 @@ class Plant extends Base_controller
 		$this->set_input_defaults($accepts, $input);
 		
 		if ($resource['id']) {
-			return $this->model->getPlantById($resource['id']);
+			return $this->model->getLocationById($resource['id']);
 		}
 
-		return $this->model->getPlants();
+		return $this->model->getLocations();
 
 
 	}
@@ -54,12 +54,12 @@ class Plant extends Base_controller
 		// \mvcr\service\l::og($input);
 		// $resource 	= $this->getResourceFromUrl();
 
-		$defaults = [
-			'serial'    => false,
-			'status' 	=> false
-		];
+		// $defaults = [
+		// 	'serial'    => false,
+		// 	'name' 	=> false
+		// ];
 
-		$this->set_input_defaults($defaults, $input);
+		// $this->set_input_defaults($defaults, $input);
 
 
 		return $this->model->create($input);

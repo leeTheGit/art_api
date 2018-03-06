@@ -4,8 +4,9 @@ namespace mvcr\controller;
 
 use mvcr\router\Request;
 use mvcr\controller;
+use \mvcr\service\l;
 
-class Test extends \PHPUnit\Framework\TestCase
+class Test extends Basetest
 {
 	public function __construct(Request $request)
 	{
@@ -20,55 +21,17 @@ class Test extends \PHPUnit\Framework\TestCase
 		$this->request 			= $request;
 		$this->cacheRequest     = clone $this->request;
 
-		$this->plantLoadId = '';
-		// $this->testMeeting  	= ''; #'6913dec6-6e3e-4329-a50c-8ec9cd82ae2d';
-		// $this->testRace1     	= ''; #'0f5ff287-f78c-445b-9d96-0eb263c26f7d';
-		// $this->testRace2     	= ''; #'0f5ff287-f78c-445b-9d96-0eb263c26f7d';
-		// $this->testRace3    	= ''; #'0f5ff287-f78c-445b-9d96-0eb263c26f7d';
-		// $this->testRace5    	= ''; #'0f5ff287-f78c-445b-9d96-0eb263c26f7d';
+		$this->plantLoadId 		= '';
 
-		// $this->testRunner   	= ''; #'7cf443e7-f825-4b24-b87b-c9b161a5dd3d';
-		// $this->testRunner2 		= '';
-
-		// $this->testJockey		= '';
-		// $this->testJockey2		= '';
-
-		// $this->testTrainer 		= '';
-		// $this->testTrainer2		= '';
-
-		// $this->testSupplier 	= 'd863242c-ae5f-4397-a5f5-2d804fd5b8a2'; // UBET
-
-		// $this->testTrack   		= '';
-		// $this->testGroup 		= '';
-		// $this->testUser 		= '';
-		// $this->testOutput 		= '';
-		// $this->testPublication 	= '';
 		$this->testMock         = $testPlant;
-		// $this->testMock2        = $testMeeting2;
-
-		// $this->meetingLoadId  	= '';
-
-		// $this->testDivsUbet		= $testUbetDivs;
-		// $this->testDivsTab   	= $testTabDivs;
-		// $this->ubetDivsId		= '';
-		// $this->tabDivsId		= '';
-
-		// $this->portalHorses 	= [];
-
-		// $this->testAuth_news 	= $testAuth_news;
-		// $this->testAuth_news2 	= $testAuth_news2;
-		// $this->testAuth_fairfax = $testAuth_fairfax;
-		// $this->testSteve 		= $testSteve;
-		// $this->testLee 			= $testLee;
-		// $this->testIndesign 	= $testIndesign;
-
-		// $this->testImportData 	= $testImportData;
+		$this->testMockData     = $plants[0];
+		$this->plantLoadDataId  = '';
 
 	}
 
-	public function Get()
+	public function Get() //RUN
 	{
-		logThis('clear');
+		l::og('clear');
 
 		// $this->testLogin();
 
@@ -77,8 +40,16 @@ class Test extends \PHPUnit\Framework\TestCase
 		$this->testPostPlant();
 
 		$this->testgetPlants();
+		
+		// $this->testputPlant();
 
 		$this->testgetPlant();
+
+
+		$this->testPostPlantdata();
+
+
+
 
 		$this->testDeletePlant();
 
@@ -88,30 +59,6 @@ class Test extends \PHPUnit\Framework\TestCase
 		exit;
     }
 
-    private function error($e)
-    {
-	    $text = '';
-	    $caller = debug_backtrace();
-	    if (!empty($caller)) {
-	        $line = (isset($caller[0]['line'])) ? $caller[0]['line'] : '';
-	        $text = $line . ': ' . $text . ' ';
-	        $text = $text . PHP_EOL;
-	    }
-		echo '<p style="color:red;margin:0;">'.$text. $e->getMessage()."</p>";
-    }
-
-    private function pass($method, $request)
-    {
-		echo '<ul style="margin:0 0 5px 0;"><li style="color:grey;margin:0;">'.$request.'</li><li style="color:green;margin:0">'.$method.'</li></ul>';
-    	$this->log($request);
-    }
-
-	private function log($url)
-	{
-		$sql = "UPDATE uri_log set tested = now() WHERE uri = :uri";
-		$param = array('uri' => $url);
-		$this->db->execute($sql, $param);
-	}
 
 
 
@@ -208,8 +155,6 @@ class Test extends \PHPUnit\Framework\TestCase
 		try {
 			$load = $this->request->di->create('mvcr\controller\Plant');
 			$get = $load->get($params);
-			$this->meetingLoadId = $post;
-
 			$this->assertGreaterThan(2, count($get), $method);
 			$this->pass($method, $request);
 			$this->log($request);
@@ -219,6 +164,58 @@ class Test extends \PHPUnit\Framework\TestCase
 		}
 	}
 
+
+
+
+	private function testputPlant()
+	{
+		echo '<h3 style="margin: 10px 0 0 0">PUT - Plant</h3>';
+
+		$request 	= "put: /plant/";
+		$method 	= "plant::fetchAll():";
+		$this->request->parts	= array("racing-api/", "plant");
+		$params 	= [];
+
+		try {
+			$load = $this->request->di->create('mvcr\controller\Plant');
+			$put = $load->put($params);
+			$this->meetingLoadId = $post;
+
+			$this->assertGreaterThan(2, count($put), $method);
+			$this->pass($method, $request);
+			$this->log($request);
+
+		} catch (\Exception $e) {
+			$this->error($e);
+		}
+	}
+
+
+
+	private function testPostPlantdata()
+	{
+		echo '<h3 style="margin: 10px 0 0 0">POST - Plantdata</h3>';
+
+		$request 	= "post: /plantdata/";
+		$method 	= "plantdata::create():";
+		$this->request->parts	= array("racing-api/", "plantdata");
+		$params 	= $this->testMockData;
+		$params['plant_id'] = $this->plantLoadId;
+
+		try {
+			$load = $this->request->di->create('mvcr\controller\Plantdata');
+			$post = $load->post($params);
+			$this->plantLoadDataId = $post->id;
+			pprint($post);
+			$this->assertRegExp('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/', $post->id);
+
+			$this->pass($method, $request);
+			$this->log($request);
+
+		} catch (\Exception $e) {
+			$this->error($e);
+		}
+	}
 
 	private function testGetPlant()
 	{
