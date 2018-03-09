@@ -10,31 +10,31 @@ set_error_handler("error_handler");
 $di = new \Dice\Dice;
 
 // Allow authorized cross origin requests;
-// $origin = $di->create('mvcr\model\Origins');
+// $origin = $di->create(NS_MODEL.'\Origins');
 
-\mvcr\service\l::og('in the index');
+src\service\l::og('in the index');
 
 
 $rule = [         'shared' => true,
          'constructParams' => [dbConfig_pg()]
 ];
-$di->addRule('mvcr\model\Database', $rule);
+$di->addRule(NS_MODEL.'\Database', $rule);
 
 
 
 $rule = [		  'shared' => true,
          'constructParams' => [cacheConfig()]
 ];
-$di->addRule('mvcr\model\Cache', $rule);
+$di->addRule(NS_MODEL.'\Cache', $rule);
 
 
-// $mc = $di->create('mvcr\model\Cache');
+// $mc = $di->create(NS_MODEL.'\Cache');
 
 
 // $redis = new Predis\Client();
 // $redis->set("hot jockey", "bob terwilliger");
 // $hot_jock = $redis->get("hot jockey");
-// logThis($hot_jock);
+
 $redis = "redis placeholder";
 
 
@@ -48,16 +48,13 @@ try { // real hard little API!!
 			Login the user
 		*/
 
-	\mvcr\service\l::og('creating login');
 
-	$login = $di->create('mvcr\controller\Login');
-	\mvcr\service\l::og('created login');
+	$login = $di->create(NS_CONT.'\Login');
 
 		/**
-			Authorise the user for request
+		Authorise the user for request
 		*/
 
-	\mvcr\service\l::og('authing user');
 
 	$auth_user = $login->auth();
 
@@ -65,23 +62,23 @@ try { // real hard little API!!
 	$rule = [		  'shared' => true,
 	         'constructParams' => [$auth_user, $redis, $di]];
 
-	$di->addRule('mvcr\router\Request', $rule);
+	$di->addRule(NS_ROUT.'\Request', $rule);
 
-	$request = $di->create('mvcr\router\Request');
+	$request = $di->create(NS_ROUT.'\Request');
 
 
 
 	$rule = ['constructParams' => [$auth_user]];
 
-	$di->addRule('mvcr\controller\AccessControl', $rule);
+	$di->addRule(NS_CONT.'\AccessControl', $rule);
 
-	$auth = $di->create('mvcr\controller\AccessControl');
+	$auth = $di->create(NS_CONT.'\AccessControl');
 
 	$auth->checkAuthLevel();  // if not authed will return with code 550
 
 
 
-	$reqLog = $di->create('mvcr\model\requestLogger');
+	$reqLog = $di->create(NS_MODEL.'\requestLogger');
 
 
 	/**
@@ -96,7 +93,7 @@ try { // real hard little API!!
 
 } catch( Exception $e ) {
 
-	\mvcr\service\l::og($e->getMessage());
+	// \src\service\l::og($e->getMessage());
 
 	exit(json_encode( 
 		[

@@ -1,0 +1,88 @@
+2063c | /vagrant/src/api/src/test/Test.php
+ ▶ ︎Get(): 
+  ▶ ︎41: ︎"¡
+
+2063c | /vagrant/src/api/src/model/Database.php
+ ▶ ︎insert(): 
+  ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "name"
+DETAIL:  Key (name)=(TEST_orange) already exists."¡
+
+2063c | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎172: ︎Did NOT INSERT"¡
+
+2063c |  ▶ ︎update(): 
+  ▶ ︎121: ︎UPDATE Location SET name = :name WHERE id = :id"¡
+
+2063c |   ▶ ︎122: ︎Array
+(
+    [id] => ffe26f7a-e808-4183-bf6c-6c3cba6464d9
+    [name] => TEST_green
+)
+"¡
+
+2063c | /vagrant/src/api/src/model/Database.php
+ ▶ ︎insert(): 
+  ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "roomname"
+DETAIL:  Key (name)=(TEST_seedroom) already exists."¡
+
+2063c | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎172: ︎Did NOT INSERT"¡
+
+2063c | /vagrant/src/api/src/controller/Room.php
+ ▶ ︎get(): 
+  ▶ ︎22: ︎getting rooms"¡
+
+2063c |   ▶ ︎28: ︎Array
+(
+    [domain] => arta-api/
+    [class] => room
+    [id] => 
+)
+"¡
+
+2063c | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎update(): 
+  ▶ ︎121: ︎UPDATE Room SET name = :name WHERE id = :id"¡
+
+2063c |   ▶ ︎122: ︎Array
+(
+    [id] => 4869ef71-79e4-41ba-96c4-f191e06dee62
+    [name] => TEST_darkroom
+)
+"¡
+
+2063c | /vagrant/src/api/src/controller/Room.php
+ ▶ ︎get(): 
+  ▶ ︎22: ︎getting rooms"¡
+
+2063c |   ▶ ︎28: ︎Array
+(
+    [domain] => arta-api/
+    [class] => room
+    [id] => 4869ef71-79e4-41ba-96c4-f191e06dee62
+)
+"¡
+
+2063c | /vagrant/src/api/src/controller/Plantdata.php
+ ▶ ︎post(): 
+  ▶ ︎85: ︎Array
+(
+    [0] => Array
+        (
+            [height] => 80
+            [location] => A3
+            [notes] => Fast growing seed
+            [ph] => 1
+            [conductivity] => 4
+            [temperature] => 34.9
+            [humidity] => 2
+            [lux] => 2.3
+            [light_hours] => 6.4
+        )
+
+    [plant_id] => c28270d6-11dd-47f4-94fd-595da439d079
+)
+"¡
+

@@ -8,7 +8,7 @@
 
     "autoload": {
         "psr-4": {
-            "mvcr\\": "mvcr/"
+            "src\\": "src/"
         }
     }
 
