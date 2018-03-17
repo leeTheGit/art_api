@@ -29,10 +29,8 @@ $lifecyceles = [
         "name" => "oldy",
     ],
     [
-        "name" => "oldy",
+        "name" => "dead",
     ]
-
-
 ];
 
 
