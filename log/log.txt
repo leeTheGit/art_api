@@ -1,88 +1,174 @@
-2063c | /vagrant/src/api/src/test/Test.php
+72fbf | /vagrant/src/api/src/test/Test.php
  ▶ ︎Get(): 
-  ▶ ︎41: ︎"¡
+  ▶ ︎42: ︎"¡
 
-2063c | /vagrant/src/api/src/model/Database.php
+72fbf | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎169: ︎stdClass Object
+(
+    [id] => dffe8d6a-0026-48bf-851c-a6c67f401b90
+)
+"¡
+
+72fbf |   ▶ ︎169: ︎stdClass Object
+(
+    [id] => 1c9ecdb9-9681-41e2-91f7-e31fdcba909a
+)
+"¡
+
+72fbf | /vagrant/src/api/src/model/Database.php
  ▶ ︎insert(): 
   ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "name"
 DETAIL:  Key (name)=(TEST_orange) already exists."¡
 
-2063c | /vagrant/src/api/src/model/Base_model.php
+72fbf | /vagrant/src/api/src/model/Base_model.php
  ▶ ︎create(): 
-  ▶ ︎172: ︎Did NOT INSERT"¡
+  ▶ ︎169: ︎bool(0)"¡
 
-2063c |  ▶ ︎update(): 
+72fbf |   ▶ ︎172: ︎Did NOT INSERT"¡
+
+72fbf | /vagrant/src/api/src/service/l.php
+ ▶ ︎ogsql(): 
+  ▶ ︎92: ︎INSERT INTO Location (name, rank) VALUES ('TEST_orange', '3')"¡
+
+72fbf | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎update(): 
   ▶ ︎121: ︎UPDATE Location SET name = :name WHERE id = :id"¡
 
-2063c |   ▶ ︎122: ︎Array
+72fbf |   ▶ ︎122: ︎Array
 (
-    [id] => ffe26f7a-e808-4183-bf6c-6c3cba6464d9
+    [id] => dffe8d6a-0026-48bf-851c-a6c67f401b90
     [name] => TEST_green
 )
 "¡
 
-2063c | /vagrant/src/api/src/model/Database.php
+72fbf |  ▶ ︎create(): 
+  ▶ ︎169: ︎stdClass Object
+(
+    [id] => f78db318-4100-4cb9-8bf9-1d0e72848dcb
+)
+"¡
+
+72fbf |   ▶ ︎169: ︎stdClass Object
+(
+    [id] => 339384b6-fbec-41ef-bf56-92109d70d5c3
+)
+"¡
+
+72fbf | /vagrant/src/api/src/model/Database.php
  ▶ ︎insert(): 
   ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "roomname"
 DETAIL:  Key (name)=(TEST_seedroom) already exists."¡
 
-2063c | /vagrant/src/api/src/model/Base_model.php
+72fbf | /vagrant/src/api/src/model/Base_model.php
  ▶ ︎create(): 
-  ▶ ︎172: ︎Did NOT INSERT"¡
+  ▶ ︎169: ︎bool(0)"¡
 
-2063c | /vagrant/src/api/src/controller/Room.php
- ▶ ︎get(): 
-  ▶ ︎22: ︎getting rooms"¡
+72fbf |   ▶ ︎172: ︎Did NOT INSERT"¡
 
-2063c |   ▶ ︎28: ︎Array
-(
-    [domain] => arta-api/
-    [class] => room
-    [id] => 
-)
-"¡
+72fbf | /vagrant/src/api/src/service/l.php
+ ▶ ︎ogsql(): 
+  ▶ ︎92: ︎INSERT INTO Room (name) VALUES ('TEST_seedroom')"¡
 
-2063c | /vagrant/src/api/src/model/Base_model.php
+72fbf | /vagrant/src/api/src/model/Base_model.php
  ▶ ︎update(): 
   ▶ ︎121: ︎UPDATE Room SET name = :name WHERE id = :id"¡
 
-2063c |   ▶ ︎122: ︎Array
+72fbf |   ▶ ︎122: ︎Array
 (
-    [id] => 4869ef71-79e4-41ba-96c4-f191e06dee62
+    [id] => f78db318-4100-4cb9-8bf9-1d0e72848dcb
     [name] => TEST_darkroom
 )
 "¡
 
-2063c | /vagrant/src/api/src/controller/Room.php
- ▶ ︎get(): 
-  ▶ ︎22: ︎getting rooms"¡
-
-2063c |   ▶ ︎28: ︎Array
+72fbf |  ▶ ︎create(): 
+  ▶ ︎169: ︎stdClass Object
 (
-    [domain] => arta-api/
-    [class] => room
-    [id] => 4869ef71-79e4-41ba-96c4-f191e06dee62
+    [id] => ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d
 )
 "¡
 
-2063c | /vagrant/src/api/src/controller/Plantdata.php
+72fbf | /vagrant/src/api/src/controller/Plantdata.php
  ▶ ︎post(): 
-  ▶ ︎85: ︎Array
+  ▶ ︎52: ︎Array
 (
-    [0] => Array
-        (
-            [height] => 80
-            [location] => A3
-            [notes] => Fast growing seed
-            [ph] => 1
-            [conductivity] => 4
-            [temperature] => 34.9
-            [humidity] => 2
-            [lux] => 2.3
-            [light_hours] => 6.4
-        )
+    [height] => 80
+    [location] => dffe8d6a-0026-48bf-851c-a6c67f401b90
+    [plant_id] => ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d
+    [notes] => Fast growing seed
+    [ph] => 1
+    [conductivity] => 4
+    [temperature] => 34.9
+    [humidity] => 2
+    [lux] => 2.3
+    [light_hours] => 6.4
+)
+"¡
 
-    [plant_id] => c28270d6-11dd-47f4-94fd-595da439d079
+72fbf |   ▶ ︎71: ︎Array
+(
+    [height] => 80
+    [location] => dffe8d6a-0026-48bf-851c-a6c67f401b90
+    [plant_id] => ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d
+    [notes] => Fast growing seed
+    [ph] => 1
+    [conductivity] => 4
+    [temperature] => 34.9
+    [humidity] => 2
+    [lux] => 2.3
+    [light_hours] => 6.4
+    [user_id] => 
+    [health] => 
+)
+"¡
+
+72fbf | /vagrant/src/api/src/service/l.php
+ ▶ ︎ogsql(): 
+  ▶ ︎92: ︎INSERT INTO Plantdata (height, location, plant_id, notes, ph, conductivity, temperature, humidity, lux, light_hours, user_id, health) VALUES ('80', 'dffe8d6a-0026-48bf-851c-a6c67f401b90', 'ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d', 'Fast growing seed', '1', '4', '34.9', '2', '2.3', '6.4', 'NULL', 'NULL')"¡
+
+72fbf | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎169: ︎stdClass Object
+(
+    [id] => a7298219-5923-412f-a8ee-3ceb2a7557aa
+)
+"¡
+
+72fbf | /vagrant/src/api/src/controller/Plantdata.php
+ ▶ ︎post(): 
+  ▶ ︎52: ︎Array
+(
+    [plant_id] => ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d
+    [location] => dffe8d6a-0026-48bf-851c-a6c67f401b90
+)
+"¡
+
+72fbf |   ▶ ︎71: ︎Array
+(
+    [plant_id] => ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d
+    [location] => dffe8d6a-0026-48bf-851c-a6c67f401b90
+    [height] => 
+    [user_id] => 
+    [notes] => 
+    [ph] => 
+    [conductivity] => 
+    [temperature] => 
+    [humidity] => 
+    [lux] => 
+    [light_hours] => 
+    [health] => 
+)
+"¡
+
+72fbf | /vagrant/src/api/src/service/l.php
+ ▶ ︎ogsql(): 
+  ▶ ︎92: ︎INSERT INTO Plantdata (plant_id, location, height, user_id, notes, ph, conductivity, temperature, humidity, lux, light_hours, health) VALUES ('ab26fc8b-247e-4ce6-81db-1c1b4f4c8f3d', 'dffe8d6a-0026-48bf-851c-a6c67f401b90', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL', 'NULL')"¡
+
+72fbf | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎169: ︎stdClass Object
+(
+    [id] => c8ee9706-3c60-424d-8f27-24d00120ee02
 )
 "¡
 
