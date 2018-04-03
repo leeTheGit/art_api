@@ -32,14 +32,15 @@ class Test extends Basetest
 		$this->TestPlant 	 = $this->request->di->create(NS_TEST.'\TestPlant');
 		$this->TestRoom 	 = $this->request->di->create(NS_TEST.'\TestRoom');
 		$this->TestPlantData = $this->request->di->create(NS_TEST.'\TestPlantData');
-
+		$this->TestLifecycle = $this->request->di->create(NS_TEST.'\TestLifecycle');
 
 
 		// TEST DATA
 		$this->testLocations	= $locations;
 		$this->testRooms		= $rooms;
-		$this->testPlant        = $testPlant;
+		$this->testPlants       = $plants;
 		$this->testPlantData    = $plantData;
+		$this->lifecycles       = $lifecycles;
 	}
 
 	public function Get() //RUN
@@ -61,16 +62,19 @@ class Test extends Basetest
 		$this->TestRoom->testGet_byId();
 
 
+		$this->TestLifecycle->testPost($this->lifecycles);
+		$this->TestLifecycle->testGetAll();
+		$this->TestLifecycle->testPut(["name" => "TEST_darkLifecycle" ]);
+		$this->TestLifecycle->testGet_byId();
 
-
-		$this->TestPlant->testPost($this->testPlant);
+		$this->TestPlant->testPost($this->testPlants);
 		$this->TestPlant->testGetAll();
 		// $this->TestPlant->testPut(["name" => "TEST_green" ]);
 		$this->TestPlant->testGet_byId();
 
 
-		$this->TestPlantData->testPost($this->TestPlant->id, $this->TestLocation->id, $this->testPlantData[0]);
-		$this->TestPlantData->testPost($this->TestPlant->id, $this->TestLocation->id, $this->testPlantData[1]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[0]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[1]);
 
 
 
@@ -78,6 +82,7 @@ class Test extends Basetest
 		$this->TestLocation->testDelete();
 		$this->TestPlant->testDelete();
 		$this->TestRoom->testDelete();
+		$this->TestLifecycle->testDelete();
 
 
 
@@ -129,6 +134,7 @@ class Test extends Basetest
 			$location = $this->request->di->create('src\controller\Location');
 			$get = $location->delete();
 
+
 			$this->request->parts	= array("racing-api/", "location");
 			$location = $this->request->di->create('src\controller\Location');
 			$get = $location->get(["name" => "TEST_red"]);
@@ -137,6 +143,7 @@ class Test extends Basetest
 			$location = $this->request->di->create('src\controller\Location');
 			$get = $location->delete();
 
+
 			$this->request->parts	= array("racing-api/", "location");
 			$location = $this->request->di->create('src\controller\Location');
 			$get = $location->get(["name" => "TEST_orange"]);
@@ -144,6 +151,46 @@ class Test extends Basetest
 			$this->request->parts	= array("racing-api/", "location", $get->id);
 			$location = $this->request->di->create('src\controller\Location');
 			$get = $location->delete();
+
+
+
+
+
+			$this->request->parts	= array("racing-api/", "lifecycle");
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->get(["name" => "TEST_darkLifecycle"]);
+
+			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->delete();
+
+
+			$this->request->parts	= array("racing-api/", "lifecycle");
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->get(["name" => "TEST_youngin"]);
+
+			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->delete();
+
+
+			$this->request->parts	= array("racing-api/", "lifecycle");
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->get(["name" => "TEST_oldy"]);
+
+			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->delete();
+
+
+
+			$this->request->parts	= array("racing-api/", "lifecycle");
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->get(["name" => "TEST_dead"]);
+
+			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
+			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+			$get = $plant->delete();
 
 
 

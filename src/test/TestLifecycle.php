@@ -6,7 +6,7 @@ use src\router\Request;
 use src\controller;
 use src\service\l;
 
-class TestLocation extends Test
+class TestLifeCycle extends Test
 {
 
 	public $id;
@@ -15,7 +15,7 @@ class TestLocation extends Test
 	{
 
 		$this->request = $request;
-		$this->resourceName = "Location";
+		$this->resourceName = "Lifecycle";
 	}		
 
 
@@ -29,19 +29,25 @@ class TestLocation extends Test
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+			
 			$post = $request->post($data[0]);
 			$this->id = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 
 			$post = $request->post($data[1]);
 			$this->id2 = $post->id;
-
-
 			$this->assertRegExp(self::UUID, $post->id);
 			
+			$post = $request->post($data[2]);
+			$this->id3 = $post->id;
+			$this->assertRegExp(self::UUID, $post->id);
+
+			$post = $request->post($data[3]);
+			$this->id4 = $post->id;
+			$this->assertRegExp(self::UUID, $post->id);
+
 
 			$post = $request->post($data[0]);
-
 			$this->IsFalse($post, $method);
 
 
@@ -66,7 +72,7 @@ class TestLocation extends Test
 
 			$get = $request->get();
 
-			$this->assertEquals('TEST_green', $get->name, $method);
+			$this->assertEquals('TEST_darkLifecycle', $get->name, $method);
 
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
@@ -83,13 +89,11 @@ class TestLocation extends Test
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
-		$params 	= [
-			"name" => "TEST_green"
-		];
 
+		
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$put = $request->put($params);
+			$put = $request->put($data);
 
 			$this->assertEquals(1, $put, $method);
 			$this->pass($method, $requestStr);
@@ -141,6 +145,20 @@ class TestLocation extends Test
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			$del = $request->delete();
 			$this->IsFalse($del, $method);
+
+
+
+			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id3);
+			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+			$del = $request->delete();
+			$this->IsFalse($del, $method);
+
+
+			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id3);
+			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+			$del = $request->delete();
+			$this->IsFalse($del, $method);
+
 
 
 			$this->pass($method, $requestStr);

@@ -112,7 +112,7 @@ abstract class Base_model
 
 			}
 			if (isset($this->last_modified) && $this->last_modified === true) {
-				$sql .= "last_modified = timezone(".DB_TIMEZONE."::text, now()) ";
+				$sql .= "updated_at = timezone(".DB_TIMEZONE."::text, now()) ";
 			}
 
 			$sql .= "WHERE id = :id";
@@ -162,14 +162,12 @@ abstract class Base_model
 			$sql .= $keys . $values;
 			$sql = str_replace(", )", ")", $sql);
 
-			if ($this->table === 'Plantdata') {
-				l::ogsql($sql, $params);
-			}
+
 			$create = $this->db->insert($sql, $params);
-			l::og($create);
+
 			if (!$create) {
 
-				\src\service\l::og('Did NOT INSERT');
+				l::og('Did NOT INSERT');
 				l::ogsql($sql, $params);
 				// l::og($sql);
 				// l::og($params);

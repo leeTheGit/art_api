@@ -33,6 +33,16 @@ class Plant extends Base_model
 	
 	
 
+
+	// select plant.*, plantdata.id as data_id, plantdata.created as data_created, plantdata.notes 
+	// from plant
+	// left join plantdata on plant.id = plantdata.plant_id
+	// where plant.id = 'acff52e7-cbba-4fe9-a93f-f2e847c57baa'
+	// order by data_created DESC
+	// limit 1
+
+
+
 	public function getPlants()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		

@@ -5,9 +5,8 @@ use src\model\Database;
 use src\service\l;
 
 // UPDATE users SET "password" = crypt('new password', gen_salt('bf')) where name = 'test';
-// insert into users(id, name, password) values (uuid_generate_v4(),'bob',crypt('new password', gen_salt('bf')))
+// insert into users(name, access, password) values ('bob', 'admin', crypt('new password', gen_salt('bf')))
 // SELECT "password" = crypt('new password', "password") success, id FROM users
-// select uuid_generate_v4()
 
 class Login
 {
@@ -35,7 +34,7 @@ class Login
 			$sql = "SELECT  users.id userid,
 						access_tokens.access,
 						access_tokens.panel,
-						users.name username,
+						users.username,
 						groups.id groupid,
 						groups.access groupaccess,
 						groups.data_access
@@ -48,7 +47,7 @@ class Login
 		} else {
 			$sql = "SELECT  users.id userid,
 						users.access,
-						users.name username,
+						users.username,
 						groups.id groupid,
 						groups.access groupaccess,
 						groups.data_access
@@ -56,11 +55,11 @@ class Login
 					FROM users
 					LEFT JOIN groups ON groups.id = users.usergroup
 					WHERE users.password = crypt(:password, users.password)
-					AND users.name = :user";
+					AND users.username = :user";
 
 			$params = ["password" => $this->server['PHP_AUTH_PW'], "user" => $this->server['PHP_AUTH_USER']];
 		}
-
+		l::ogsql($sql, $params);
 		$user = $this->db->fetch($sql, $params);
 
 		if ( !$user ) {

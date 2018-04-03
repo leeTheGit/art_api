@@ -4,6 +4,12 @@ namespace src\service;
 if (!defined('REQUEST_ID')) {
     define('REQUEST_ID', substr(str_shuffle(md5(time())),0,5));
 }
+if (!defined('DIR_WEB')) {
+    define('DIR_WEB',   dirname(__FILE__).'/../../public');
+    define('DIR_ROOT',  DIR_WEB .'/..');
+    define('DIR_LOG',   DIR_ROOT.'/log');
+}
+
 
 class l 
 {

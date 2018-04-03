@@ -9,7 +9,7 @@ use src\service\l;
 class TestPlant extends Test
 {
 
-	public $id = '';
+	public $id = [];
 
 	public function __construct(Request $request)
 	{
@@ -20,7 +20,7 @@ class TestPlant extends Test
 
 	protected function testPost($data)
 	{
-		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'data</h3>';
+		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
@@ -28,10 +28,19 @@ class TestPlant extends Test
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $request->post($data);
-			$this->id = $post->id;
-
+			$post = $request->post($data[0]);
+			$this->id[] = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
+
+			$post = $request->post($data[1]);
+			$this->id[] = $post->id;
+			$this->assertRegExp(self::UUID, $post->id);
+
+			$post = $request->post($data[2]);
+			$this->id[] = $post->id;
+			$this->assertRegExp(self::UUID, $post->id);
+
+
 
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
@@ -95,7 +104,7 @@ class TestPlant extends Test
 
 		$requestStr = "get: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::fetch():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -116,13 +125,16 @@ class TestPlant extends Test
 
 		$requestStr = "delete: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::delete():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
 
 		try {
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
 
-			$this->IsFalse($del, $method);
+			for ($i=0; $i < count($this->id); $i++) {
+				$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[$i]);
+				$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+				$del = $request->delete();
+				$this->IsFalse($del, $method);	
+			}
+
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
 

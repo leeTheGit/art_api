@@ -14,22 +14,58 @@ $plantData = [
         "humidity"      => "2",
         "lux"           => '2.3',
         "light_hours"   => '6.4',
+    ],
+    [
+        "height"        => "30",
+        "location"      => "",
+        "plant_id"      => "",
+        "notes"         => "Slow growing seed",
+        "ph"            => "2",
+        "conductivity"  => "3",
+        "temperature"   => "24.4",
+        "humidity"      => "5",
+        "lux"           => '1.3',
+        "light_hours"   => '4.4',
+    ],
+    [
+        "height"        => "4",
+        "location"      => "",
+        "plant_id"      => "",
+        "notes"         => "Weird green seed",
+        "ph"            => "1",
+        "conductivity"  => "2",
+        "temperature"   => "4.4",
+        "humidity"      => "5",
+        "lux"           => '3.3',
+        "light_hours"   => '2.4',
+    ],
+    [
+        "height"        => "120",
+        "location"      => "",
+        "plant_id"      => "",
+        "notes"         => "Came in a nice pouch",
+        "ph"            => "5",
+        "conductivity"  => "4",
+        "temperature"   => "34.4",
+        "humidity"      => "6",
+        "lux"           => '6.3',
+        "light_hours"   => '2.4',
     ]
 ];
 
-$lifecyceles = [
+$lifecycles = [
 
     [
-        "name" => "seed",
+        "name" => "TEST_seed",
     ],
     [
-        "name" => "youngin",
+        "name" => "TEST_youngin",
     ],
     [
-        "name" => "oldy",
+        "name" => "TEST_oldy",
     ],
     [
-        "name" => "dead",
+        "name" => "TEST_dead",
     ]
 ];
 
@@ -63,10 +99,21 @@ $locations = [
 
 
 
-$plant = array(
-    "serial"    => "TEST_2099-01-01_13",
-    "mortality"    => "1",
-);
+$plants = [
+    [
+        "serial"    => "TEST_2099-01-01_13",
+        "mortality"    => "1",
+    ],
+    [
+        "serial"    => "TEST_2099-01-01_14",
+        "mortality"    => "0",
+    ],
+    [
+        "serial"    => "TEST_2099-01-01_15",
+        "mortality"    => "0",
+    ],
+
+];
 
 
 $testPlant = $plant;

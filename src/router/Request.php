@@ -71,14 +71,8 @@ class Request
 
         $resource = ($this->parts[1] != '') ? $this->parts[1] : 'home';
 
-
-        if (strtolower( $resource ) == 'test')  {
-            $class = NS_TEST.'\\'.ucfirst( $resource );
-        } else {
-            $class = NS_CONT.'\\'.ucfirst( $resource );
-        }
-
-
+        $class = NS_CONT.'\\'.ucfirst( $resource );
+        
         $time_start = microtime(true);
 
         if (!class_exists($class)) {
@@ -95,9 +89,8 @@ class Request
         }
 
         $result['home'] = API;
-        l::og('getting data');
+
         $result['data'] = $controller->{$this->method}($this->data);
-        l::og('got data');
 
         $result['time'] = (microtime(true) - $time_start);
 

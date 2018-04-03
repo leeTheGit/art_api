@@ -12,15 +12,15 @@ class Users extends Base_model
 	}
 
 	protected $data_view = array(
-			'default' => [ "name", "access", "useraccess", "groupname", "groupaccess" ],
-			'edit' => [ "name", "access", "useraccess", "groupname", "groupaccess" ]
+			'default' => [ "username", "access", "useraccess", "groupname", "groupaccess" ],
+			'edit' => [ "username", "access", "useraccess", "groupname", "groupaccess" ]
 		);
 
 	public function getUser($UID, $GID = '')
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		if ($GID == 'all') {
 			$sql = "SELECT users.id userid,
-												 users.name username,
+												 users.username,
 												 users.firstname,
 												 users.lastname,
 												 users.access,
@@ -32,14 +32,14 @@ class Users extends Base_model
 										FROM users
 										LEFT JOIN groups on users.usergroup = groups.id
 											WHERE users.id = :UID
-											ORDER BY users.name";
+											ORDER BY users.username";
 			$params = ["UID" 	=> $UID];
 			// sqlLog($sql, $params);
 			$user = $this->db->fetchAll($sql, $params);
 
 		} else {
 			$user = $this->db->fetchAll("SELECT users.id userid,
-												 users.name username,
+												 users.username,
 												 users.firstname,
 												 users.lastname,
 												 users.access,
@@ -49,7 +49,7 @@ class Users extends Base_model
 										FROM users
 										LEFT JOIN groups on users.usergroup = groups.id
 										WHERE users.id = :UID and users.usergroup = :GID
-										ORDER BY users.name",
+										ORDER BY users.username",
 											array(	"UID" 	=> $UID,
 													"GID"	=> $GID));
 		}
@@ -62,7 +62,7 @@ class Users extends Base_model
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		$name = str_replace('_',  ' ', $name);
 		$sql = "SELECT   users.id userid,
-						 users.name username,
+						 users.username,
 						 users.firstname,
 						 users.lastname,
 						 users.access,
@@ -73,8 +73,8 @@ class Users extends Base_model
 						 groups.access groupaccess
 				FROM users
 				LEFT JOIN groups on users.usergroup = groups.id
-					WHERE users.name = :name
-					ORDER BY users.name";
+					WHERE users.username = :name
+					ORDER BY users.username";
 		// sqlLog($sql, array("name" => $name));
 		$user = $this->db->fetch($sql, array("name" => $name));
 		return $user;
@@ -95,7 +95,7 @@ class Users extends Base_model
 		}
 
 		$sql = "SELECT  users.id userid,
-						users.name username,
+						users.username,
 						users.access useraccess,
 						groups.id groupid,
 						users.firstname,
@@ -106,7 +106,7 @@ class Users extends Base_model
 					FROM users
 					LEFT JOIN groups ON users.usergroup = groups.id
 					{$groupsql}
-					ORDER BY users.name, groups.name";
+					ORDER BY users.username, groups.name";
 		// sqlPrint($sql, $params);
 		return $this->db->fetchAll($sql, $params);
 	}
@@ -115,7 +115,7 @@ class Users extends Base_model
 	{   global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
 		return $this->db->fetchAll('SELECT users.id userid,
-										users.name username,
+										users.username,
 										users.access useraccess,
 										users.firstname,
 										users.lastname,
@@ -126,7 +126,7 @@ class Users extends Base_model
 									FROM users
 									LEFT JOIN groups ON users.usergroup = groups.id
 									WHERE users.usergroup = :GID
-									ORDER BY users.name',
+									ORDER BY users.username',
 						array("GID"=>$group));
 	}
 
@@ -202,7 +202,7 @@ class Users extends Base_model
 			|| $data['access'] 	 == 'read')
 		) {
 
-			$sql = "INSERT INTO users (name, password, usergroup, access)
+			$sql = "INSERT INTO users (username, password, usergroup, access)
 						   VALUES (:name, crypt(:password, gen_salt('bf')), :group, :access)";
 
 			$params = array("name" 	 	=> $data['name'],

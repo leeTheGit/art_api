@@ -11,3 +11,4 @@ logfile.txt
 .vagrant
 php_errors.log
 psalm.xml
+phinx.yml

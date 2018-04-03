@@ -5,15 +5,15 @@ use src\router\Request;
 use src\service\l;
 
 
-class Lifecycle extends Base_controller
+class Room extends Base_controller
 {
 
 
-	public function __construct(Request $request, \src\model\Lifecycle $lifecycle)
+	public function __construct(Request $request, \src\model\Room $room)
 	{
 		parent::__construct($request);
 
-		$this->model = $lifecycle;
+		$this->model = $room;
 	}
 
 
@@ -27,15 +27,15 @@ class Lifecycle extends Base_controller
 		$this->set_input_defaults($accepts, $queryParams);
 
 		if ($resource['id']) {
-			return $this->model->getById($resource['id']);
+			return $this->model->getRoomById($resource['id']);
 		}
 
 		if (!empty( $queryParams['name'] ) ) {
-			return $this->model->getByName($queryParams['name']);
+			return $this->model->getRoomByName($queryParams['name']);
 		}
 
 
-		return $this->model->getAll();
+		return $this->model->getRooms();
 
 
 	}
@@ -65,6 +65,7 @@ class Lifecycle extends Base_controller
 
 	public function post(array $input = [])
 	{
+
 		return $this->model->create($input);
 
 	}
