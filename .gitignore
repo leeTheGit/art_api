@@ -1,5 +1,6 @@
 /bootstrap/compiled.php
 /vendor/
+/log/
 config/config.php
 composer.phar
 composer.lock
