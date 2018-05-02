@@ -3,7 +3,7 @@
 /log/
 config/config.php
 composer.phar
-composer.lock
+composer.json
 .env.*.php
 .env.php
 .DS_Store
