@@ -59,7 +59,7 @@ class Login
 
 			$params = ["password" => $this->server['PHP_AUTH_PW'], "user" => $this->server['PHP_AUTH_USER']];
 		}
-		l::ogsql($sql, $params);
+
 		$user = $this->db->fetch($sql, $params);
 
 		if ( !$user ) {

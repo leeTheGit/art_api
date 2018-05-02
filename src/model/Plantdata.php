@@ -21,32 +21,31 @@ class Plantdata extends Base_model
 		'edit' 	  => [ "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health"],
 	);
 
-	public function getPlantDataById($id)
+	public function getById($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		
-		$sql = "SELECT  plantdata.*, 
+		l::og($id);
+		$sql = "SELECT  {$this->table}.*, 
 					FROM {$this->table}
 					WHERE id = :id
-					ORDER BY created DESC";
+					ORDER BY created_at DESC";
 
 		$params = ['id' => $id];
 
 		$plantdata = $this->db->fetch($sql, $params);
-		return $plantdata;
+		return $plantdata ?? [];
 	}
 
-	public function getPlantByPlantId($id)
+	public function getByPlantId($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT plantdata.* 
 					FROM plantdata 
 					WHERE plant_id = :id
-					ORDER BY created DESC";
+					ORDER BY created_at DESC";
 		$params = ["id" => $id];
-		// l::og($sql);
-		// l::og($params);
+		l::ogsql($sql, $params);
 		$plants = $this->db->fetchAll($sql, $params);
-
+		l::og($plants);
 
 		return $plants;
 	}

@@ -68,14 +68,19 @@ class Test extends Basetest
 		$this->TestLifecycle->testGet_byId();
 
 		$this->TestPlant->testPost($this->testPlants);
-		$this->TestPlant->testGetAll();
+		// $this->TestPlant->testGetAll();
 		// $this->TestPlant->testPut(["name" => "TEST_green" ]);
 		$this->TestPlant->testGet_byId();
 
 
 		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[0]);
 		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[1]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[2]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[3]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[4]);
+		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[5]);
 
+		$this->TestPlant->testGet_byIdWithData(["data"=> true, 'limit' => 4]);
 
 
 

@@ -50,6 +50,30 @@ $plantData = [
         "humidity"      => "6",
         "lux"           => '6.3',
         "light_hours"   => '2.4',
+    ],
+    [
+        "height"        => "159",
+        "location"      => "",
+        "plant_id"      => "",
+        "notes"         => "Browny green color",
+        "ph"            => "7.8",
+        "conductivity"  => "56",
+        "temperature"   => "32.9",
+        "humidity"      => "64",
+        "lux"           => '6.1',
+        "light_hours"   => '8.4',
+    ],
+    [
+        "height"        => "1462",
+        "location"      => "",
+        "plant_id"      => "",
+        "notes"         => "small and seedy",
+        "ph"            => "1",
+        "conductivity"  => "2",
+        "temperature"   => "3",
+        "humidity"      => "4",
+        "lux"           => '5',
+        "light_hours"   => '6',
     ]
 ];
 

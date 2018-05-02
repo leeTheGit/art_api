@@ -35,7 +35,7 @@ class Database  {
 			return $stmt->fetchAll(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -49,7 +49,7 @@ class Database  {
 			return $stmt->fetch(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -61,7 +61,7 @@ class Database  {
 			return $stmt->fetchAll(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -76,7 +76,7 @@ class Database  {
 			return $stmt->fetch(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -89,7 +89,7 @@ class Database  {
 			return $stmt->fetchAll(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -118,7 +118,7 @@ class Database  {
 			return $error;
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -143,7 +143,7 @@ class Database  {
 			return $stmt->fetch(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}
@@ -161,7 +161,7 @@ class Database  {
 			return $this->PDO->lastInsertId();
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			l::og($errormsg);
+			// l::og($errormsg);
 			return false;
 		}
 	}

@@ -7,12 +7,14 @@ require_once dirname(__FILE__) .'/../config/globals.php';
 include_once DIR_MODEL.'/functions.php';
 set_error_handler("error_handler");
 
+use src\service\l;
+
+
+
 $di = new \Dice\Dice;
 
 // Allow authorized cross origin requests;
-// $origin = $di->create(NS_MODEL.'\Origins');
-
-src\service\l::og('in the index');
+$origin = $di->create(NS_MODEL.'\Origins');
 
 
 $rule = [         'shared' => true,
@@ -48,6 +50,7 @@ try { // real hard little API!!
 			Login the user
 		*/
 
+		l::og('logging in');
 
 	$login = $di->create(NS_CONT.'\Login');
 
