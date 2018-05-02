@@ -1,142 +1,586 @@
-3cf5c | /vagrant/src/api/src/test/Test.php
- ▶ ︎Get(): 
-  ▶ ︎48: ︎"¡
+a0369 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
 
-3cf5c | /vagrant/src/api/src/model/Database.php
- ▶ ︎insert(): 
-  ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "idx_location_name"
-DETAIL:  Key (name)=(TEST_orange) already exists."¡
+a0369 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
 
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎create(): 
-  ▶ ︎170: ︎Did NOT INSERT"¡
+a0369 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
 
-3cf5c | /vagrant/src/api/src/service/l.php
- ▶ ︎ogsql(): 
-  ▶ ︎98: ︎INSERT INTO Location (name, rank) VALUES ('TEST_orange', '3')"¡
-
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎update(): 
-  ▶ ︎121: ︎UPDATE Location SET name = :name WHERE id = :id"¡
-
-3cf5c |   ▶ ︎122: ︎Array
+a0369 |   ▶ ︎67: ︎Array
 (
-    [id] => 94e72aec-bfec-449d-8c8d-0ebc4b5fcc4d
-    [name] => TEST_green
 )
 "¡
 
-3cf5c | /vagrant/src/api/src/model/Database.php
- ▶ ︎insert(): 
-  ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "idx_room_name"
-DETAIL:  Key (name)=(TEST_seedroom) already exists."¡
+6095c | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
 
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎create(): 
-  ▶ ︎170: ︎Did NOT INSERT"¡
+6095c | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
 
-3cf5c | /vagrant/src/api/src/service/l.php
- ▶ ︎ogsql(): 
-  ▶ ︎98: ︎INSERT INTO Room (name) VALUES ('TEST_seedroom')"¡
+6095c |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
 
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎update(): 
-  ▶ ︎121: ︎UPDATE Room SET name = :name WHERE id = :id"¡
-
-3cf5c |   ▶ ︎122: ︎Array
+6095c |   ▶ ︎67: ︎Array
 (
-    [id] => 3c77090d-4b7f-4046-8589-1cd3dff0642d
-    [name] => TEST_darkroom
 )
 "¡
 
-3cf5c | /vagrant/src/api/src/model/Database.php
- ▶ ︎insert(): 
-  ▶ ︎146: ︎SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "idx_life_name"
-DETAIL:  Key (name)=(TEST_seed) already exists."¡
+cce6d | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
 
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎create(): 
-  ▶ ︎170: ︎Did NOT INSERT"¡
+cce6d | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
 
-3cf5c | /vagrant/src/api/src/service/l.php
- ▶ ︎ogsql(): 
-  ▶ ︎98: ︎INSERT INTO Lifecycle (name) VALUES ('TEST_seed')"¡
+cce6d |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
 
-3cf5c | /vagrant/src/api/src/model/Base_model.php
- ▶ ︎update(): 
-  ▶ ︎121: ︎UPDATE Lifecycle SET name = :name WHERE id = :id"¡
-
-3cf5c |   ▶ ︎122: ︎Array
+cce6d |   ▶ ︎67: ︎Array
 (
-    [id] => 68e4cfe0-4ca8-47d0-8216-e9e43a33d5f0
-    [name] => TEST_darkLifecycle
+    [serial] => seven
+    [mortality] => 0
 )
 "¡
 
-3cf5c | /vagrant/src/api/src/controller/Plantdata.php
+cce6d | /vagrant/src/api/src/controller/Plant.php
  ▶ ︎post(): 
-  ▶ ︎52: ︎Array
+  ▶ ︎92: ︎in the post for plant"¡
+
+cce6d |   ▶ ︎93: ︎Array
 (
-    [height] => 80
-    [location] => 94e72aec-bfec-449d-8c8d-0ebc4b5fcc4d
-    [plant_id] => ff9b2bbf-aac1-4d3f-b3e5-ee2fdc603020
-    [notes] => Fast growing seed
-    [ph] => 1
-    [conductivity] => 4
-    [temperature] => 34.9
-    [humidity] => 2
-    [lux] => 2.3
-    [light_hours] => 6.4
+    [serial] => seven
+    [mortality] => 0
 )
 "¡
 
-3cf5c |   ▶ ︎71: ︎Array
+3ceb6 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+3ceb6 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+3ceb6 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+3ceb6 |   ▶ ︎67: ︎Array
 (
-    [height] => 80
-    [location] => 94e72aec-bfec-449d-8c8d-0ebc4b5fcc4d
-    [plant_id] => ff9b2bbf-aac1-4d3f-b3e5-ee2fdc603020
-    [notes] => Fast growing seed
-    [ph] => 1
-    [conductivity] => 4
-    [temperature] => 34.9
-    [humidity] => 2
-    [lux] => 2.3
-    [light_hours] => 6.4
-    [user_id] => 
-    [health] => 
 )
 "¡
 
-3cf5c |   ▶ ︎52: ︎Array
+98b78 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+98b78 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+98b78 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+98b78 |   ▶ ︎67: ︎Array
 (
-    [height] => 30
-    [location] => 94e72aec-bfec-449d-8c8d-0ebc4b5fcc4d
-    [plant_id] => ff9b2bbf-aac1-4d3f-b3e5-ee2fdc603020
-    [notes] => Slow growing seed
-    [ph] => 2
-    [conductivity] => 3
-    [temperature] => 24.4
-    [humidity] => 5
-    [lux] => 1.3
-    [light_hours] => 4.4
+    [serial] => fads
+    [mortality] => 0
 )
 "¡
 
-3cf5c |   ▶ ︎71: ︎Array
+98b78 | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+98b78 |   ▶ ︎93: ︎Array
 (
-    [height] => 30
-    [location] => 94e72aec-bfec-449d-8c8d-0ebc4b5fcc4d
-    [plant_id] => ff9b2bbf-aac1-4d3f-b3e5-ee2fdc603020
-    [notes] => Slow growing seed
-    [ph] => 2
-    [conductivity] => 3
-    [temperature] => 24.4
-    [humidity] => 5
-    [lux] => 1.3
-    [light_hours] => 4.4
-    [user_id] => 
-    [health] => 
+    [serial] => fads
+    [mortality] => 0
+)
+"¡
+
+ffec1 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+ffec1 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+ffec1 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+ffec1 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+c9fca | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+c9fca | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+c9fca |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+c9fca |   ▶ ︎67: ︎Array
+(
+    [serial] => fdsa
+    [mortality] => 1
+)
+"¡
+
+c9fca | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+c9fca |   ▶ ︎93: ︎Array
+(
+    [serial] => fdsa
+    [mortality] => 1
+)
+"¡
+
+6d008 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+6d008 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+6d008 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+6d008 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+ece5d | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+ece5d | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+ece5d |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+ece5d |   ▶ ︎67: ︎Array
+(
+    [serial] => fasfd
+    [mortality] => 0
+)
+"¡
+
+ece5d | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+ece5d |   ▶ ︎93: ︎Array
+(
+    [serial] => fasfd
+    [mortality] => 0
+)
+"¡
+
+7952b | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+7952b | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+7952b |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+7952b |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+81a8f | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+81a8f | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+81a8f |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+81a8f |   ▶ ︎67: ︎Array
+(
+    [serial] => fsad
+    [mortality] => 0
+)
+"¡
+
+81a8f | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+81a8f |   ▶ ︎93: ︎Array
+(
+    [serial] => fsad
+    [mortality] => 0
+)
+"¡
+
+3e7a8 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+3e7a8 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+3e7a8 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+3e7a8 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+ffaca | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+ffaca | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+ffaca |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+ffaca |   ▶ ︎67: ︎Array
+(
+    [serial] => fdsa
+    [mortality] => 0
+)
+"¡
+
+ffaca | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+ffaca |   ▶ ︎93: ︎Array
+(
+    [serial] => fdsa
+    [mortality] => 0
+)
+"¡
+
+ffaca | /vagrant/src/api/src/model/Base_model.php
+ ▶ ︎create(): 
+  ▶ ︎170: ︎Did NOT INSERT"¡
+
+ffaca | /vagrant/src/api/src/service/l.php
+ ▶ ︎ogsql(): 
+  ▶ ︎98: ︎INSERT INTO plant (serial, mortality) VALUES ('fdsa', '0')"¡
+
+628bd | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+628bd | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+628bd |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+628bd |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+2a5b8 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+2a5b8 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+2a5b8 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+2a5b8 |   ▶ ︎67: ︎Array
+(
+    [serial] => gfds
+    [mortality] => 0
+)
+"¡
+
+2a5b8 | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+2a5b8 |   ▶ ︎93: ︎Array
+(
+    [serial] => gfds
+    [mortality] => 0
+)
+"¡
+
+ed74b | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+ed74b | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+ed74b |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+ed74b |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+b2a44 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+b2a44 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+b2a44 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+b2a44 |   ▶ ︎67: ︎Array
+(
+    [serial] => as
+    [mortality] => 2
+)
+"¡
+
+b2a44 | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+b2a44 |   ▶ ︎93: ︎Array
+(
+    [serial] => as
+    [mortality] => 2
+)
+"¡
+
+18480 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+18480 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+18480 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+18480 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+e4c50 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+e4c50 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+e4c50 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+e4c50 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+1ad8f | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+1ad8f | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+1ad8f |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+1ad8f |   ▶ ︎67: ︎Array
+(
+    [serial] => ad
+    [mortality] => 0
+)
+"¡
+
+1ad8f | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+1ad8f |   ▶ ︎93: ︎Array
+(
+    [serial] => ad
+    [mortality] => 0
+)
+"¡
+
+57f2d | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+57f2d | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+57f2d |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+57f2d |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+37264 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+37264 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+37264 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+37264 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+bd7ce | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+bd7ce | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+bd7ce |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+bd7ce |   ▶ ︎67: ︎Array
+(
+    [serial] => kevin
+    [mortality] => 8
+)
+"¡
+
+bd7ce | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+bd7ce |   ▶ ︎93: ︎Array
+(
+    [serial] => kevin
+    [mortality] => 8
+)
+"¡
+
+d4ea2 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+d4ea2 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+d4ea2 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+d4ea2 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+a3118 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+a3118 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+a3118 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+a3118 |   ▶ ︎67: ︎Array
+(
+)
+"¡
+
+709a3 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+709a3 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+709a3 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+709a3 |   ▶ ︎67: ︎Array
+(
+    [serial] => frank
+    [mortality] => 7
+)
+"¡
+
+709a3 | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+709a3 |   ▶ ︎93: ︎Array
+(
+    [serial] => frank
+    [mortality] => 7
+)
+"¡
+
+e604d | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+e604d | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+e604d |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+e604d |   ▶ ︎67: ︎Array
+(
+    [serial] => donald
+    [mortality] => 4
+    [rarp] => er
+)
+"¡
+
+e604d | /vagrant/src/api/src/controller/Plant.php
+ ▶ ︎post(): 
+  ▶ ︎92: ︎in the post for plant"¡
+
+e604d |   ▶ ︎93: ︎Array
+(
+    [serial] => donald
+    [mortality] => 4
+    [rarp] => er
+)
+"¡
+
+712f5 | /vagrant/src/api/public/index.php
+  ▶ ︎53: ︎logging in"¡
+
+712f5 | /vagrant/src/api/src/router/Request.php
+ ▶ ︎getData(): 
+  ▶ ︎38: ︎getting data"¡
+
+712f5 |  ▶ ︎process(): 
+  ▶ ︎66: ︎processing"¡
+
+712f5 |   ▶ ︎67: ︎Array
+(
 )
 "¡
 

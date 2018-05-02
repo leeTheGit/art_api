@@ -29,7 +29,7 @@ class Plantdata extends Base_controller
 		$this->set_input_defaults($accepts, $input);
 		
 		if ($resource['id']) {
-			return $this->model->getPlantById($resource['id']);
+			return $this->model->getById($resource['id']);
 		}
 
 		return $this->model->getPlantdata();
@@ -48,8 +48,6 @@ class Plantdata extends Base_controller
 
 	public function post($input)
 	{
-		
-		l::og($input);
 
 		$default_values = [
 			"plant_id"		=> false,
@@ -68,7 +66,6 @@ class Plantdata extends Base_controller
 
 		$this->set_input_defaults($default_values, $input);
 
-		l::og($input);
 		return $this->model->create($input);
 
 	}

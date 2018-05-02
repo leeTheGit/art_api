@@ -19,7 +19,7 @@ class Plant extends Base_controller
 	}
 
 
-	public function get($queryParams)
+	public function get($params)
 	{
 
 		$resource 	= $this->getResourceFromUrl();
@@ -33,15 +33,23 @@ class Plant extends Base_controller
 			"data"          => False,
 		];
 
-		$this->set_input_defaults($accepts, $queryParams);
-
+		$this->set_input_defaults($accepts, $params);
+		l::og($resource);
 		if ($resource['id']) {
-			return $this->model->getPlantById($resource['id']);
+			$plant = $this->model->getPlantById($resource['id']);
+			l::og($plant);
+
+		} 
+		
+		else if (!empty( $params['serial'] ) ) {
+			$plant2 = $this->model->getPlantBySerial($params);
 		}
 
-
-		if (!empty( $queryParams['serial'] ) ) {
-			return $this->model->getPlantBySerial($queryParams['serial']);
+		if (!empty($params['data']) && $params['data'] === true) {
+			$plant = $this->model->getPlantData($plant, $params);
+			return $plant;
+		} else {
+			return $plant;
 		}
 
 		return $this->model->getPlants();
@@ -81,6 +89,8 @@ class Plant extends Base_controller
 	{
 		// \src\service\l::og($input);
 		// $resource 	= $this->getResourceFromUrl();
+		l::og('in the post for plant');
+		l::og($input);
 
 		$defaults = [
 			'serial'    => false,

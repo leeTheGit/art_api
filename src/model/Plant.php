@@ -10,9 +10,10 @@ class Plant extends Base_model
 	protected $required = [ "serial"];
 
 
-	public function __construct(Request $request)
+	public function __construct(Request $request, Plantdata $plantdata)
 	{
 		parent::__construct($request);
+		$this->plantData = $plantdata;
 	}
 
 	protected $data_view = array(
@@ -42,14 +43,23 @@ class Plant extends Base_model
 	// limit 1
 
 
+	public function getPlantData($plant, $params)
+	{
+		l::og('getting plant data');
+		$data = $this->plantData->getByPlantId($plant->id);
+		l::og($data);
+		$plant->data = $data;
+		return $plant;
+		l::og($data);
+	}
+
+
 
 	public function getPlants()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  plant.*, 
-						plantdata.* 
-					FROM plant 
-					LEFT JOIN plantdata ON plant.id = plantdata.plant_id
+		$sql = "SELECT  {$this->table}.*
+					FROM {$this->table} 
 					ORDER BY serial";
 
 		$plants = $this->db->fetchAll($sql);
@@ -61,25 +71,23 @@ class Plant extends Base_model
 	public function getPlantById($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  plant.*, 
-						plantdata.* 
-					FROM plant 
-					LEFT JOIN plantdata ON plant.id = plantdata.plant_id
-					WHERE plant.id = :id";
+		$sql = "SELECT  {$this->table}.*
+					FROM {$this->table} 
+					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		// l::og($sql);
-		// l::og($params);
+		l::og($sql);
+		l::og($params);
 		$plants = $this->db->fetch($sql, $params);
 
 
 		return $plants;
 	}
 
-	public function getPlantBySerial($serial)
+	public function getPlantBySerial($params)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  plant.* FROM plant WHERE plant.serial = :serial";
-		$params = ["serial" => $serial];
+		$sql = "SELECT  {$this->table}.* FROM {$this->table} WHERE {$this->table}.serial = :serial";
+		$params = ["serial" => $params['serial']];
 
 		$plant = $this->db->fetch($sql, $params);
 

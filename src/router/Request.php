@@ -35,7 +35,7 @@ class Request
 
     public function getData()
     {
-
+        l::og('getting data');
         $headers = getallheaders();
 
         switch ($this->method)
@@ -63,6 +63,8 @@ class Request
 
     public function process()
     {
+        l::og('processing');
+        l::og($_POST);
         $result = [];
 
         $urlArr = parse_url( $this->uri );
@@ -71,7 +73,11 @@ class Request
 
         $resource = ($this->parts[1] != '') ? $this->parts[1] : 'home';
 
-        $class = NS_CONT.'\\'.ucfirst( $resource );
+        if (strtolower( $resource ) == 'test')  {
+            $class = NS_TEST.'\\'.ucfirst( $resource );
+        } else {
+            $class = NS_CONT.'\\'.ucfirst( $resource );
+        }
         
         $time_start = microtime(true);
 

@@ -24,7 +24,7 @@ abstract class Base_model
 		$this->user = $request->auth_user->userid;
 		$this->group = $request->auth_user->groupid;
 		$this->setColumns($request->auth_user->access);
-		$this->table = end( explode('\\', get_class($this) ) );
+		$this->table = strtolower( end( explode('\\', get_class($this) ) ) );
 	}
 
 	public function setUser($user) {
@@ -118,12 +118,12 @@ abstract class Base_model
 			$sql .= "WHERE id = :id";
 			$sql = str_replace(", WHERE", " WHERE", $sql);
 
-			l::og($sql);
-			l::og($params);
-
-
 			$result = $this->db->execute($sql, $params);
 			if (!$result) {
+				l::og('DID NOT UPDATE');
+				l::og($sql);
+				l::og($params);
+
 			}
 			return $result;
 		}
@@ -133,9 +133,9 @@ abstract class Base_model
 	public function create($data)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		if ($this->table === 'plantdata') {
-			l::og($data);
-		}
+		// if ($this->table === 'plantdata') {
+		// 	l::og($data);
+		// }
 		
 		$required = $this->required ? array_flip($this->required) : array();
 
