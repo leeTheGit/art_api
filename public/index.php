@@ -97,7 +97,7 @@ try { // real hard little API!!
 } catch( Exception $e ) {
 
 	// \src\service\l::og($e->getMessage());
-
+	// exit();
 	exit(json_encode( 
 		[
 			"error"   => $e->getMessage(),

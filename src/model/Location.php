@@ -23,7 +23,13 @@ class Location extends Base_model
 	public function getLocations()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT location.* FROM location";
+		$sql = "SELECT 
+					location.*,
+					roomlocation.id as roomid,
+					room.name as roomname 
+				FROM location
+				left join roomlocation on location.id = roomlocation.room_id
+				left join room on roomlocation.room_id = room.id";
 
 		$data = $this->db->fetchAll($sql, $params);
 

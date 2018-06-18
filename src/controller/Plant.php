@@ -21,7 +21,6 @@ class Plant extends Base_controller
 
 	public function get($params)
 	{
-
 		$resource 	= $this->getResourceFromUrl();
 
 		$accepts = [
@@ -34,25 +33,32 @@ class Plant extends Base_controller
 		];
 
 		$this->set_input_defaults($accepts, $params);
-		l::og($resource);
+
 		if ($resource['id']) {
+
 			$plant = $this->model->getPlantById($resource['id']);
-			l::og($plant);
 
-		} 
-		
-		else if (!empty( $params['serial'] ) ) {
-			$plant2 = $this->model->getPlantBySerial($params);
-		}
+			// return $plant;
 
-		if (!empty($params['data']) && $params['data'] === true) {
-			$plant = $this->model->getPlantData($plant, $params);
-			return $plant;
+		}  else if (!empty( $params['serial'] ) ) {
+			
+			$plant = $this->model->getPlantBySerial($params);
+	
 		} else {
-			return $plant;
+
+			$plant = $this->model->getPlants();
 		}
 
-		return $this->model->getPlants();
+		if (!empty($params['data']) && $params['data'] == true) {
+			
+			$plant = $this->model->getPlantData($plant, $params);
+
+			return $plant;
+		
+		} else {
+		
+			return $plant;
+		}
 
 	}
 

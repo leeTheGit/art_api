@@ -17,10 +17,16 @@ class Database  {
 	private function connect()
 	{
 		// $this->PDO = new \PDO($this->config['connect'], $this->config['user'], $this->config['password']);
-		$this->PDO = new \PDO($this->config['connect'], $this->config['user'], $this->config['password']);
+		try {
+
+			$this->PDO = new \PDO($this->config['connect'], $this->config['user'], $this->config['password']);
+		} catch (\PDOException $e) {
+			$errormsg = $this->getErrorMsg( $e->getMessage() );	
+			http_response_code(500);
+			exit($errormsg);
+
+		}
 		// $this->PDO = new \PDO('pgsql:user=vagrant dbname=vagrant password=vagrant');
-
-
 
 		$this->PDO->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 
@@ -76,7 +82,7 @@ class Database  {
 			return $stmt->fetch(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
+			l::og($errormsg);
 			return false;
 		}
 	}
@@ -89,7 +95,7 @@ class Database  {
 			return $stmt->fetchAll(\PDO::FETCH_OBJ);
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
+			l::og($errormsg);
 			return false;
 		}
 	}
@@ -118,7 +124,7 @@ class Database  {
 			return $error;
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
+			l::og($errormsg);
 			return false;
 		}
 	}
@@ -175,6 +181,9 @@ class Database  {
 	{
 		if (strpos($msg, "Invalid text representation: 7 ERROR:  invalid input syntax for uuid") !== false) {
 			return "The id you're using is not a valid UUID";
+		}
+		if (strpos($msg, "could not connect to server:") != false) {
+			return "Can not connect to the database";
 		}
 		return $msg;
 	}

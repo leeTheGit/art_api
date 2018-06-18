@@ -19,7 +19,7 @@ class Users extends Base_model
 	public function getUser($UID, $GID = '')
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		if ($GID == 'all') {
-			$sql = "SELECT users.id userid,
+			$sql = "SELECT users.id,
 												 users.username,
 												 users.firstname,
 												 users.lastname,
@@ -38,7 +38,7 @@ class Users extends Base_model
 			$user = $this->db->fetchAll($sql, $params);
 
 		} else {
-			$user = $this->db->fetchAll("SELECT users.id userid,
+			$user = $this->db->fetchAll("SELECT users.id,
 												 users.username,
 												 users.firstname,
 												 users.lastname,
@@ -61,7 +61,7 @@ class Users extends Base_model
 	public function getUserByAccountName($name)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		$name = str_replace('_',  ' ', $name);
-		$sql = "SELECT   users.id userid,
+		$sql = "SELECT   users.id,
 						 users.username,
 						 users.firstname,
 						 users.lastname,
@@ -94,7 +94,7 @@ class Users extends Base_model
 			$params['group'] = $groupid;
 		}
 
-		$sql = "SELECT  users.id userid,
+		$sql = "SELECT  users.id,
 						users.username,
 						users.access useraccess,
 						groups.id groupid,
@@ -114,7 +114,7 @@ class Users extends Base_model
 	public function getGroupUsers($group)
 	{   global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		return $this->db->fetchAll('SELECT users.id userid,
+		return $this->db->fetchAll('SELECT users.id,
 										users.username,
 										users.access useraccess,
 										users.firstname,
@@ -188,28 +188,33 @@ class Users extends Base_model
 	}
 
 
-	public function createUser($id, $data)
+	public function createUser($groupid, $data)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+		l::og('creating user with ');
+		l::og($data);
 
 		if ($data['access'] != 'admin' && $data['access'] != 'user') {
 			$data['access'] = 'read';
 		}
-		if ($data['name'] 		 != ''
+		if ($data['username']    != ''
 			&& $data['password'] != ''
-			&& $id 			     != ''
+			&& $groupid 	     != ''
 			&& ($data['access']  == 'admin'
 			|| $data['access'] 	 == 'user'
 			|| $data['access'] 	 == 'read')
 		) {
 
-			$sql = "INSERT INTO users (username, password, usergroup, access)
-						   VALUES (:name, crypt(:password, gen_salt('bf')), :group, :access)";
+			$sql = "INSERT INTO users (username, firstname, lastname, password, usergroup, access)
+						   VALUES (:name, :firstname, :lastname, crypt(:password, gen_salt('bf')), :group, :access)";
 
-			$params = array("name" 	 	=> $data['name'],
+			$params = array("name" 	 	=> $data['username'],
 							"password" 	=> $data['password'],
-							"group" 	=> $id,
+							"group" 	=> $groupid,
+							"firstname" => $data['firstname'],
+							"lastname"  => $data['lastname'],
 							"access" 	=> $data['access']);
-
+			l::og($sql);
+			l::og($params);
 			$insert = $this->db->insert($sql, $params);
 
 			return $insert;

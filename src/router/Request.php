@@ -63,8 +63,6 @@ class Request
 
     public function process()
     {
-        l::og('processing');
-        l::og($_POST);
         $result = [];
 
         $urlArr = parse_url( $this->uri );
@@ -82,7 +80,7 @@ class Request
         $time_start = microtime(true);
 
         if (!class_exists($class)) {
-            header('HTTP/1.0 404 Not found');
+            http_response_code(404);
             throw new \Exception('Resource does\'t exist');
         }
 
@@ -90,7 +88,7 @@ class Request
 
 
         if (!method_exists($controller, $this->method)) {
-            header('HTTP/1.0 400 Bad request');
+            http_response_code(400);
             throw new \Exception('Action is invalid');
         }
 
@@ -114,7 +112,7 @@ class Request
             if (!DEBUG) {
                 header('content-type: application/json; charset=utf-8');
             }
-
+            l::og($result);
             exit( json_encode($result) );
         }
 

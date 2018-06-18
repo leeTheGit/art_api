@@ -61,19 +61,19 @@ class requestLogger
 		$this->tipstercheck();
 		//
 		$uri = $this->method . ': ' .$this->uri;
-		$sql = "SELECT * FROM uri_log WHERE uri = :uri";
+		$sql = "SELECT * FROM urilog WHERE uri = :uri";
 		$param = array('uri' => $uri);
 		$check = $this->db->query($sql, $param);
 
 		if (count($check) > 0 ) {
 			$number = $check[0]->count;
 			$number++;
-			$sql = "UPDATE uri_log set count = :count WHERE id = :id";
+			$sql = "UPDATE urilog set count = :count WHERE id = :id";
 			$param = array('count' => $number, 'id'=>$check[0]->id );
 			$this->db->execute($sql, $param);
 
 		} else {
-			$sql = "INSERT INTO uri_log (uri) Values(:uri)";
+			$sql = "INSERT INTO urilog (uri) Values(:uri)";
 			$this->db->execute($sql, $param);
 		}
 	}
