@@ -86,15 +86,16 @@ abstract class Base_model
 
 	public function update($id, $data, $permitted_columns = array())
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-
+		l::og('updating');
+		l::og($data);
 		$this->clearCache($id);
 
 		if ( count($permitted_columns) === 0 ) {
 			$permitted_columns = !empty($this->data_view['edit']) ? $this->intersect( $this->getColumns(), $this->data_view['edit']) : $this->getColumns();
 		}
-
+		l::og($permitted_columns);
 		$data = array_intersect_key((array)$data, $permitted_columns);
-
+		l::og($data);
 		$fields  = array_keys($data);
 
 		$params = array("id" => $id);

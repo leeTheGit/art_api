@@ -17,8 +17,8 @@ class Plant extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "serial", "mortality"],
-		'edit' 	  => [ "serial", "mortality"]
+		'default' => [ "serial", "mortality", "location"],
+		'edit' 	  => [ "serial", "mortality", "location"]
 	);
 
 
@@ -58,13 +58,13 @@ class Plant extends Base_model
 	public function getPlants()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  {$this->table}.*
-					FROM {$this->table} 
+		$sql = "SELECT {$this->table}.*, location.name
+					FROM {$this->table}
+					LEFT JOIN location on {$this->table}.location = location.id
 					ORDER BY serial
 					LIMIT {$this->limit}";
 
 		$plants = $this->db->fetchAll($sql);
-
 
 		return $plants;
 	}

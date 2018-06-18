@@ -67,7 +67,7 @@ class Plant extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-
+		l::og($input);
 		// throw new \Exception($error);
 		
 
@@ -77,13 +77,16 @@ class Plant extends Base_controller
 			'serial' 		=> null,
 			'mortality'		=> null,
 			"manager_id"	=> null,
-			"life_cycle" 	=> null
+			"life_cycle" 	=> null,
+			"location"      => null,
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
-
+		l::og($input);
 		if (!empty($input)) {
+			l::og('updaing to the model');
+			l::og($resource);
 			$result = $this->model->update($resource['id'], $input);
 		}
 

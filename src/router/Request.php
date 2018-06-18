@@ -35,7 +35,6 @@ class Request
 
     public function getData()
     {
-        l::og('getting data');
         $headers = getallheaders();
 
         switch ($this->method)
@@ -48,9 +47,10 @@ class Request
 
             case 'put':
                 $data = file_get_contents('php://input') ?? '';
-
+                l::og($data);
                 $result = array();
                 parse_str($data, $result);
+                l::og($result);
                 return $result;
 
             case 'delete':
@@ -112,7 +112,7 @@ class Request
             if (!DEBUG) {
                 header('content-type: application/json; charset=utf-8');
             }
-            l::og($result);
+            // l::og($result);
             exit( json_encode($result) );
         }
 
