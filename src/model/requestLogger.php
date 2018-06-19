@@ -73,7 +73,7 @@ class requestLogger
 			$this->db->execute($sql, $param);
 
 		} else {
-			$sql = "INSERT INTO urilog (uri) Values(:uri)";
+			$sql = "INSERT INTO urilog (uri, count) Values(:uri, '1')";
 			$this->db->execute($sql, $param);
 		}
 	}

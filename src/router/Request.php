@@ -22,7 +22,6 @@ class Request
     {
         $this->method    = strtolower( $_SERVER['REQUEST_METHOD']);
         $this->uri       = rawurldecode( $_SERVER['REQUEST_URI'] );
-        $this->data      = $this->getData();
         $this->db        = $db;
         $this->mc        = $mc;
         $this->auth_user = $auth_user;
@@ -30,13 +29,13 @@ class Request
         $this->di        = $di;
         $this->date      = new \DateTime('now');
         $this->date->setTime(23, 59, 59);
+        $this->headers   = apache_request_headers();
+        $this->data      = $this->getData();
     }
 
 
     public function getData()
     {
-        $headers = getallheaders();
-
         switch ($this->method)
         {
             case 'get':
@@ -47,10 +46,12 @@ class Request
 
             case 'put':
                 $data = file_get_contents('php://input') ?? '';
-                l::og($data);
-                $result = array();
-                parse_str($data, $result);
-                l::og($result);
+
+                if ($this->headers['Content-Type'] == "application/x-www-form-urlencoded" ) {
+                    $result = [];
+                    parse_str($data, $result);
+                }
+
                 return $result;
 
             case 'delete':
