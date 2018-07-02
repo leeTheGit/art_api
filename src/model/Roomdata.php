@@ -4,9 +4,9 @@ namespace src\model;
 use src\service\l;
 use src\router\Request;
 
-class Roomlocation extends Base_model
+class Roomdata extends Base_model
 {
-	protected $required = ['room_id', 'location_id'];
+	protected $required = ['id', 'room_id'];
 
 	public function __construct(Request $request)
 	{
@@ -18,7 +18,7 @@ class Roomlocation extends Base_model
 		'edit' 	  => [ "room_id", "location_id"],
 	);
 
-	public function getRooms()
+	public function getRoomData()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
@@ -29,14 +29,15 @@ class Roomlocation extends Base_model
 		return $location;
 	}
 
-	public function getRoomLocationById($id)
+	public function getRoomDataByRoom($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT  {$this->table}.*
 					FROM {$this->table} 
-					WHERE {$this->table}.id = :id";
+                    WHERE {$this->table}.room_id = :id
+                    ORDER BY created_at DESC";
 		$params = ["id" => $id];
-		$locations = $this->db->fetch($sql, $params);
+		$locations = $this->db->fetchAll($sql, $params);
 
 		return $locations;
 	}

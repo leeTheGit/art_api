@@ -22,20 +22,38 @@ class Room extends Base_controller
 
 		$resource 	= $this->getResourceFromUrl();
 
-		$accepts = [];
-
+		$accepts = [
+			"data" => False,
+			"locations" => False
+		];
 		$this->set_input_defaults($accepts, $queryParams);
+		l::og($queryParams);
 
 		if ($resource['id']) {
-			return $this->model->getRoomById($resource['id']);
-		}
+			$room = $this->model->getRoomById($resource['id']);
+		} else
 
 		if (!empty( $queryParams['name'] ) ) {
-			return $this->model->getRoomByName($queryParams['name']);
+			$room =  $this->model->getRoomByName($queryParams['name']);
+		} else {
+			l::og('getting rooms');
+			$room = $this->model->getRooms();
 		}
 
+		if (!empty($queryParams['data']) && $queryParams['data'] == 'true') {
+			$room = $this->model->getRoomData($room, $queryParams);
+		} 
 
-		return $this->model->getRooms();
+
+		if (!empty($queryParams['locations']) && $queryParams['locations'] == 'true') {
+			l::og('getting room locations');
+			// l::og($room);
+
+			$room = $this->model->getLocationData($room, $queryParams);
+		} 
+
+
+		return $room;
 
 
 	}

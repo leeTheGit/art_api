@@ -83,10 +83,7 @@ class Plant extends Base_controller
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
-		l::og($input);
 		if (!empty($input)) {
-			l::og('updaing to the model');
-			l::og($resource);
 			$result = $this->model->update($resource['id'], $input);
 		}
 

@@ -5,15 +5,15 @@ use src\router\Request;
 use src\service\l;
 
 
-class Roomlocation extends Base_controller
+class Roomdata extends Base_controller
 {
 
 
-	public function __construct(Request $request, \src\model\Roomlocation $room)
+	public function __construct(Request $request, \src\model\Roomdata $roomdata)
 	{
 		parent::__construct($request);
 
-		$this->model = $room;
+		$this->model = $roomdata;
 	}
 
 
@@ -22,17 +22,19 @@ class Roomlocation extends Base_controller
 
 		$resource 	= $this->getResourceFromUrl();
 
-		$accepts = [];
+        $accepts = [
+            "room" => false,
+        ];
 
 		$this->set_input_defaults($accepts, $queryParams);
 
 		if ($resource['id']) {
-			return $this->model->getRoomLocationById($resource['id']);
+			return $this->model->getRoomDataById($resource['id']);
 		}
 
-		// if (!empty( $queryParams['name'] ) ) {
-		// 	return $this->model->getRoomLocationByName($queryParams['name']);
-		// }
+		if (!empty( $queryParams['room'] ) ) {
+			return $this->model->getRoomDataByRoom($queryParams['room']);
+		}
 
 
 		return $this->model->getRoomLocations();

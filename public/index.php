@@ -50,7 +50,7 @@ try { // real hard little API!!
 			Login the user
 		*/
 
-		l::og('logging in');
+		// l::og('logging in');
 
 	$login = $di->create(NS_CONT.'\Login');
 
