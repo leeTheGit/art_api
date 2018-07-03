@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace src\model;
 
 use src\service\l;
@@ -9,6 +9,7 @@ class Plant extends Base_model
 
 	protected $required = [ "serial"];
 	protected $limit = 10;
+
 
 	public function __construct(Request $request, Plantdata $plantdata)
 	{
@@ -43,9 +44,8 @@ class Plant extends Base_model
 	// limit 1
 
 
-	public function getPlantData($plant, $params)
+	public function getPlantData(object $plant, array $params) : object
 	{
-
 		$data = $this->plantData->getByPlantId($plant->id);
 
 		$plant->data = $data;
@@ -55,7 +55,7 @@ class Plant extends Base_model
 
 
 
-	public function getPlants()
+	public function getPlants(array $options = []) : array
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT {$this->table}.*, location.name
@@ -64,12 +64,17 @@ class Plant extends Base_model
 					ORDER BY serial
 					LIMIT {$this->limit}";
 
+
+		if (!empty($options['offset']) && is_numeric($options['offset'])) {
+			$sql .= " OFFSET {$options['offset']}";
+		}
+
 		$plants = $this->db->fetchAll($sql);
 
 		return $plants;
 	}
 
-	public function getPlantById($id)
+	public function getPlantById(string $id) : object 
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT {$this->table}.*
@@ -83,7 +88,7 @@ class Plant extends Base_model
 		return $plants;
 	}
 
-	public function getPlantBySerial($params)
+	public function getPlantBySerial(array $params) : object
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT  {$this->table}.* FROM {$this->table} WHERE {$this->table}.serial = :serial";

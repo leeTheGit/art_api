@@ -14,6 +14,7 @@ abstract class Base_model
 	protected $data_view;
 	protected $table;
 	protected $required;
+	protected $offset;
 
 	public function __construct(\src\router\Request $request)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;

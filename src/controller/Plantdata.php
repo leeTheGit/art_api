@@ -19,7 +19,7 @@ class Plantdata extends Base_controller
 	}
 
 
-	public function get($input)
+	public function get(array $input)
 	{
 
 		$resource 	= $this->getResourceFromUrl();
@@ -38,15 +38,40 @@ class Plantdata extends Base_controller
 	}
 
 
-	public function put($input)
+	public function put(array $input)
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-		return "You're not allowed to do that.";
+		l::og($input);
+		// throw new \Exception($error);
+		
 
+		$result = False;
+		
+		$accepts = [
+			'height' 		=> null,
+			'location'		=> null,
+			"user_id"		=> null,
+			"notes" 		=> null,
+			"ph"      		=> null,
+			'conductivity' 	=> null,
+			'temperature' 	=> null,
+			"humidity"		=> null,
+			"lux" 			=> null,
+			"light_hours" 	=> null,
+			"health"      	=> null,
+		];
+
+		$accepts = array_intersect_key($accepts, $input);
+		$this->set_input_defaults($accepts, $input);
+		if (!empty($input)) {
+			$result = $this->model->update($resource['id'], $input);
+		}
+
+		return $result;
 	}
 
-	public function post($input)
+	public function post(array $input)
 	{
 
 		$default_values = [

@@ -1,5 +1,6 @@
 <?php
 namespace src\controller;
+use src\service\l;
 
 /**
 
@@ -34,7 +35,7 @@ class AccessControl
 	function checkAuthLevel()
 	{
 		$access = array();
-		// l::og()
+
 		//checks a request against the current users access and retursn true or false
 		// if ($credentials->groupaccess == 'full') { //internal users
 		switch ($this->user->access) {

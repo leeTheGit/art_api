@@ -19,16 +19,17 @@ class Plant extends Base_controller
 	}
 
 
-	public function get($params)
+	public function get(array $params)
 	{
 		$resource 	= $this->getResourceFromUrl();
 
 		$accepts = [
 			"location" 		=> NULL,
-			"serial"        => False,
-			"room" 			=> False,
 			"section"		=> False,
+			"serial"        => False,
+			"offset"  		=> NULL,
 			"limit"			=> 20,
+			"room" 			=> False,
 			"data"          => False,
 		];
 
@@ -37,8 +38,6 @@ class Plant extends Base_controller
 		if ($resource['id']) {
 
 			$plant = $this->model->getPlantById($resource['id']);
-
-			// return $plant;
 
 		}  else if (!empty( $params['serial'] ) ) {
 			
@@ -55,15 +54,14 @@ class Plant extends Base_controller
 
 			return $plant;
 		
-		} else {
+		} 
 		
-			return $plant;
-		}
+		return $plant;
 
 	}
 
 
-	public function put($input)
+	public function put(array $input)
 	{
 
 		$resource 	= $this->getResourceFromUrl();
@@ -91,7 +89,7 @@ class Plant extends Base_controller
 
 	}
 
-	public function post($input)
+	public function post(array $input)
 	{
 		// \src\service\l::og($input);
 		// $resource 	= $this->getResourceFromUrl();
