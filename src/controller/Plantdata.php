@@ -73,7 +73,7 @@ class Plantdata extends Base_controller
 
 	public function post(array $input)
 	{
-
+		l::og($this->auth_user);
 		$default_values = [
 			"plant_id"		=> false,
 			"height"		=> false,
@@ -87,6 +87,7 @@ class Plantdata extends Base_controller
 			"lux"			=> false,
 			"light_hours"	=> false,
 			"health"		=> false,
+			"user_id"       => $this->auth_user->userid,
 		];
 
 		$this->set_input_defaults($default_values, $input);
@@ -104,7 +105,7 @@ class Plantdata extends Base_controller
 
 		if ($this->auth_user->access == 'admin' && !empty($resource['id'])) {
 
-			$delete = $this->model->delete($resource['id']);
+			$delete = $this->model->delete($resource['id'], true);
 
 			return $delete;
 		}

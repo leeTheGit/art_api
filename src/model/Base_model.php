@@ -79,13 +79,26 @@ abstract class Base_model
 		return $arr3;
 	}
 
-	public function delete($id)
+	public function delete($id, $store = False)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+
+		if ($store) {
+			$row =  $this->db->fetch("SELECT * FROM {$this->table} WHERE id = :id", ["id"=>$id]);
+			$row = json_encode($row);
+
+			$params = [
+				"tablename" => $this->table,
+				"content" => $row,
+				"user_id" => $this->user
+			];
+
+			$this->create($params, 'deleted');
+		}
 
 		return $this->db->execute('DELETE FROM ' . $this->table . ' WHERE id = :id', array("id"=>$id));
 	}
 
-	public function update($id, $data, $permitted_columns = array())
+	public function update(string $id, array $data, array $permitted_columns = array())
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
 		$this->clearCache($id);
@@ -133,22 +146,26 @@ abstract class Base_model
 		return false;
 	}
 
-	public function create($data)
+	public function create( array $data, string $table = null)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		l::og('creating');
+		
+		if (is_null($table)) {
+			$table = $this->table;	
+			$permitted_columns = !empty($this->data_view['edit']) ? array_intersect_key($this->getColumns(), array_flip($this->data_view['edit'])) : $this->getColumns();
+			$required = $this->required ? array_flip($this->required) : [];
 
-		$required = $this->required ? array_flip($this->required) : array();
+		}
 
-		$permitted_columns = !empty($this->data_view['edit']) ? array_intersect_key($this->getColumns(), array_flip($this->data_view['edit'])) : $this->getColumns();
-		l::og($permitted_columns);
-		$data = (array)$data;
-		l::og($data);
-		if ( !array_diff_key($required, $data) ) {
-			l::og('here');
-			$params = array_intersect_key( $data, array_merge( $permitted_columns, $required ) );
-			l::og($params);
-			$sql = 'INSERT INTO ' . $this->table . ' ';
+		$params = (array)$data;
+
+		if ( !array_diff_key($required, $params) ) {
+
+			if ($table === $this->table) {
+				$params = array_intersect_key( $data, array_merge( $permitted_columns, $required ) );
+			}
+
+			$sql = 'INSERT INTO ' . $table . ' ';
 			$keys = '(';
 			$values = 'VALUES (';
 			foreach (array_keys($params) as $key) {
@@ -162,8 +179,8 @@ abstract class Base_model
 			$values .= ')';
 			$sql .= $keys . $values;
 			$sql = str_replace(", )", ")", $sql);
-			l::og($sql);
-			l::og($params);
+			// l::og($sql);
+			// l::og($params);
 
 			$create = $this->db->insert($sql, $params);
 
@@ -178,7 +195,7 @@ abstract class Base_model
 			return $create;
 		} else {
 			l::og('required colimn missing');
-			return "Required column missing for " . $this->table;
+			return "Required column missing for " . $table;
 		}
 		return False;
 	}
