@@ -21,7 +21,6 @@ class Plant extends Base_controller
 
 	public function get($params)
 	{
-
 		$resource 	= $this->getResourceFromUrl();
 
 		$accepts = [
@@ -34,25 +33,32 @@ class Plant extends Base_controller
 		];
 
 		$this->set_input_defaults($accepts, $params);
-		l::og($resource);
+
 		if ($resource['id']) {
+
 			$plant = $this->model->getPlantById($resource['id']);
-			l::og($plant);
 
-		} 
-		
-		else if (!empty( $params['serial'] ) ) {
-			$plant2 = $this->model->getPlantBySerial($params);
-		}
+			// return $plant;
 
-		if (!empty($params['data']) && $params['data'] === true) {
-			$plant = $this->model->getPlantData($plant, $params);
-			return $plant;
+		}  else if (!empty( $params['serial'] ) ) {
+			
+			$plant = $this->model->getPlantBySerial($params);
+	
 		} else {
-			return $plant;
+
+			$plant = $this->model->getPlants();
 		}
 
-		return $this->model->getPlants();
+		if (!empty($params['data']) && $params['data'] == true) {
+			
+			$plant = $this->model->getPlantData($plant, $params);
+
+			return $plant;
+		
+		} else {
+		
+			return $plant;
+		}
 
 	}
 
@@ -61,7 +67,7 @@ class Plant extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-
+		l::og($input);
 		// throw new \Exception($error);
 		
 
@@ -71,12 +77,12 @@ class Plant extends Base_controller
 			'serial' 		=> null,
 			'mortality'		=> null,
 			"manager_id"	=> null,
-			"life_cycle" 	=> null
+			"life_cycle" 	=> null,
+			"location"      => null,
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
-
 		if (!empty($input)) {
 			$result = $this->model->update($resource['id'], $input);
 		}

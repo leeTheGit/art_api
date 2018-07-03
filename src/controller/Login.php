@@ -56,7 +56,6 @@ class Login
 					LEFT JOIN groups ON groups.id = users.usergroup
 					WHERE users.password = crypt(:password, users.password)
 					AND users.username = :user";
-
 			$params = ["password" => $this->server['PHP_AUTH_PW'], "user" => $this->server['PHP_AUTH_USER']];
 		}
 

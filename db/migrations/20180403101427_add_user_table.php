@@ -34,7 +34,7 @@ class AddUserTable extends AbstractMigration
         $group = $this->fetchRow("SELECT id from groups WHERE name = 'Arta'");
         $groupid = $group['id'];
         $sql = "INSERT INTO users (firstname, lastname, username, password, usergroup, access)
-        VALUES ('bugs', 'bunny', 'bugs', crypt('artadb', gen_salt('bf')), '".$groupid."', 'full')";
+        VALUES ('bugs', 'bunny', 'bugs', crypt('artadb', gen_salt('bf')), '".$groupid."', 'admin')";
         $this->execute($sql);
     }
 

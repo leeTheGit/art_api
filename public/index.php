@@ -50,7 +50,7 @@ try { // real hard little API!!
 			Login the user
 		*/
 
-		l::og('logging in');
+		// l::og('logging in');
 
 	$login = $di->create(NS_CONT.'\Login');
 
@@ -97,7 +97,7 @@ try { // real hard little API!!
 } catch( Exception $e ) {
 
 	// \src\service\l::og($e->getMessage());
-
+	// exit();
 	exit(json_encode( 
 		[
 			"error"   => $e->getMessage(),

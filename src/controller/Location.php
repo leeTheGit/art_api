@@ -24,6 +24,7 @@ class Location extends Base_controller
 		
 		$accepts = [
 			"name" => False,
+			"room" => False
 		];
 
 		$this->set_input_defaults($accepts, $input);
@@ -36,6 +37,9 @@ class Location extends Base_controller
 			return $this->model->getLocationByName($input['name']);
 		}
 
+		if (!empty( $input['room'] ) ) {
+			return $this->model->getLocationsByRoom($input['room']);
+		}
 
 		return $this->model->getLocations();
 
@@ -48,17 +52,23 @@ class Location extends Base_controller
 
 		$resource 	= $this->getResourceFromUrl();
 
-		// throw new \Exception($error);
-	
+		// l::og($resource);
+
 		$result = False;
 
 		$accepts = [
 			'name' 		=> null,
-			'rank'		=> null
+			'rank'		=> null,
+			'room_id'   => null,
+			'old_rank'  => null
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
+		l::og($input);
+		if (!empty($input['rank'])) {
+			$result = $this->model->updateLocationRank($resource['id'], $input['rank'], $input['old_rank']);
+		}
 
 		if (!empty($input)) {
 			$result = $this->model->update($resource['id'], $input);
@@ -70,6 +80,7 @@ class Location extends Base_controller
 	public function post(array $input = [])
 	{
 		try {
+			// l::og($input);
 			return $this->model->addLocation($input);
 		}
 		catch(Exception $e) {

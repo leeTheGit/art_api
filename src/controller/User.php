@@ -2,6 +2,7 @@
 namespace src\controller;
 
 use src\router\Request;
+use src\service\l;
 
 class User extends Base_controller
 {
@@ -22,13 +23,12 @@ class User extends Base_controller
 
 		$resource 	= $this->getResourceFromUrl();
 
-		$accepts = ['group' 		=> null,
-					];
+		$urlParameters = [
+			'group' => null,
+		];
 
-		$this->set_input_defaults($accepts, $input);
-
-		$races = array();
-
+		$this->set_input_defaults($urlParameters, $input);
+		l::og($this->auth_user);
 		if (empty($resource['id'])) {
 			if ($this->auth_user->access != 'admin') { //if user is not admin, they can see only themselves
 
@@ -111,10 +111,12 @@ class User extends Base_controller
 
 	public function post($input)
 	{
+		l::og('in the user post controller');
+		l::og($input);
 		$resource 	= $this->getResourceFromUrl();
 
 		$defaults = [
-			'name' 		=> false,
+			'username' 	=> false,
 			'password' 	=> false,
 			'group'     => false,
 			'access' 	=> false,
@@ -122,14 +124,14 @@ class User extends Base_controller
 
 		$this->set_input_defaults($defaults, $input);
 
-		\src\service\l::og($this->auth_user);
+		l::og($this->auth_user);
 		
 
-		if ($this->auth_user->access == 'admin' && !empty($input['group'])) {
-
+		if ($this->auth_user->access == 'admin' && !empty($input['groupid'])) {
+			l::og('yeah admin user!');
 			if ($input['group'] != 'self') { //full admins create users anywhere
-
-				return $this->users->createUser($input['group'], $input);
+				l::og('adding user now');
+				return $this->users->createUser($input['groupid'], $input);
 			}
 
 			if ($input['group'] == 'self') { //non full admins can only create users in their group

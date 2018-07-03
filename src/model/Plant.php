@@ -8,7 +8,7 @@ class Plant extends Base_model
 {
 
 	protected $required = [ "serial"];
-
+	protected $limit = 10;
 
 	public function __construct(Request $request, Plantdata $plantdata)
 	{
@@ -17,8 +17,8 @@ class Plant extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "serial", "mortality"],
-		'edit' 	  => [ "serial", "mortality"]
+		'default' => [ "serial", "mortality", "location"],
+		'edit' 	  => [ "serial", "mortality", "location"]
 	);
 
 
@@ -45,12 +45,12 @@ class Plant extends Base_model
 
 	public function getPlantData($plant, $params)
 	{
-		l::og('getting plant data');
+
 		$data = $this->plantData->getByPlantId($plant->id);
-		l::og($data);
+
 		$plant->data = $data;
+
 		return $plant;
-		l::og($data);
 	}
 
 
@@ -58,12 +58,13 @@ class Plant extends Base_model
 	public function getPlants()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  {$this->table}.*
-					FROM {$this->table} 
-					ORDER BY serial";
+		$sql = "SELECT {$this->table}.*, location.name
+					FROM {$this->table}
+					LEFT JOIN location on {$this->table}.location = location.id
+					ORDER BY serial
+					LIMIT {$this->limit}";
 
 		$plants = $this->db->fetchAll($sql);
-
 
 		return $plants;
 	}
@@ -71,12 +72,11 @@ class Plant extends Base_model
 	public function getPlantById($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  {$this->table}.*
+		$sql = "SELECT {$this->table}.*
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		l::og($sql);
-		l::og($params);
+
 		$plants = $this->db->fetch($sql, $params);
 
 

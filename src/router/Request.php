@@ -22,7 +22,6 @@ class Request
     {
         $this->method    = strtolower( $_SERVER['REQUEST_METHOD']);
         $this->uri       = rawurldecode( $_SERVER['REQUEST_URI'] );
-        $this->data      = $this->getData();
         $this->db        = $db;
         $this->mc        = $mc;
         $this->auth_user = $auth_user;
@@ -30,14 +29,13 @@ class Request
         $this->di        = $di;
         $this->date      = new \DateTime('now');
         $this->date->setTime(23, 59, 59);
+        $this->headers   = apache_request_headers();
+        $this->data      = $this->getData();
     }
 
 
     public function getData()
     {
-        l::og('getting data');
-        $headers = getallheaders();
-
         switch ($this->method)
         {
             case 'get':
@@ -49,8 +47,11 @@ class Request
             case 'put':
                 $data = file_get_contents('php://input') ?? '';
 
-                $result = array();
-                parse_str($data, $result);
+                if ($this->headers['Content-Type'] == "application/x-www-form-urlencoded" ) {
+                    $result = [];
+                    parse_str($data, $result);
+                }
+
                 return $result;
 
             case 'delete':
@@ -63,8 +64,6 @@ class Request
 
     public function process()
     {
-        l::og('processing');
-        l::og($_POST);
         $result = [];
 
         $urlArr = parse_url( $this->uri );
@@ -82,7 +81,7 @@ class Request
         $time_start = microtime(true);
 
         if (!class_exists($class)) {
-            header('HTTP/1.0 404 Not found');
+            http_response_code(404);
             throw new \Exception('Resource does\'t exist');
         }
 
@@ -90,7 +89,7 @@ class Request
 
 
         if (!method_exists($controller, $this->method)) {
-            header('HTTP/1.0 400 Bad request');
+            http_response_code(400);
             throw new \Exception('Action is invalid');
         }
 
@@ -114,7 +113,7 @@ class Request
             if (!DEBUG) {
                 header('content-type: application/json; charset=utf-8');
             }
-
+            // l::og($result);
             exit( json_encode($result) );
         }
 

@@ -117,6 +117,8 @@ abstract class Base_model
 
 			$sql .= "WHERE id = :id";
 			$sql = str_replace(", WHERE", " WHERE", $sql);
+			// l::og($sql);
+			// l::og($params);
 
 			$result = $this->db->execute($sql, $params);
 			if (!$result) {
@@ -133,20 +135,18 @@ abstract class Base_model
 	public function create($data)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		// if ($this->table === 'plantdata') {
-		// 	l::og($data);
-		// }
-		
+		l::og('creating');
+
 		$required = $this->required ? array_flip($this->required) : array();
 
 		$permitted_columns = !empty($this->data_view['edit']) ? array_intersect_key($this->getColumns(), array_flip($this->data_view['edit'])) : $this->getColumns();
-
+		l::og($permitted_columns);
 		$data = (array)$data;
-
+		l::og($data);
 		if ( !array_diff_key($required, $data) ) {
-
+			l::og('here');
 			$params = array_intersect_key( $data, array_merge( $permitted_columns, $required ) );
-
+			l::og($params);
 			$sql = 'INSERT INTO ' . $this->table . ' ';
 			$keys = '(';
 			$values = 'VALUES (';
@@ -161,7 +161,8 @@ abstract class Base_model
 			$values .= ')';
 			$sql .= $keys . $values;
 			$sql = str_replace(", )", ")", $sql);
-
+			l::og($sql);
+			l::og($params);
 
 			$create = $this->db->insert($sql, $params);
 
@@ -175,6 +176,7 @@ abstract class Base_model
 			}
 			return $create;
 		} else {
+			l::og('required colimn missing');
 			return "Required column missing for " . $this->table;
 		}
 		return False;

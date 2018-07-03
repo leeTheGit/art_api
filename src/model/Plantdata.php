@@ -37,16 +37,16 @@ class Plantdata extends Base_model
 
 	public function getByPlantId($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		
+
 		$sql = "SELECT plantdata.* 
 					FROM plantdata 
 					WHERE plant_id = :id
 					ORDER BY created_at DESC";
 		$params = ["id" => $id];
-		l::ogsql($sql, $params);
-		$plants = $this->db->fetchAll($sql, $params);
-		l::og($plants);
 
+		$plants = $this->db->fetchAll($sql, $params);
+
+		
 		return $plants;
 	}
 
