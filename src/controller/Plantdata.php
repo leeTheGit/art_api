@@ -60,6 +60,7 @@ class Plantdata extends Base_controller
 			"lux" 			=> null,
 			"light_hours" 	=> null,
 			"health"      	=> null,
+			"time"  		=> null
 		];
 
 		$accepts = array_intersect_key($accepts, $input);

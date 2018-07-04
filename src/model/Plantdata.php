@@ -17,8 +17,8 @@ class Plantdata extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "plant_id", "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health"],
-		'edit' 	  => [ "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health"],
+		'default' => [ "plant_id", "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time"],
+		'edit' 	  => [ "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time"],
 	);
 
 	public function getById($id)
@@ -41,7 +41,7 @@ class Plantdata extends Base_model
 		$sql = "SELECT plantdata.* 
 					FROM plantdata 
 					WHERE plant_id = :id
-					ORDER BY created_at DESC";
+					ORDER BY time DESC";
 		$params = ["id" => $id];
 
 		$plants = $this->db->fetchAll($sql, $params);
