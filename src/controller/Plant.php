@@ -19,7 +19,7 @@ class Plant extends Base_controller
 	}
 
 
-	public function get(array $params)
+	public function get(array $params = [])
 	{
 		$resource 	= $this->getResourceFromUrl();
 

@@ -6,35 +6,37 @@ use src\router\Request;
 use src\controller;
 use src\service\l;
 
-class TestLocation extends Test
+class TestRoomData extends Test
 {
 
 	public $id;
 
-	private $data = [
-		["name" => "TEST_orange"],
-		["name" => "TEST_red"],
-		["name" => "TEST_green"],
-	];
-	
-
+    private $data = [
+        ["temperature" => "40", "humidity" => "23" ],
+        ["temperature" => "50", "humidity" => "12" ],
+        ["temperature" => "12", "humidity" => "34" ],  
+    ];
 
 	public function __construct(Request $request)
 	{
 
 		$this->request = $request;
-		$this->resourceName = "Location";
+		$this->resourceName = "roomdata";
 	}		
 
 
-	protected function testPost()
+	protected function testPost($room_id)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName) );
-
+        l::og($room_id);
+        foreach ($this->data as &$data) {
+            $data['room_id'] = $room_id;
+        }
+        l::og($data);
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			$post = $request->post($this->data[0]);

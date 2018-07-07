@@ -88,7 +88,7 @@ class Plant extends Base_model
 		return $plants;
 	}
 
-	public function getPlantBySerial(array $params) : object
+	public function getPlantBySerial(array $params) : ?object
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT  {$this->table}.* FROM {$this->table} WHERE {$this->table}.serial = :serial";
@@ -96,7 +96,7 @@ class Plant extends Base_model
 
 		$plant = $this->db->fetch($sql, $params);
 
-		return $plant;
+		return $plant ? $plant : null;
 	}
 
 

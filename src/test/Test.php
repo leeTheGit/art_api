@@ -16,8 +16,6 @@ class Test extends Basetest
 	public function __construct(Request $request)
 	{
 
-		require_once 'Testdata.php';
-
 		$this->db 				= $request->db;
 		parent::__construct($this->db);
 		// $this->mc 				= $request->mc;
@@ -28,19 +26,13 @@ class Test extends Basetest
 
 
 		// TEST OBJECTS
-		$this->TestLocation  = $this->request->di->create(NS_TEST.'\TestLocation');
-		$this->TestPlant 	 = $this->request->di->create(NS_TEST.'\TestPlant');
-		$this->TestRoom 	 = $this->request->di->create(NS_TEST.'\TestRoom');
-		$this->TestPlantData = $this->request->di->create(NS_TEST.'\TestPlantData');
-		$this->TestLifecycle = $this->request->di->create(NS_TEST.'\TestLifecycle');
+		$this->Location  	 = $this->request->di->create(NS_TEST.'\TestLocation');
+		$this->Plant 	 	 = $this->request->di->create(NS_TEST.'\TestPlant');
+		$this->Room 	 	 = $this->request->di->create(NS_TEST.'\TestRoom');
+		$this->RoomData 	 = $this->request->di->create(NS_TEST.'\TestRoomData');
+		$this->plantData 	 = $this->request->di->create(NS_TEST.'\TestPlantData');
+		$this->Lifecycle 	 = $this->request->di->create(NS_TEST.'\TestLifecycle');
 
-
-		// TEST DATA
-		$this->testLocations	= $locations;
-		$this->testRooms		= $rooms;
-		$this->testPlants       = $plants;
-		$this->testPlantData    = $plantData;
-		$this->lifecycles       = $lifecycles;
 	}
 
 	public function Get() //RUN
@@ -50,44 +42,51 @@ class Test extends Basetest
 
 		$this->ClearTestData();
 
-		$this->TestLocation->testPost($this->testLocations);
-		$this->TestLocation->testGetAll();
-		$this->TestLocation->testPut(["name" => "TEST_green" ]);
-		$this->TestLocation->testGet_byId();
+		$this->Location->testPost();
+		$this->Location->testGetAll();
+		$this->Location->testPut(["name" => "TEST_green" ]);
+		$this->Location->testGet_byId();
 
 
-		$this->TestRoom->testPost($this->testRooms);
-		$this->TestRoom->testGetAll();
-		$this->TestRoom->testPut(["name" => "TEST_darkroom" ]);
-		$this->TestRoom->testGet_byId();
+		$this->Room->testPost();
+		$this->Room->testGetAll();
+		$this->Room->testPut(["name" => "TEST_darkroom" ]);
+		$this->Room->testGet_byId();
 
 
-		$this->TestLifecycle->testPost($this->lifecycles);
-		$this->TestLifecycle->testGetAll();
-		$this->TestLifecycle->testPut(["name" => "TEST_darkLifecycle" ]);
-		$this->TestLifecycle->testGet_byId();
-
-		$this->TestPlant->testPost($this->testPlants);
-		// $this->TestPlant->testGetAll();
-		// $this->TestPlant->testPut(["name" => "TEST_green" ]);
-		$this->TestPlant->testGet_byId();
-
-
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[0]);
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[1]);
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[2]);
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[3]);
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[4]);
-		$this->TestPlantData->testPost($this->TestPlant->id[1], $this->TestLocation->id, $this->testPlantData[5]);
-
-		$this->TestPlant->testGet_byIdWithData(["data"=> true, 'limit' => 4]);
+		$this->RoomData->testPost($this->Room->roomId);
+		// $this->RoomData->testGetAll();
+		$this->RoomData->testPut(["temperature" => "12", "humidity" => "5" ]);
+		$this->RoomData->testGet_byId();
 
 
 
-		$this->TestLocation->testDelete();
-		$this->TestPlant->testDelete();
-		$this->TestRoom->testDelete();
-		$this->TestLifecycle->testDelete();
+		$this->Lifecycle->testPost();
+		$this->Lifecycle->testGetAll();
+		$this->Lifecycle->testPut(["name" => "TEST_darkLifecycle" ]);
+		$this->Lifecycle->testGet_byId();
+
+		$this->Plant->testPost($this->plants);
+		// $this->Plant->testGetAll();
+		// $this->Plant->testPut(["name" => "TEST_green" ]);
+		$this->Plant->testGet_byId();
+
+
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 0);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 1);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 2);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 3);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 4);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 5);
+
+		$this->Plant->testGet_byIdWithData(["data"=> true, 'limit' => 4]);
+
+
+
+		$this->Location->testDelete();
+		$this->Plant->testDelete();
+		$this->Room->testDelete();
+		$this->Lifecycle->testDelete();
 
 
 

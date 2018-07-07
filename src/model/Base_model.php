@@ -185,16 +185,19 @@ abstract class Base_model
 			$create = $this->db->insert($sql, $params);
 
 			if (!$create) {
-
-				l::og('Did NOT INSERT');
+				l::og('Did NOT INSERT for table ' . $table );
 				l::ogsql($sql, $params);
+
 				// l::og($sql);
 				// l::og($params);
 
 			}
 			return $create;
 		} else {
-			l::og('required colimn missing');
+			l::og('required column missing');
+			l::og($params);
+			l::og($required);
+
 			return "Required column missing for " . $table;
 		}
 		return False;

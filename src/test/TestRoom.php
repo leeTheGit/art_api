@@ -9,6 +9,19 @@ use src\service\l;
 class TestRoom extends Test
 {
 
+	private $data = [
+		[
+			"name" => "TEST_seedroom",
+		],
+		[
+			"name" => "TEST_growingroom",
+		],
+		[
+			"name" => "TEST_funroom",
+		],
+	];
+	
+
 	public function __construct(Request $request)
 	{
 		$this->request = $request;
@@ -16,7 +29,7 @@ class TestRoom extends Test
 	}		
 
 
-	protected function testPost($data)
+	protected function testPost()
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
 
@@ -26,12 +39,12 @@ class TestRoom extends Test
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $request->post($data[0]);
+			$post = $request->post($this->data[0]);
 
 			$this->roomId = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 
-			$post = $request->post($data[1]);
+			$post = $request->post($this->data[1]);
 
 			
 			$this->roomId2 = $post->id;
@@ -40,7 +53,7 @@ class TestRoom extends Test
 			$this->assertRegExp(self::UUID, $post->id);
 			
 
-			$post = $request->post($data[0]);
+			$post = $request->post($this->data[0]);
 
 			$this->IsFalse($post, $method);
 

@@ -74,7 +74,7 @@ class Plantdata extends Base_controller
 
 	public function post(array $input)
 	{
-		l::og($this->auth_user);
+
 		$default_values = [
 			"plant_id"		=> false,
 			"height"		=> false,

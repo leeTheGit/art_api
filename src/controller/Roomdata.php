@@ -23,7 +23,7 @@ class Roomdata extends Base_controller
 		$resource 	= $this->getResourceFromUrl();
 
         $accepts = [
-            "room" => false,
+            "room_id" => false,
         ];
 
 		$this->set_input_defaults($accepts, $queryParams);
@@ -37,7 +37,7 @@ class Roomdata extends Base_controller
 		}
 
 
-		return $this->model->getRoomLocations();
+		return False;
 
 
 	}
@@ -52,7 +52,6 @@ class Roomdata extends Base_controller
 
 		$accepts = [
 			'room_id' 		=> null,
-			'location_id'   => null,
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
@@ -68,7 +67,7 @@ class Roomdata extends Base_controller
 
 	public function post(array $input = [])
 	{
-		l::og('posting to room location');
+		l::og('posting to roomdata');
 		l::og($input);
 		return $this->model->create($input);
 
