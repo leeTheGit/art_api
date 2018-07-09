@@ -76,19 +76,19 @@ class Plantdata extends Base_controller
 	{
 		l::og($this->auth_user);
 		$default_values = [
-			"plant_id"		=> false,
-			"height"		=> false,
+			"conductivity"	=> false,
+			"light_hours"	=> false,
 			"location"		=> false,
 			"user_id"		=> false,
+			"height"		=> false,
 			"notes"			=> false,
-			"ph"			=> false,
-			"conductivity"	=> false,
 			"temperature"	=> false,
+			"plant_id"		=> false,
 			"humidity"		=> false,
-			"lux"			=> false,
-			"light_hours"	=> false,
-			"health"		=> false,
 			"user_id"       => $this->auth_user->userid,
+			"health"		=> false,
+			"lux"			=> false,
+			"ph"			=> false,
 		];
 
 		$this->set_input_defaults($default_values, $input);
