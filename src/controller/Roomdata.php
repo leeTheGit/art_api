@@ -51,7 +51,7 @@ class Roomdata extends Base_controller
 		$result = False;
 
 		$accepts = [
-			'room_id' 		=> null,
+			'room_id' => null,
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
@@ -67,8 +67,8 @@ class Roomdata extends Base_controller
 
 	public function post(array $input = [])
 	{
-		l::og('posting to roomdata');
-		l::og($input);
+		// l::og('posting to roomdata');
+		// l::og($input);
 		return $this->model->create($input);
 
 	}

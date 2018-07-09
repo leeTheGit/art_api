@@ -16,14 +16,7 @@ class Test extends Basetest
 	public function __construct(Request $request)
 	{
 
-		$this->db 				= $request->db;
-		parent::__construct($this->db);
-		// $this->mc 				= $request->mc;
-		$this->auth_user        = $request->auth_user;
-		$this->request 			= $request;
-		// $this->cacheRequest     = clone $this->request;
-
-
+		parent::__construct($request);
 
 		// TEST OBJECTS
 		$this->Location  	 = $this->request->di->create(NS_TEST.'\TestLocation');
@@ -44,19 +37,21 @@ class Test extends Basetest
 
 		$this->Location->testPost();
 		$this->Location->testGetAll();
-		$this->Location->testPut(["name" => "TEST_green" ]);
+		$this->Location->testPut();
 		$this->Location->testGet_byId();
 
 
 		$this->Room->testPost();
 		$this->Room->testGetAll();
-		$this->Room->testPut(["name" => "TEST_darkroom" ]);
+		$this->Room->testPut();
 		$this->Room->testGet_byId();
 
 
-		$this->RoomData->testPost($this->Room->roomId);
+		$this->RoomData->testPost($this->Room->id[0], "seed");
+		$this->RoomData->testPost($this->Room->id[1], "grow");
+		$this->RoomData->testPost($this->Room->id[2], "fun");
 		// $this->RoomData->testGetAll();
-		$this->RoomData->testPut(["temperature" => "12", "humidity" => "5" ]);
+		$this->RoomData->testPut();
 		$this->RoomData->testGet_byId();
 
 
@@ -72,12 +67,7 @@ class Test extends Basetest
 		$this->Plant->testGet_byId();
 
 
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 0);
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 1);
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 2);
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 3);
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 4);
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id, 5);
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id);
 
 		$this->Plant->testGet_byIdWithData(["data"=> true, 'limit' => 4]);
 
@@ -86,6 +76,7 @@ class Test extends Basetest
 		$this->Location->testDelete();
 		$this->Plant->testDelete();
 		$this->Room->testDelete();
+		$this->RoomData->testDelete();
 		$this->Lifecycle->testDelete();
 
 
@@ -108,93 +99,63 @@ class Test extends Basetest
 		$request 	= "delete: /location/:name";
 		try {
 
-			$this->request->parts	= array("racing-api/", "plant");
-			$plant = $this->request->di->create('src\controller\Plant');
-			$get = $plant->get(["serial" => "TEST_2099-01-01_13"]);
 
-			$this->request->parts	= array("racing-api/", "plant", $get->id);
-			$plant = $this->request->di->create('src\controller\Plant');
-			$get = $plant->delete();
+			$plants = ["TEST_2099-01-01_13", "TEST_2099-01-01_14", "TEST_2099-01-01_15"];
+			foreach( $plants as $plant) {
 
-
-
-			$rooms = ["TEST_growingroom", "TEST_darkroom", "TEST_seedroom"];
-			foreach( $rooms as $room) {
-				$this->request->parts	= array("racing-api/", "room");
-				$roomModel = $this->request->di->create('src\controller\Room');
-				$get = $roomModel->get(["name" => $room]);
-
-				$this->request->parts	= array("racing-api/", "room", $get->id);
-				$roomModel = $this->request->di->create('src\controller\Room');
-				$roomModel->delete();
+				$this->request->parts	= array("racing-api/", "plant");
+				$resource = $this->request->di->create('src\controller\Plant');
+				$get = $resource->get(["serial" => $plant]);
+				if ($get) {
+					$this->request->parts	= array("racing-api/", "plant", $get->id);
+					$resource = $this->request->di->create('src\controller\Plant');
+					$get = $resource->delete();
+				}
 			}
 
 
-			$this->request->parts	= array("racing-api/", "location");
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->get(["name" => "TEST_green"]);
-
-			$this->request->parts	= array("racing-api/", "location", $get->id);
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->delete();
-
-
-			$this->request->parts	= array("racing-api/", "location");
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->get(["name" => "TEST_red"]);
-
-			$this->request->parts	= array("racing-api/", "location", $get->id);
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->delete();
+			$rooms = ["TEST_growingroom", "TEST_darkroom", "TEST_seedroom", "TEST_funroom"];
+			foreach( $rooms as $room) {
+				$this->request->parts	= array("racing-api/", "room");
+				$resource = $this->request->di->create('src\controller\Room');
+				$get = $resource->get(["name" => $room]);
+				if ($get) {
+					$this->request->parts	= array("racing-api/", "room", $get->id);
+					$resource = $this->request->di->create('src\controller\Room');
+					$resource->delete();
+				}
+			}
 
 
-			$this->request->parts	= array("racing-api/", "location");
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->get(["name" => "TEST_orange"]);
+			$locations = ["TEST_green", "TEST_red", "TEST_orange"];
+			foreach( $locations as $loc) {
+				$this->request->parts	= array("racing-api/", "location");
+				$resource = $this->request->di->create('src\controller\Location');
+				$get = $resource->get(["name" => $loc]);
+				if ($get) {
+					$this->request->parts	= array("racing-api/", "location", $get->id);
+					$resource = $this->request->di->create('src\controller\Location');
+					$get = $resource->delete();
+				}
+			}
 
-			$this->request->parts	= array("racing-api/", "location", $get->id);
-			$location = $this->request->di->create('src\controller\Location');
-			$get = $location->delete();
-
-
-
-
-
-			$this->request->parts	= array("racing-api/", "lifecycle");
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->get(["name" => "TEST_darkLifecycle"]);
-
-			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->delete();
-
-
-			$this->request->parts	= array("racing-api/", "lifecycle");
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->get(["name" => "TEST_youngin"]);
-
-			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->delete();
-
-
-			$this->request->parts	= array("racing-api/", "lifecycle");
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->get(["name" => "TEST_oldy"]);
-
-			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->delete();
+			
 
 
 
-			$this->request->parts	= array("racing-api/", "lifecycle");
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->get(["name" => "TEST_dead"]);
+			$lifes = ["TEST_seed", "TEST_darkLifecycle", "TEST_youngin", "TEST_oldy", "TEST_dead"];
+			foreach( $lifes as $life) {
+				$this->request->parts	= array("racing-api/", "lifecycle");
+				$resource = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+				$get = $resource->get(["name" => $life]);
+				if ($get) {
+					$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
+					$resource = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
+					$get = $resource->delete();
+				}
+			}	
 
-			$this->request->parts	= array("racing-api/", "lifecycle", $get->id);
-			$plant = $this->request->di->create(NS_CONT.'\\'.'Lifecycle');
-			$get = $plant->delete();
+
 
 
 

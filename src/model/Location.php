@@ -91,11 +91,13 @@ class Location extends Base_model
 
 	public function getLocationByName($name)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		
+
 		$sql = "SELECT  location.*
 					FROM location 
 					WHERE location.name = :name";
 		$params = ["name" => $name];
+		l::og($sql);
+		l::og($params);
 		$data = $this->db->fetch($sql, $params);
 
 		return $data;

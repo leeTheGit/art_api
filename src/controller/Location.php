@@ -20,6 +20,8 @@ class Location extends Base_controller
 
 	public function get(array $input = [])
 	{
+		l::og($input);
+
 		$resource 	= $this->getResourceFromUrl();
 		
 		$accepts = [
@@ -32,7 +34,6 @@ class Location extends Base_controller
 		if ($resource['id']) {
 			return $this->model->getLocationById($resource['id']);
 		}
-
 		if (!empty( $input['name'] ) ) {
 			return $this->model->getLocationByName($input['name']);
 		}

@@ -10,10 +10,11 @@ Abstract class BaseTest extends \PHPUnit\Framework\TestCase
 	CONST UUID = '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/';
 
 
-	public function __construct($db)
+	public function __construct($request)
 	{
-		$this->db = $db;
-		
+		$this->db 			= $request->db;
+		$this->auth_user	= $request->auth_user;
+		$this->request		= $request;
 	}
 
 

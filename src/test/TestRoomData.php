@@ -9,12 +9,45 @@ use src\service\l;
 class TestRoomData extends Test
 {
 
-	public $id;
+	public $id = [];
 
     private $data = [
-        ["temperature" => "40", "humidity" => "23" ],
-        ["temperature" => "50", "humidity" => "12" ],
-        ["temperature" => "12", "humidity" => "34" ],  
+		"seed" => [
+			["temperature" => "40", "humidity" => "23" ],
+			["temperature" => "50", "humidity" => "12" ],
+			["temperature" => "12", "humidity" => "34" ],  
+			["temperature" => "4", "humidity"  => "2" ],  
+			["temperature" => "1", "humidity"  => "89" ],  
+			["temperature" => "16", "humidity" => "10" ],  
+			["temperature" => "17", "humidity" => "44" ],  
+			["temperature" => "23", "humidity" => "5" ],  
+			["temperature" => "30", "humidity" => "6" ],  
+			["temperature" => "40", "humidity" => "2" ],
+		],
+		"grow" => [
+			["temperature" => "23", "humidity" => "76" ],
+			["temperature" => "78", "humidity" => "34" ],
+			["temperature" => "76", "humidity" => "54" ],  
+			["temperature" => "54", "humidity" => "11" ],  
+			["temperature" => "13", "humidity" => "54" ],  
+			["temperature" => "90", "humidity" => "23" ],  
+			["temperature" => "56", "humidity" => "65" ],  
+			["temperature" => "78", "humidity" => "58" ],  
+			["temperature" => "45", "humidity" => "34" ],  
+			["temperature" => "34", "humidity" => "45" ],
+		],
+		"fun" => [
+			["temperature" => "32", "humidity" => "65" ],
+			["temperature" => "45", "humidity" => "67" ],
+			["temperature" => "86", "humidity" => "43" ],  
+			["temperature" => "34", "humidity" => "65" ],  
+			["temperature" => "87", "humidity" => "23" ],  
+			["temperature" => "24", "humidity" => "44" ],  
+			["temperature" => "25", "humidity" => "65" ],  
+			["temperature" => "75", "humidity" => "87" ],  
+			["temperature" => "36", "humidity" => "63" ],  
+			["temperature" => "75", "humidity" => "3" ],
+		]
     ];
 
 	public function __construct(Request $request)
@@ -25,33 +58,32 @@ class TestRoomData extends Test
 	}		
 
 
-	protected function testPost($room_id)
+	protected function testPost($room_id, $room)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName) );
-        l::og($room_id);
-        foreach ($this->data as &$data) {
-            $data['room_id'] = $room_id;
-        }
-        l::og($data);
+
+		$dataDate = \DateTime::createFromFormat('Y-m-d H:i:s', "2018-06-01" . '13:00:00');
+		// pprint($todayDate);
+		// pprint($dataDate->format('Y-m-d H:i:s'));
+
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $request->post($this->data[0]);
-			$this->id = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
+			foreach($this->data[$room] as $d) {
+				$d['room_id'] = $room_id;
+				$d['time'] = $dataDate->format('Y-m-d H:i:s');
+				$post = $request->post($d);
+				$this->id[] = $post->id;
+				$this->assertRegExp(self::UUID, $post->id);
+				$dataDate->modify( '+1 day' );
 
-			$post = $request->post($this->data[1]);
-			$this->id2 = $post->id;
-
-
-			$this->assertRegExp(self::UUID, $post->id);
+			}
 			
-
-			$post = $request->post($this->data[0]);
-
+			// pprint($this->id);
+			$post = $request->post($this->data["seed"][0]);
 			$this->IsFalse($post, $method);
 
 
@@ -69,14 +101,14 @@ class TestRoomData extends Test
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::fetch():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 
 			$get = $request->get();
-
-			$this->assertEquals('TEST_green', $get->name, $method);
+			$this->assertEquals(12, $get->temperature, $method);
+			$this->assertEquals(5, $get->humidity, $method);
 
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
@@ -86,16 +118,14 @@ class TestRoomData extends Test
 		}
 	}
 
-	protected function testPut($data)
+	protected function testPut()
 	{
 		echo '<h3 style="margin: 10px 0 0 0">PUT - '.$this->resourceName.'</h3>';
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
-		$params 	= [
-			"name" => "TEST_green"
-		];
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
+		$params = ["temperature" => "12", "humidity" => "5" ];
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -140,18 +170,13 @@ class TestRoomData extends Test
 		$method 	= $this->resourceName."::delete():";
 
 		try {
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
-
-
-
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id2);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
-
+			
+			foreach($this->id as $id) {
+				$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $id);
+				$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+				$del = $request->delete();
+				$this->IsFalse($del, $method);
+			}
 
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);

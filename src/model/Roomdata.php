@@ -14,8 +14,8 @@ class Roomdata extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "room_id", "temperature", "humidity"],
-		'edit' 	  => [ "room_id", "temperature", "humidity"],
+		'default' => [ "room_id", "temperature", "humidity", "time"],
+		'edit' 	  => [ "room_id", "temperature", "humidity", "time"],
 	);
 
 	public function getRoomData()
@@ -28,6 +28,20 @@ class Roomdata extends Base_model
 
 		return $location;
 	}
+
+	public function getRoomDataById($id)
+	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+		
+		$sql = "SELECT  {$this->table}.*
+					FROM {$this->table} 
+                    WHERE {$this->table}.id = :id
+                    ORDER BY created_at DESC";
+		$params = ["id" => $id];
+		$locations = $this->db->fetch($sql, $params);
+
+		return $locations;
+	}
+
 
 	public function getRoomDataByRoom($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;

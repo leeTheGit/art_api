@@ -9,6 +9,7 @@ use src\service\l;
 class TestPlantData extends Test
 {
 
+	public $id = [];
 
 	private $data = [
 
@@ -87,9 +88,6 @@ class TestPlantData extends Test
 	];
 
 
-
-	public $id;
-
 	public function __construct(Request $request)
 	{
 		$this->request = $request;
@@ -97,26 +95,28 @@ class TestPlantData extends Test
 	}		
 
 
-	protected function testPost($plantId, $locationId, $data_index)
+	protected function testPost($plantId, $locationId)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
-
-		$data = $this->data[$data_index];
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
 
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName));
 
-		$data['plant_id'] = $plantId;
-		$data['location'] = $locationId;
 
 		try {
-			$load = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $load->post($data);
-			$this->id = $post->id;
-
-			$this->assertRegExp(self::UUID, $post->id);
+			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+			
+			foreach($this->data as $d) {
+				$d['plant_id'] = $plantId;
+				$d['location'] = $locationId;
+		
+				$post = $request->post($d);
+				$this->id[] = $post->id;
+				$this->assertRegExp(self::UUID, $post->id);
+			}
+		
 
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);

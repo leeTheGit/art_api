@@ -9,23 +9,15 @@ use src\service\l;
 class TestLifeCycle extends Test
 {
 
-	public $id;
+	public $id = [];
 
 
 	private $data = [
 
-		[
-			"name" => "TEST_seed",
-		],
-		[
-			"name" => "TEST_youngin",
-		],
-		[
-			"name" => "TEST_oldy",
-		],
-		[
-			"name" => "TEST_dead",
-		]
+		["name" => "TEST_seed"],
+		["name" => "TEST_youngin"],
+		["name" => "TEST_oldy"],
+		["name" => "TEST_dead"]
 	];
 	
 
@@ -52,21 +44,29 @@ class TestLifeCycle extends Test
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			
-			$post = $request->post($this->data[0]);
-			$this->id = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
 
-			$post = $request->post($this->data[1]);
-			$this->id2 = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
+			foreach($this->data as $d) {
+				$post = $request->post($d);
+				$this->id[] = $post->id;
+				$this->assertRegExp(self::UUID, $post->id);
+			}
+
+
+			// $post = $request->post($this->data[0]);
+			// $this->id = $post->id;
+			// $this->assertRegExp(self::UUID, $post->id);
+
+			// $post = $request->post($this->data[1]);
+			// $this->id2 = $post->id;
+			// $this->assertRegExp(self::UUID, $post->id);
 			
-			$post = $request->post($this->data[2]);
-			$this->id3 = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
+			// $post = $request->post($this->data[2]);
+			// $this->id3 = $post->id;
+			// $this->assertRegExp(self::UUID, $post->id);
 
-			$post = $request->post($this->data[3]);
-			$this->id4 = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
+			// $post = $request->post($this->data[3]);
+			// $this->id4 = $post->id;
+			// $this->assertRegExp(self::UUID, $post->id);
 
 
 			$post = $request->post($this->data[0]);
@@ -87,7 +87,7 @@ class TestLifeCycle extends Test
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::fetch():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -110,7 +110,7 @@ class TestLifeCycle extends Test
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
 
 		
 		try {
@@ -156,31 +156,13 @@ class TestLifeCycle extends Test
 		$method 	= $this->resourceName."::delete():";
 
 		try {
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
 
-
-
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id2);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
-
-
-
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id3);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
-
-
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id3);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
-
+			foreach($this->id as $id) {
+				$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $id);
+				$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+				$del = $request->delete();
+				$this->IsFalse($del, $method);
+			}
 
 
 			$this->pass($method, $requestStr);

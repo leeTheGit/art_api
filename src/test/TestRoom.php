@@ -9,16 +9,12 @@ use src\service\l;
 class TestRoom extends Test
 {
 
+	public $id = [];
+
 	private $data = [
-		[
-			"name" => "TEST_seedroom",
-		],
-		[
-			"name" => "TEST_growingroom",
-		],
-		[
-			"name" => "TEST_funroom",
-		],
+		["name" => "TEST_seedroom"],
+		["name" => "TEST_growingroom"],
+		["name" => "TEST_funroom"],
 	];
 	
 
@@ -39,22 +35,16 @@ class TestRoom extends Test
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $request->post($this->data[0]);
-
-			$this->roomId = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
-
-			$post = $request->post($this->data[1]);
-
 			
-			$this->roomId2 = $post->id;
-
-
-			$this->assertRegExp(self::UUID, $post->id);
+			
+			foreach($this->data as $d) {
+				$post = $request->post($d);
+				$this->id[] = $post->id;
+				$this->assertRegExp(self::UUID, $post->id);
+			}
 			
 
 			$post = $request->post($this->data[0]);
-
 			$this->IsFalse($post, $method);
 
 
@@ -72,7 +62,7 @@ class TestRoom extends Test
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::fetch():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->roomId);
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -88,16 +78,14 @@ class TestRoom extends Test
 		}
 	}
 
-	protected function testPut($data)
+	protected function testPut()
 	{
 		echo '<h3 style="margin: 10px 0 0 0">PUT - '.$this->resourceName.'</h3>';
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->roomId);
-		$params 	= [
-			"name" => "TEST_darkroom"
-		];
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
+		$params = [ "name" => "TEST_darkroom" ];
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -141,17 +129,14 @@ class TestRoom extends Test
 		$method 	= $this->resourceName."::delete():";
 
 		try {
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->roomId);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
 
 
-
-			$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->roomId2);
-			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$del = $request->delete();
-			$this->IsFalse($del, $method);
+			foreach($this->id as $id) {
+				$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $id);
+				$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+				$del = $request->delete();
+				$this->IsFalse($del, $method);
+			}
 
 
 			$this->pass($method, $requestStr);

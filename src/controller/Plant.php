@@ -65,7 +65,7 @@ class Plant extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-		l::og($input);
+		// l::og($input);
 		// throw new \Exception($error);
 		
 
@@ -93,8 +93,8 @@ class Plant extends Base_controller
 	{
 		// \src\service\l::og($input);
 		// $resource 	= $this->getResourceFromUrl();
-		l::og('in the post for plant');
-		l::og($input);
+		// l::og('in the post for plant');
+		// l::og($input);
 
 		$defaults = [
 			'serial'    => false,
