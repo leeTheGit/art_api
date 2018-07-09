@@ -11,6 +11,27 @@ class TestLifeCycle extends Test
 
 	public $id;
 
+
+	private $data = [
+
+		[
+			"name" => "TEST_seed",
+		],
+		[
+			"name" => "TEST_youngin",
+		],
+		[
+			"name" => "TEST_oldy",
+		],
+		[
+			"name" => "TEST_dead",
+		]
+	];
+	
+
+
+
+
 	public function __construct(Request $request)
 	{
 
@@ -19,9 +40,10 @@ class TestLifeCycle extends Test
 	}		
 
 
-	protected function testPost($data)
+	protected function testPost()
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
+
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
@@ -30,24 +52,24 @@ class TestLifeCycle extends Test
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			
-			$post = $request->post($data[0]);
+			$post = $request->post($this->data[0]);
 			$this->id = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 
-			$post = $request->post($data[1]);
+			$post = $request->post($this->data[1]);
 			$this->id2 = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 			
-			$post = $request->post($data[2]);
+			$post = $request->post($this->data[2]);
 			$this->id3 = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 
-			$post = $request->post($data[3]);
+			$post = $request->post($this->data[3]);
 			$this->id4 = $post->id;
 			$this->assertRegExp(self::UUID, $post->id);
 
 
-			$post = $request->post($data[0]);
+			$post = $request->post($this->data[0]);
 			$this->IsFalse($post, $method);
 
 

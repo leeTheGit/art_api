@@ -74,7 +74,7 @@ class Plantdata extends Base_controller
 
 	public function post(array $input)
 	{
-		l::og($this->auth_user);
+
 		$default_values = [
 			"conductivity"	=> false,
 			"light_hours"	=> false,

@@ -6,7 +6,7 @@ use src\router\Request;
 
 class Roomdata extends Base_model
 {
-	protected $required = ['id', 'room_id'];
+	protected $required = ['room_id'];
 
 	public function __construct(Request $request)
 	{
@@ -14,8 +14,8 @@ class Roomdata extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "room_id", "location_id"],
-		'edit' 	  => [ "room_id", "location_id"],
+		'default' => [ "room_id", "temperature", "humidity"],
+		'edit' 	  => [ "room_id", "temperature", "humidity"],
 	);
 
 	public function getRoomData()
@@ -41,18 +41,6 @@ class Roomdata extends Base_model
 
 		return $locations;
 	}
-
-	// public function getRoomLocationByName($name)
-	// {	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		
-	// 	$sql = "SELECT {$this->table}.*
-	// 				FROM {$this->table} 
-	// 				WHERE {$this->table}.name = :name";
-	// 	$params = ["name" => $name];
-	// 	$data = $this->db->fetch($sql, $params);
-
-	// 	return $data;
-	// }
 
 
 }

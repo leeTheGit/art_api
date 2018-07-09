@@ -9,6 +9,85 @@ use src\service\l;
 class TestPlantData extends Test
 {
 
+
+	private $data = [
+
+		[
+			"height"        => "80",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "Fast growing seed",
+			"ph"            => "1",
+			"conductivity"  => "4",
+			"temperature"   => "34.9",
+			"humidity"      => "2",
+			"lux"           => '2.3',
+			"light_hours"   => '6.4',
+		],
+		[
+			"height"        => "30",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "Slow growing seed",
+			"ph"            => "2",
+			"conductivity"  => "3",
+			"temperature"   => "24.4",
+			"humidity"      => "5",
+			"lux"           => '1.3',
+			"light_hours"   => '4.4',
+		],
+		[
+			"height"        => "4",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "Weird green seed",
+			"ph"            => "1",
+			"conductivity"  => "2",
+			"temperature"   => "4.4",
+			"humidity"      => "5",
+			"lux"           => '3.3',
+			"light_hours"   => '2.4',
+		],
+		[
+			"height"        => "120",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "Came in a nice pouch",
+			"ph"            => "5",
+			"conductivity"  => "4",
+			"temperature"   => "34.4",
+			"humidity"      => "6",
+			"lux"           => '6.3',
+			"light_hours"   => '2.4',
+		],
+		[
+			"height"        => "159",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "Browny green color",
+			"ph"            => "7.8",
+			"conductivity"  => "56",
+			"temperature"   => "32.9",
+			"humidity"      => "64",
+			"lux"           => '6.1',
+			"light_hours"   => '8.4',
+		],
+		[
+			"height"        => "1462",
+			"location"      => "",
+			"plant_id"      => "",
+			"notes"         => "small and seedy",
+			"ph"            => "1",
+			"conductivity"  => "2",
+			"temperature"   => "3",
+			"humidity"      => "4",
+			"lux"           => '5',
+			"light_hours"   => '6',
+		]
+	];
+
+
+
 	public $id;
 
 	public function __construct(Request $request)
@@ -18,10 +97,11 @@ class TestPlantData extends Test
 	}		
 
 
-	protected function testPost($plantId, $locationId, $data)
+	protected function testPost($plantId, $locationId, $data_index)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">POST - '.$this->resourceName.'</h3>';
 
+		$data = $this->data[$data_index];
 
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";

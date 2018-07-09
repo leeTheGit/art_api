@@ -27,7 +27,6 @@ class Room extends Base_controller
 			"locations" => False
 		];
 		$this->set_input_defaults($accepts, $queryParams);
-		l::og($queryParams);
 
 		if ($resource['id']) {
 			$room = $this->model->getRoomById($resource['id']);
@@ -36,7 +35,6 @@ class Room extends Base_controller
 		if (!empty( $queryParams['name'] ) ) {
 			$room =  $this->model->getRoomByName($queryParams['name']);
 		} else {
-			l::og('getting rooms');
 			$room = $this->model->getRooms();
 		}
 
@@ -46,8 +44,6 @@ class Room extends Base_controller
 
 
 		if (!empty($queryParams['locations']) && $queryParams['locations'] == 'true') {
-			l::og('getting room locations');
-			// l::og($room);
 
 			$room = $this->model->getLocationData($room, $queryParams);
 		} 
