@@ -20,8 +20,6 @@ class Location extends Base_controller
 
 	public function get(array $input = [])
 	{
-		l::og($input);
-
 		$resource 	= $this->getResourceFromUrl();
 		
 		$accepts = [
@@ -66,7 +64,7 @@ class Location extends Base_controller
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
-		l::og($input);
+
 		if (!empty($input['rank'])) {
 			$result = $this->model->updateLocationRank($resource['id'], $input['rank'], $input['old_rank']);
 		}
@@ -81,7 +79,6 @@ class Location extends Base_controller
 	public function post(array $input = [])
 	{
 		try {
-			// l::og($input);
 			return $this->model->addLocation($input);
 		}
 		catch(Exception $e) {

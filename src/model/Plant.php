@@ -11,15 +11,22 @@ class Plant extends Base_model
 	protected $limit = 10;
 
 
-	public function __construct(Request $request, Plantdata $plantdata)
+	public function __construct(Request 		$request, 
+								Plantdata 		$plantdata, 
+								Roomdata 		$roomdata,
+								Plantlocation 	$locations,
+								Roomlocation 	$rooms)
 	{
 		parent::__construct($request);
-		$this->plantData = $plantdata;
+		$this->plantData 	= $plantdata;
+		$this->roomData 	= $roomdata;
+		$this->locations 	= $locations;
+		$this->rooms 		= $rooms;
 	}
 
 	protected $data_view = array(
-		'default' => [ "serial", "mortality", "location"],
-		'edit' 	  => [ "serial", "mortality", "location"]
+		'default' => [ "serial", "mortality", "location", "created_at"],
+		'edit' 	  => [ "serial", "mortality", "location", "created_at"]
 	);
 
 
@@ -47,8 +54,15 @@ class Plant extends Base_model
 	public function getPlantData(object $plant, array $params) : object
 	{
 		$data = $this->plantData->getByPlantId($plant->id);
-
 		$plant->data = $data;
+		
+		$plantLocations = $this->locations->getPlantLocationHistoryByPlantId($plant->id);
+		pprint($plantLocations);
+		$rooms = $this->rooms->getRoomLocationHistoryByLocations($plantLocations);
+
+		pprint($rooms);
+		// $roomData = $this->roomData->getByPlantHistory(($plant->room_id));
+		// $plant->roomData = $roomData;
 
 		return $plant;
 	}

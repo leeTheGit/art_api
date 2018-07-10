@@ -194,7 +194,7 @@ abstract class Base_model
 			}
 			return $create;
 		} else {
-			l::og('required column missing');
+			l::og('required column missing for table ' . $table);
 			l::og($params);
 			l::og($required);
 

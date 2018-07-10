@@ -5,15 +5,15 @@ use src\router\Request;
 use src\service\l;
 
 
-class Roomlocation extends Base_controller
+class Plantlocation extends Base_controller
 {
 
 
-	public function __construct(Request $request, \src\model\Roomlocation $room)
+	public function __construct(Request $request, \src\model\Plantlocation $model)
 	{
 		parent::__construct($request);
 
-		$this->model = $room;
+		$this->model = $model;
 	}
 
 
@@ -27,15 +27,18 @@ class Roomlocation extends Base_controller
 		$this->set_input_defaults($accepts, $queryParams);
 
 		if ($resource['id']) {
-			return $this->model->getRoomLocationById($resource['id']);
+			return $this->model->getPlantLocationById($resource['id']);
 		}
 
-		// if (!empty( $queryParams['name'] ) ) {
-		// 	return $this->model->getRoomLocationByName($queryParams['name']);
+		if (!empty( $queryParams['plant'] ) ) {
+			return $this->model->getPlantLocationByPlantId($queryParams['plant']);
+		}
+		// if (!empty( $queryParams['serial'] ) ) {
+		// 	return $this->model->getPlantLocationBySerial($queryParams['serial']);
 		// }
 
 
-		return $this->model->getRoomLocations();
+		return $this->model->getPlantLocations();
 
 
 	}
@@ -49,7 +52,7 @@ class Roomlocation extends Base_controller
 		$result = False;
 
 		$accepts = [
-			'room_id' 		=> null,
+			'plant_id' 		=> null,
 			'location_id'   => null,
 		];
 
@@ -66,7 +69,7 @@ class Roomlocation extends Base_controller
 
 	public function post(array $input = [])
 	{
-		// l::og('posting to room location');
+		// l::og('posting to plant location');
 		// l::og($input);
 		return $this->model->create($input);
 

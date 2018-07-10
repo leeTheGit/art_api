@@ -96,8 +96,7 @@ class Location extends Base_model
 					FROM location 
 					WHERE location.name = :name";
 		$params = ["name" => $name];
-		l::og($sql);
-		l::og($params);
+
 		$data = $this->db->fetch($sql, $params);
 
 		return $data;
@@ -129,10 +128,6 @@ class Location extends Base_model
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
 		$room = $this->db->fetch("SELECT room_id FROM location WHERE id = :id", ["id" => $id]);
-		l::og($id);
-		l::og($rank);
-		l::og($old);
-		// l::og($room);
 
 		$operator = $rank > $old ? '-' : '+';
 		$min = $rank > $old ? '<' : '>';
@@ -144,7 +139,7 @@ class Location extends Base_model
 					AND rank $max= :rank2
 					AND room_id = :room_id";
 		
-		l::og($sql);
+
 		$params = [
 			"room_id" => $room->room_id, 
 			"rank1" => $rank,
