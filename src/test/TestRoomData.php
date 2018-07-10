@@ -67,8 +67,6 @@ class TestRoomData extends Test
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName) );
 
 		$dataDate = \DateTime::createFromFormat('Y-m-d H:i:s', "2018-06-01" . '13:00:00');
-		// pprint($todayDate);
-		// pprint($dataDate->format('Y-m-d H:i:s'));
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
@@ -82,9 +80,13 @@ class TestRoomData extends Test
 
 			}
 			
-			// pprint($this->id);
-			$post = $request->post($this->data["seed"][0]);
-			$this->IsFalse($post, $method);
+
+			// $failData = $this->data["seed"][0];
+			// $failData['room_id'] = $room_id;
+
+			// $post = $request->post($failData);
+			// pprint($post);
+			// $this->IsFalse($post, $method);
 
 
 			$this->pass($method, $requestStr);

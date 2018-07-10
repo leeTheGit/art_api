@@ -51,23 +51,7 @@ class TestLifeCycle extends Test
 				$this->assertRegExp(self::UUID, $post->id);
 			}
 
-
-			// $post = $request->post($this->data[0]);
-			// $this->id = $post->id;
-			// $this->assertRegExp(self::UUID, $post->id);
-
-			// $post = $request->post($this->data[1]);
-			// $this->id2 = $post->id;
-			// $this->assertRegExp(self::UUID, $post->id);
 			
-			// $post = $request->post($this->data[2]);
-			// $this->id3 = $post->id;
-			// $this->assertRegExp(self::UUID, $post->id);
-
-			// $post = $request->post($this->data[3]);
-			// $this->id4 = $post->id;
-			// $this->assertRegExp(self::UUID, $post->id);
-
 
 			$post = $request->post($this->data[0]);
 			$this->IsFalse($post, $method);

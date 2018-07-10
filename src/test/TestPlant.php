@@ -14,15 +14,15 @@ class TestPlant extends Test
 	private $data = [
 		[
 			"serial"    => "TEST_2099-01-01_13",
-			"mortality"    => "1",
+			"mortality" => "1",
 		],
 		[
 			"serial"    => "TEST_2099-01-01_14",
-			"mortality"    => "0",
+			"mortality" => "0",
 		],
 		[
 			"serial"    => "TEST_2099-01-01_15",
-			"mortality"    => "0",
+			"mortality" => "0",
 		],
 	];
 	
@@ -42,23 +42,21 @@ class TestPlant extends Test
 		$requestStr = "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::create():";
 		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName));
+		
+		$dataDate = \DateTime::createFromFormat('Y-m-d H:i:s', "2018-06-01" . '13:00:00');
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
-			$post = $request->post($this->data[0]);
-			$this->id[] = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
+			
+			
+			foreach($this->data as $d) {
+				$d['created_at'] = $dataDate->format(('Y-m-d H:i:s'));
+				$post = $request->post($d);
+				$this->id[] = $post->id;
+				$this->assertRegExp(self::UUID, $post->id);
+			}
 
-			$post = $request->post($this->data[1]);
-			$this->id[] = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
-
-			$post = $request->post($this->data[2]);
-			$this->id[] = $post->id;
-			$this->assertRegExp(self::UUID, $post->id);
-
-
-
+			
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
 
@@ -104,7 +102,7 @@ class TestPlant extends Test
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			$put = $request->put($data);
 
-			$this->assertGreaterThan(2, count($put), $method);
+			$this->assertEquals(1, $put, $method);
 			$this->pass($method, $requestStr);
 			$this->log($requestStr);
 

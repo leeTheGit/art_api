@@ -19,12 +19,14 @@ class Test extends Basetest
 		parent::__construct($request);
 
 		// TEST OBJECTS
-		$this->Location  	 = $this->request->di->create(NS_TEST.'\TestLocation');
-		$this->Plant 	 	 = $this->request->di->create(NS_TEST.'\TestPlant');
-		$this->Room 	 	 = $this->request->di->create(NS_TEST.'\TestRoom');
-		$this->RoomData 	 = $this->request->di->create(NS_TEST.'\TestRoomData');
-		$this->plantData 	 = $this->request->di->create(NS_TEST.'\TestPlantData');
 		$this->Lifecycle 	 = $this->request->di->create(NS_TEST.'\TestLifecycle');
+		$this->Location  	 = $this->request->di->create(NS_TEST.'\TestLocation');
+		$this->Room 	 	 = $this->request->di->create(NS_TEST.'\TestRoom');
+		$this->RoomLocation  = $this->request->di->create(NS_TEST.'\TestRoomLocation');
+		$this->RoomData 	 = $this->request->di->create(NS_TEST.'\TestRoomData');
+		$this->Plant 	 	 = $this->request->di->create(NS_TEST.'\TestPlant');
+		$this->PlantLocation = $this->request->di->create(NS_TEST.'\TestPlantLocation');
+		$this->plantData 	 = $this->request->di->create(NS_TEST.'\TestPlantData');
 
 	}
 
@@ -34,6 +36,12 @@ class Test extends Basetest
 
 
 		$this->ClearTestData();
+		// return;
+		$this->Lifecycle->testPost();
+		$this->Lifecycle->testGetAll();
+		$this->Lifecycle->testPut(["name" => "TEST_darkLifecycle" ]);
+		$this->Lifecycle->testGet_byId();
+
 
 		$this->Location->testPost();
 		$this->Location->testGetAll();
@@ -47,37 +55,65 @@ class Test extends Basetest
 		$this->Room->testGet_byId();
 
 
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-06"]);
+		
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-01"]);
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-10"]);
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-14"]);
+		
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-01"]);
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[2], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-04"]);
+		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-12"]);
+		$this->RoomLocation->testGetAll();
+		// $this->RoomLocation->testPut();
+		// $this->RoomLocation->testGet_byId();
+
+
+
 		$this->RoomData->testPost($this->Room->id[0], "seed");
 		$this->RoomData->testPost($this->Room->id[1], "grow");
 		$this->RoomData->testPost($this->Room->id[2], "fun");
-		// $this->RoomData->testGetAll();
 		$this->RoomData->testPut();
 		$this->RoomData->testGet_byId();
 
 
 
-		$this->Lifecycle->testPost();
-		$this->Lifecycle->testGetAll();
-		$this->Lifecycle->testPut(["name" => "TEST_darkLifecycle" ]);
-		$this->Lifecycle->testGet_byId();
 
-		$this->Plant->testPost($this->plants);
-		// $this->Plant->testGetAll();
+		$this->Plant->testPost();
+		$this->Plant->testGetAll();
 		// $this->Plant->testPut(["name" => "TEST_green" ]);
 		$this->Plant->testGet_byId();
 
 
-		$this->plantData->testPost($this->Plant->id[1], $this->Location->id);
+
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-03"]);
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-08"]);
+		
+		// used for testing plantData across rooms
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-02"]);
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-05"]);
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-09"]);
+		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-20"]);
+		$this->PlantLocation->testGetAll();
+
+
+
+
+
+		$this->plantData->testPost($this->Plant->id[1], $this->Location->id[0]);
 
 		$this->Plant->testGet_byIdWithData(["data"=> true, 'limit' => 4]);
 
 
 
-		$this->Location->testDelete();
-		$this->Plant->testDelete();
-		$this->Room->testDelete();
-		$this->RoomData->testDelete();
-		$this->Lifecycle->testDelete();
+		// $this->Location->testDelete();
+		// $this->Plant->testDelete();
+		// $this->Room->testDelete();
+		// $this->RoomLocation->testDelete();
+		// $this->RoomData->testDelete();
+		// $this->Lifecycle->testDelete();
 
 
 
@@ -127,7 +163,7 @@ class Test extends Basetest
 			}
 
 
-			$locations = ["TEST_green", "TEST_red", "TEST_orange"];
+			$locations = ["TEST_green", "TEST_red", "TEST_orange", "TEST_black"];
 			foreach( $locations as $loc) {
 				$this->request->parts	= array("racing-api/", "location");
 				$resource = $this->request->di->create('src\controller\Location');
@@ -171,11 +207,11 @@ class Test extends Basetest
     protected function finish()
     {
     	echo "<div>";
-		echo '<img src="flag.gif" style="margin: 10px 0 0 0;"></img>';
-		echo '<h2 style="display:inline-block;margin: 10px 0 0 0;color:green;background:yellow">FINISHED!!</h2>';
-		echo '<img src="flag.gif" style="margin: 10px 0 0 0;"></img>';
-		echo '<br />';
-		echo '<img src="digital_counter.gif" style="margin: 10px 0 0 0;"></img>';
+		echo 	'<img src="flag.gif" style="margin: 10px 0 0 0;"></img>';
+		echo 	'<h2 style="display:inline-block;margin: 10px 0 0 0;color:green;background:yellow">FINISHED!!</h2>';
+		echo 	'<img src="flag.gif" style="margin: 10px 0 0 0;"></img>';
+		echo 	'<br />';
+		echo 	'<img src="digital_counter.gif" style="margin: 10px 0 0 0;"></img>';
 		echo "</div>";
 	}
 

@@ -111,7 +111,7 @@ class TestPlantData extends Test
 			foreach($this->data as $d) {
 				$d['plant_id'] = $plantId;
 				$d['location'] = $locationId;
-		
+
 				$post = $request->post($d);
 				$this->id[] = $post->id;
 				$this->assertRegExp(self::UUID, $post->id);
