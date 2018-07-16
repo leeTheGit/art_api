@@ -23,6 +23,17 @@ class TestRoomData extends Test
 			["temperature" => "23", "humidity" => "5" ],  
 			["temperature" => "30", "humidity" => "6" ],  
 			["temperature" => "40", "humidity" => "2" ],
+			["temperature" => "25", "humidity" => "1" ],
+			["temperature" => "86", "humidity" => "43" ],
+			["temperature" => "55", "humidity" => "98" ],  
+			["temperature" => "2", "humidity"  => "25" ],  
+			["temperature" => "77", "humidity"  => "12" ],  
+			["temperature" => "24", "humidity" => "46" ],  
+			["temperature" => "75", "humidity" => "13" ],  
+			["temperature" => "34", "humidity" => "52" ],  
+			["temperature" => "56", "humidity" => "4" ],  
+			["temperature" => "21", "humidity" => "1" ],
+
 		],
 		"grow" => [
 			["temperature" => "23", "humidity" => "76" ],
@@ -35,6 +46,17 @@ class TestRoomData extends Test
 			["temperature" => "78", "humidity" => "58" ],  
 			["temperature" => "45", "humidity" => "34" ],  
 			["temperature" => "34", "humidity" => "45" ],
+			["temperature" => "76", "humidity" => "44" ],  
+			["temperature" => "23", "humidity" => "5" ],  
+			["temperature" => "46", "humidity" => "32" ],  
+			["temperature" => "31", "humidity" => "2" ],
+			["temperature" => "25", "humidity" => "23" ],
+			["temperature" => "97", "humidity" => "76" ],
+			["temperature" => "12", "humidity" => "35" ],  
+			["temperature" => "2", "humidity"  => "21" ],  
+			["temperature" => "77", "humidity"  => "67" ],  
+			["temperature" => "35", "humidity" => "64" ],  
+
 		],
 		"fun" => [
 			["temperature" => "32", "humidity" => "65" ],
@@ -47,6 +69,17 @@ class TestRoomData extends Test
 			["temperature" => "75", "humidity" => "87" ],  
 			["temperature" => "36", "humidity" => "63" ],  
 			["temperature" => "75", "humidity" => "3" ],
+			["temperature" => "17", "humidity" => "44" ],  
+			["temperature" => "25", "humidity" => "1" ],
+			["temperature" => "2", "humidity"  => "25" ],  
+			["temperature" => "75", "humidity" => "13" ],  
+			["temperature" => "34", "humidity" => "52" ],  
+			["temperature" => "13", "humidity" => "54" ],  
+			["temperature" => "34", "humidity" => "45" ],
+			["temperature" => "23", "humidity" => "5" ],  
+			["temperature" => "25", "humidity" => "23" ],
+			["temperature" => "2", "humidity"  => "21" ],  
+
 		]
     ];
 

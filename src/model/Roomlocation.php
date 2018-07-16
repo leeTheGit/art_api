@@ -48,12 +48,18 @@ class Roomlocation extends Base_model
 
 		$now = new \DateTime();
 		$now = $now->format('Y-m-d H:i:s');
-		// pprint($locations);
+
 		foreach($locations as $i => $location) {
 
 			// Get first roomlocation
-			$sql = "SELECT  {$this->table}.*
+			$sql = "SELECT  {$this->table}.*, 
+						location.name as locationName, 
+						room.name as roomName,
+						plantLocation.created_at as locationTime
 					FROM {$this->table} 
+					LEFT JOIN room on room.id = {$this->table}.room_id
+					LEFT JOIN location on location.id = {$this->table}.location_id
+					LEFT JOIN plantlocation on plantlocation.id = :plantLocationId
 					WHERE {$this->table}.location_id = :id
 					AND {$this->table}.created_at <= :from
 					ORDER BY created_at DESC
@@ -61,10 +67,12 @@ class Roomlocation extends Base_model
 			$params = [
 				"id" 	=> $location->location_id,
 				"from" 	=> $location->created_at,
+				"plantLocationId" => $location->id
 			];
 			$resultArray[] = $this->db->fetch($sql, $params);
 
 
+			
 
 			// Check if location was moved to other rooms
 			$dates = [
@@ -72,8 +80,15 @@ class Roomlocation extends Base_model
 				"to" => !isset($locations[$i + 1]) ? $now : $locations[$i+1]->created_at,
 			];
 
-			$sql = "SELECT  {$this->table}.*
-						FROM {$this->table} 
+			$sql = "SELECT  {$this->table}.*, 
+						location.name as locationName, 
+						room.name as roomName,
+						{$this->table}.created_at as locationTime
+
+						FROM {$this->table}
+						LEFT JOIN room on room.id = {$this->table}.room_id
+						LEFT JOIN location on location.id = {$this->table}.location_id
+
 						WHERE {$this->table}.location_id = :id
 						AND {$this->table}.created_at > :from
 						AND {$this->table}.created_at < :to
@@ -83,9 +98,7 @@ class Roomlocation extends Base_model
 				"from" 	=> $dates['from'],
 				"to" 	=> $dates['to'],
 			];
-			// l::og($sql);
-			// l::og($params);
-			// l::ogsql($sql, $params);
+
 			$other = $this->db->fetchAll($sql, $params);
 			if (count($other)) {
 				$resultArray[] = $other;
@@ -93,6 +106,7 @@ class Roomlocation extends Base_model
 		}
 
 		$output = [];
+		// Flatten output array
 		array_walk_recursive($resultArray, function ($current) use (&$output) {
 			if (count($current) > 0 ) {
 				$output[] = $current;
