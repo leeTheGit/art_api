@@ -23,12 +23,12 @@ class Roomdata extends Base_model
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
 
-		$location = $this->db->fetchAll($sql, $params);
+		$location = $this->fetchAll($sql, $params);
 
 		return $location;
 	}
 
-	public function getRoomDataById(string $id) : ?object
+	public function getRoomDataById(string $id) 
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
 		$sql = "SELECT  {$this->table}.*
@@ -36,7 +36,7 @@ class Roomdata extends Base_model
                     WHERE {$this->table}.id = :id
                     ORDER BY created_at DESC";
 		$params = ["id" => $id];
-		$locations = $this->db->fetch($sql, $params);
+		$locations = $this->fetch($sql, $params);
 
 		return $locations;
 	}
@@ -50,7 +50,7 @@ class Roomdata extends Base_model
                     WHERE {$this->table}.room_id = :id
                     ORDER BY created_at DESC";
 		$params = ["id" => $id];
-		$locations = $this->db->fetchAll($sql, $params);
+		$locations = $this->fetchAll($sql, $params);
 
 		return $locations;
 	}
@@ -76,9 +76,8 @@ class Roomdata extends Base_model
 				"from" => $room->locationtime,
 				"to" => !isset($rooms[$i + 1]) ? $now : $rooms[$i+1]->locationtime,
 			];
-			l::og($sql);
-			l::og($params);
-			$resultArray[] = $this->db->fetchAll($sql, $params);
+
+			$resultArray[] = $this->fetchAll($sql, $params);
 
 		}
 

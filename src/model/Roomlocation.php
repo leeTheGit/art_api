@@ -23,9 +23,40 @@ class Roomlocation extends Base_model
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
 
-		$location = $this->db->fetchAll($sql, $params);
+		$location = $this->fetchAll($sql);
 
 		return $location;
+	}
+
+
+	public function getRoomLocationByRoomId(string $room_id)
+	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+
+		$sql = "WITH location AS(
+				SELECT DISTINCT
+					ON(location_id)roomlocation. ID AS roomlocationid,
+					roomlocation.created_at,
+					LOCATION . NAME,
+					LOCATION . RANK,
+					LOCATION . ID
+				FROM
+					roomlocation
+				LEFT JOIN LOCATION ON LOCATION . ID = location_id
+				WHERE
+					roomlocation.room_id = :roomid
+				ORDER BY
+					location_id,
+					created_at DESC
+			)
+			
+			SELECT * FROM location
+			ORDER BY created_at DESC";
+		
+		$params = ["roomid" => $room_id];
+
+		$locations = $this->fetchAll($sql, $params);
+		return $locations;
+
 	}
 
 	public function getRoomLocationById($id)
@@ -35,7 +66,7 @@ class Roomlocation extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		$locations = $this->db->fetch($sql, $params);
+		$locations = $this->fetch($sql, $params);
 
 		return $locations;
 	}
@@ -69,7 +100,7 @@ class Roomlocation extends Base_model
 				"from" 	=> $location->created_at,
 				"plantLocationId" => $location->id
 			];
-			$resultArray[] = $this->db->fetch($sql, $params);
+			$resultArray[] = $this->fetch($sql, $params);
 
 
 			
@@ -99,7 +130,7 @@ class Roomlocation extends Base_model
 				"to" 	=> $dates['to'],
 			];
 
-			$other = $this->db->fetchAll($sql, $params);
+			$other = $this->fetchAll($sql, $params);
 			if (count($other)) {
 				$resultArray[] = $other;
 			}
@@ -124,7 +155,7 @@ class Roomlocation extends Base_model
 	// 				FROM {$this->table} 
 	// 				WHERE {$this->table}.name = :name";
 	// 	$params = ["name" => $name];
-	// 	$data = $this->db->fetch($sql, $params);
+	// 	$data = $this->fetch($sql, $params);
 
 	// 	return $data;
 	// }

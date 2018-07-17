@@ -226,4 +226,18 @@ abstract class Base_model
 		return $this->mc->delete($this->table . '_' . $id);
 	}
 
+
+	
+	protected function fetch(string $sql, array $params = [])
+	{
+		$result =$this->db->fetch($sql, $params);
+		return $result;
+	}
+
+	protected function fetchAll(string $sql, array $params = []) : array
+	{
+		return $this->db->fetchAll($sql, $params);
+	}
+
+	
 }

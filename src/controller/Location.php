@@ -10,11 +10,15 @@ class Location extends Base_controller
 
 	
 
-	public function __construct(Request $request, \src\model\Location $location)
+	public function __construct(Request 				$request, 
+								\src\model\Location 	$location,
+								\src\model\Roomlocation $roomlocation
+	)
 	{
 		parent::__construct($request);
 
 		$this->model = $location;
+		$this->locations = $roomlocation;
 	}
 
 
@@ -72,6 +76,14 @@ class Location extends Base_controller
 		if (!empty($input)) {
 			$result = $this->model->update($resource['id'], $input);
 		}
+
+
+		// if changing room, store in the history of the change in roomlocations
+		// which is used to match stats of room data with location data over time.
+		if (!empty($input['room_id'])) {
+			$this->locations->create(["room_id" => $input['room_id'], "location_id"=> $resource['id']]);
+		}
+
 
 		return $result;
 	}

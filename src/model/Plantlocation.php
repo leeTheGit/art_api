@@ -23,7 +23,7 @@ class Plantlocation extends Base_model
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
 
-		$location = $this->db->fetchAll($sql, $params);
+		$location = $this->fetchAll($sql);
 
 
 		return $location;
@@ -36,7 +36,7 @@ class Plantlocation extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		$locations = $this->db->fetch($sql, $params);
+		$locations = $this->fetch($sql, $params);
 
 		return $locations;
 	}
@@ -48,7 +48,7 @@ class Plantlocation extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.plant_id = :id";
 		$params = ["id" => $id];
-		$location = $this->db->fetch($sql, $params);
+		$location = $this->fetch($sql, $params);
 
 		return $location;
 	}
@@ -62,7 +62,7 @@ class Plantlocation extends Base_model
 					WHERE {$this->table}.plant_id = :id
 					ORDER BY {$this->table}.created_at ASC";
 		$params = ["id" => $id];
-		$location = $this->db->fetchAll($sql, $params);
+		$location = $this->fetchAll($sql, $params);
 
 		return $location;
 	}
@@ -75,7 +75,7 @@ class Plantlocation extends Base_model
 	// 				FROM {$this->table} 
 	// 				WHERE {$this->table}.plant_id = :id";
 	// 	$params = ["id" => $id];
-	// 	$location = $this->db->fetch($sql, $params);
+	// 	$location = $this->fetch($sql, $params);
 
 	// 	return $location;
 	// }

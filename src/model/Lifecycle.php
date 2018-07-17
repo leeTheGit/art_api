@@ -23,7 +23,7 @@ class Lifecycle extends Base_model
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
 
-		$plants = $this->db->fetchAll($sql, $params);
+		$plants = $this->fetchAll($sql);
 
 
 		return $plants;
@@ -36,7 +36,7 @@ class Lifecycle extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		$plants = $this->db->fetch($sql, $params);
+		$plants = $this->fetch($sql, $params);
 
 		return $plants;
 	}
@@ -48,7 +48,7 @@ class Lifecycle extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.name = :name";
 		$params = ["name" => $name];
-		$data = $this->db->fetch($sql, $params);
+		$data = $this->fetch($sql, $params);
 
 		return $data;
 	}

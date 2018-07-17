@@ -35,10 +35,10 @@ class Users extends Base_model
 											ORDER BY users.username";
 			$params = ["UID" 	=> $UID];
 			// sqlLog($sql, $params);
-			$user = $this->db->fetchAll($sql, $params);
+			$user = $this->fetchAll($sql, $params);
 
 		} else {
-			$user = $this->db->fetchAll("SELECT users.id,
+			$user = $this->fetchAll("SELECT users.id,
 												 users.username,
 												 users.firstname,
 												 users.lastname,
@@ -76,7 +76,7 @@ class Users extends Base_model
 					WHERE users.username = :name
 					ORDER BY users.username";
 		// sqlLog($sql, array("name" => $name));
-		$user = $this->db->fetch($sql, array("name" => $name));
+		$user = $this->fetch($sql, array("name" => $name));
 		return $user;
 	}
 
@@ -108,13 +108,13 @@ class Users extends Base_model
 					{$groupsql}
 					ORDER BY users.username, groups.name";
 		// sqlPrint($sql, $params);
-		return $this->db->fetchAll($sql, $params);
+		return $this->fetchAll($sql, $params);
 	}
 
 	public function getGroupUsers($group)
 	{   global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		return $this->db->fetchAll('SELECT users.id,
+		return $this->fetchAll('SELECT users.id,
 										users.username,
 										users.access useraccess,
 										users.firstname,
@@ -136,7 +136,7 @@ class Users extends Base_model
 		$sql = "SELECT id groupid, name groupname, access groupaccess FROM groups
 									WHERE id = :GID";
 		// sqlLog($sql, array("GID"=>$GID));
-		$group = $this->db->fetch($sql, array("GID"=>$GID));
+		$group = $this->fetch($sql, array("GID"=>$GID));
 
 		$group = $this->getGroupData($group, $input);
 
@@ -150,7 +150,7 @@ class Users extends Base_model
 		$sql = "SELECT id groupid, name groupname, access groupaccess FROM groups
 									WHERE name = :group";
 		// sqlPrint($sql, array("group"=>$group));
-		$group = $this->db->fetch($sql, array("group"=>$group));
+		$group = $this->fetch($sql, array("group"=>$group));
 		// pprint($group);
 		return $group;
 	}
@@ -169,7 +169,7 @@ class Users extends Base_model
 	public function getAllGroups($input)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		$groups = $this->db->fetchAll('SELECT id groupid, name groupname, access groupaccess FROM groups ORDER BY groupname');
+		$groups = $this->fetchAll('SELECT id groupid, name groupname, access groupaccess FROM groups ORDER BY groupname');
 
 		foreach ($groups as &$group) {
 			$this->getGroupData($group, $input);
@@ -183,7 +183,7 @@ class Users extends Base_model
 
 		$sql = "SELECT * FROM tipspanels WHERE publication = :id";
 		$param = array("id" => $id);
-		$result = $this->db->fetchAll($sql, $param);
+		$result = $this->fetchAll($sql, $param);
 		return $result;
 	}
 
