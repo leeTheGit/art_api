@@ -6,6 +6,8 @@ use src\router\Request;
 
 class Location extends Base_model
 {
+	const LIMIT = 20;
+	const MAX_LIMIT = 50;
 
 	protected $required = ["name"];
 

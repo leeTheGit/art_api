@@ -6,6 +6,9 @@ use src\router\Request;
 
 class Room extends Base_model
 {
+	const LIMIT = 20;
+	const MAX_LIMIT = 50;
+
 	protected $required = ['name'];
 
 	public function __construct(Request $request)
