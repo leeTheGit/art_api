@@ -19,7 +19,7 @@ class Login
 		$this->server = $_SERVER;
 		if (!isset($_GET['token'])) {
 			if (!isset($this->server['PHP_AUTH_PW'])) {
-				header('WWW-Authenticate: Basic realm="Pagemasters Racing API"');
+				header('WWW-Authenticate: Basic realm="Arta"');
 				header('HTTP/1.0 401 Unauthorized');
 				print "Login failed!\n";
 				exit;
@@ -62,7 +62,7 @@ class Login
 		$user = $this->db->fetch($sql, $params);
 
 		if ( !$user ) {
-			header('WWW-Authenticate: Basic realm="Pagemasters Racing API"');
+			// header('WWW-Authenticate: Basic realm="Pagemasters Racing API"');
 			header('HTTP/1.0 401 Unauthorized');
 			exit(json_encode(array('message'=>"You aren't logged in")));
 		}

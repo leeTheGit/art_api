@@ -17,13 +17,13 @@ class Plantdata extends Base_model
 	}
 
 	protected $data_view = array(
-		'default' => [ "plant_id", "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time"],
-		'edit' 	  => [ "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time"],
+		'default' => [ "plant_id", "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time", "user_check"],
+		'edit' 	  => [ "height", "location", "user_id", "notes", "ph", "conductivity", "temperature", "humidity", "lux", "light_hours", "health", "time", "user_check"],
 	);
 
 	public function getById($id)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		l::og($id);
+
 		$sql = "SELECT  {$this->table}.*, 
 					FROM {$this->table}
 					WHERE id = :id
@@ -51,4 +51,8 @@ class Plantdata extends Base_model
 	}
 
 
+	public function allowCheck(string $id, string $userid) : boolean 
+	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+		return true;
+	}
 }

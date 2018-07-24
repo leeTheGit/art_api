@@ -42,30 +42,40 @@ class Plantdata extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-		l::og($input);
+		// l::og($input);
 		// throw new \Exception($error);
 		
 
 		$result = False;
-		
+		l::og($input);
 		$accepts = [
-			'height' 		=> null,
-			'location'		=> null,
-			"user_id"		=> null,
-			"notes" 		=> null,
-			"ph"      		=> null,
 			'conductivity' 	=> null,
 			'temperature' 	=> null,
-			"humidity"		=> null,
-			"lux" 			=> null,
 			"light_hours" 	=> null,
+			"user_check"    => null,
+			"humidity"		=> null,
+			'location'		=> null,
+			"user_id"		=> null,
 			"health"      	=> null,
-			"time"  		=> null
+			'height' 		=> null,
+			"notes" 		=> null,
+			"time"  		=> null,
+			"lux" 			=> null,
+			"ph"      		=> null,
 		];
 
 		$accepts = array_intersect_key($accepts, $input);
 		$this->set_input_defaults($accepts, $input);
+
+		if (!empty($input['user_check'])) {
+			$user = $this->model->allowCheck($resource['id'], $input['user_check']);
+			if(!$user) {
+				unset($input['user_check']);
+			}
+		}
+
 		if (!empty($input)) {
+			l::og($input);
 			$result = $this->model->update($resource['id'], $input);
 		}
 
@@ -78,15 +88,15 @@ class Plantdata extends Base_controller
 		$default_values = [
 			"conductivity"	=> false,
 			"light_hours"	=> false,
-			"location"		=> false,
-			"user_id"		=> false,
-			"height"		=> false,
-			"notes"			=> false,
 			"temperature"	=> false,
 			"plant_id"		=> false,
 			"humidity"		=> false,
+			"location"		=> false,
 			"user_id"       => $this->auth_user->userid,
+			"user_id"		=> false,
+			"height"		=> false,
 			"health"		=> false,
+			"notes"			=> false,
 			"lux"			=> false,
 			"ph"			=> false,
 		];

@@ -55,7 +55,7 @@ class Plant extends Base_model
 	{
 		$data = $this->plantData->getByPlantId($plant->id);
 		$plant->data = $data;
-		
+
 		$plantLocations = $this->locations->getPlantLocationHistoryByPlantId($plant->id);
 		// pprint($plantLocations);
 		$rooms = $this->rooms->getRoomLocationHistoryByLocations($plantLocations);

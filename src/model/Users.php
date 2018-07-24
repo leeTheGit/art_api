@@ -20,38 +20,37 @@ class Users extends Base_model
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		if ($GID == 'all') {
 			$sql = "SELECT users.id,
-												 users.username,
-												 users.firstname,
-												 users.lastname,
-												 users.access,
-												 users.password,
-												 users.access useraccess,
-												 groups.id groupid,
-												 groups.name groupname,
-												 groups.access groupaccess
-										FROM users
-										LEFT JOIN groups on users.usergroup = groups.id
-											WHERE users.id = :UID
-											ORDER BY users.username";
+						users.username,
+						users.firstname,
+						users.lastname,
+						users.access,
+						users.access useraccess,
+						groups.id groupid,
+						groups.name groupname,
+						groups.access groupaccess
+			FROM users
+			LEFT JOIN groups on users.usergroup = groups.id
+				WHERE users.id = :UID
+				ORDER BY users.username";
 			$params = ["UID" 	=> $UID];
 			// sqlLog($sql, $params);
-			$user = $this->fetchAll($sql, $params);
+			$user = $this->fetch($sql, $params);
 
 		} else {
-			$user = $this->fetchAll("SELECT users.id,
-												 users.username,
-												 users.firstname,
-												 users.lastname,
-												 users.access,
-												 groups.id groupid,
-												 groups.name groupname,
-												 groups.access groupaccess
-										FROM users
-										LEFT JOIN groups on users.usergroup = groups.id
-										WHERE users.id = :UID and users.usergroup = :GID
-										ORDER BY users.username",
-											array(	"UID" 	=> $UID,
-													"GID"	=> $GID));
+			$user = $this->fetch("SELECT users.id,
+									users.username,
+									users.firstname,
+									users.lastname,
+									users.access,
+									groups.id groupid,
+									groups.name groupname,
+									groups.access groupaccess
+						FROM users
+						LEFT JOIN groups on users.usergroup = groups.id
+						WHERE users.id = :UID and users.usergroup = :GID
+						ORDER BY users.username",
+							array(	"UID" 	=> $UID,
+									"GID"	=> $GID));
 		}
 
 		return $user;

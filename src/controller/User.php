@@ -28,7 +28,7 @@ class User extends Base_controller
 		];
 
 		$this->set_input_defaults($urlParameters, $input);
-		l::og($this->auth_user);
+
 		if (empty($resource['id'])) {
 			if ($this->auth_user->access != 'admin') { //if user is not admin, they can see only themselves
 
