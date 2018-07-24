@@ -42,36 +42,9 @@ class Database  {
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
 			// l::og($errormsg);
-			return false;
+			return null;
 		}
 	}
-
-
-
-	public function stmt_fetch($stmt, $bindings = array())
-	{
-		try {
-			$stmt->execute($bindings);
-			return $stmt->fetch(\PDO::FETCH_OBJ);
-		} catch (\PDOException $e) {
-			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
-			return false;
-		}
-	}
-
-	public function stmt_fetchAll($stmt, $bindings = array())
-	{
-		try {
-			$stmt->execute($bindings);
-			return $stmt->fetchAll(\PDO::FETCH_OBJ);
-		} catch (\PDOException $e) {
-			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
-			return false;
-		}
-	}
-
 
 
 	public function fetch($query, $bindings = array())
@@ -79,11 +52,12 @@ class Database  {
 		try {
 			$stmt = $this->prepare($query);
 			$stmt->execute($bindings);
-			return $stmt->fetch(\PDO::FETCH_OBJ);
+			$found = $stmt->fetch(\PDO::FETCH_OBJ);
+			return $found;
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
 			l::og($errormsg);
-			return false;
+			return null;
 		}
 	}
 
@@ -96,7 +70,7 @@ class Database  {
 		} catch (\PDOException $e) {
 			$errormsg = $this->getErrorMsg( $e->getMessage() );
 			l::og($errormsg);
-			return false;
+			return null;
 		}
 	}
 
@@ -110,7 +84,7 @@ class Database  {
 			  return true;
 			}
 
-
+			
 			foreach ($bindings as &$b) {
 				if (empty($b)) {
 					$b = gettype($b);
@@ -159,18 +133,7 @@ class Database  {
 		return $this->PDO->prepare($query);
 	}
 
-	public function insert_MYSQL($query, $bindings = array())
-	{
-		try {
-			$stmt = $this->prepare($query);
-			$stmt->execute($bindings);
-			return $this->PDO->lastInsertId();
-		} catch (\PDOException $e) {
-			$errormsg = $this->getErrorMsg( $e->getMessage() );
-			// l::og($errormsg);
-			return false;
-		}
-	}
+
 	public function setTimezone($tz)
 	{
 		$sql = "SET Time Zone '" . $tz . "'";

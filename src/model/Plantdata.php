@@ -31,7 +31,7 @@ class Plantdata extends Base_model
 
 		$params = ['id' => $id];
 
-		$plantdata = $this->db->fetch($sql, $params);
+		$plantdata = $this->fetch($sql, $params);
 		return $plantdata ?? [];
 	}
 
@@ -44,7 +44,7 @@ class Plantdata extends Base_model
 					ORDER BY time DESC";
 		$params = ["id" => $id];
 
-		$plants = $this->db->fetchAll($sql, $params);
+		$plants = $this->fetchAll($sql, $params);
 
 		
 		return $plants;

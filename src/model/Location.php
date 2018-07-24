@@ -47,7 +47,7 @@ class Location extends Base_model
 		// 		) locations_with_room
 		// 		order by locations_with_room.rank";
 
-		$data = $this->db->fetchAll($sql, $params);
+		$data = $this->fetchAll($sql);
 
 		return $data;
 	}
@@ -72,7 +72,7 @@ class Location extends Base_model
 		// l::og($sql);
 		// l::og($params);
 
-		$data = $this->db->fetchAll($sql, $params);
+		$data = $this->fetchAll($sql, $params);
 
 		return $data;
 	}
@@ -85,7 +85,7 @@ class Location extends Base_model
 					FROM location 
 					WHERE location.id = :id";
 		$params = ["id" => $id];
-		$data = $this->db->fetch($sql, $params);
+		$data = $this->fetch($sql, $params);
 
 		return $data;
 	}
@@ -99,7 +99,7 @@ class Location extends Base_model
 					WHERE location.name = :name";
 		$params = ["name" => $name];
 
-		$data = $this->db->fetch($sql, $params);
+		$data = $this->fetch($sql, $params);
 
 		return $data;
 	}
@@ -116,7 +116,7 @@ class Location extends Base_model
 		
 		$params = ['room_id' => $location['room_id']];
 
-		$ranking = $this->db->fetch($sql, $params);
+		$ranking = $this->fetch($sql, $params);
 
 		if ($ranking) {
 			$location['rank'] = $ranking->rank + 1;
@@ -129,7 +129,7 @@ class Location extends Base_model
 	public function updateLocationRank($id, $rank, $old) 
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		$room = $this->db->fetch("SELECT room_id FROM location WHERE id = :id", ["id" => $id]);
+		$room = $this->fetch("SELECT room_id FROM location WHERE id = :id", ["id" => $id]);
 
 		$operator = $rank > $old ? '-' : '+';
 		$min = $rank > $old ? '<' : '>';

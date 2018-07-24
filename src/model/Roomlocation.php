@@ -23,9 +23,40 @@ class Roomlocation extends Base_model
 		
 		$sql = "SELECT {$this->table}.* FROM {$this->table}";
 
-		$location = $this->db->fetchAll($sql, $params);
+		$location = $this->fetchAll($sql);
 
 		return $location;
+	}
+
+
+	public function getRoomLocationByRoomId(string $room_id)
+	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+
+		$sql = "WITH location AS(
+				SELECT DISTINCT
+					ON(location_id)roomlocation. ID AS roomlocationid,
+					roomlocation.created_at,
+					LOCATION . NAME,
+					LOCATION . RANK,
+					LOCATION . ID
+				FROM
+					roomlocation
+				LEFT JOIN LOCATION ON LOCATION . ID = location_id
+				WHERE
+					roomlocation.room_id = :roomid
+				ORDER BY
+					location_id,
+					created_at DESC
+			)
+			
+			SELECT * FROM location
+			ORDER BY created_at DESC";
+		
+		$params = ["roomid" => $room_id];
+
+		$locations = $this->fetchAll($sql, $params);
+		return $locations;
+
 	}
 
 	public function getRoomLocationById($id)
@@ -35,7 +66,7 @@ class Roomlocation extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		$locations = $this->db->fetch($sql, $params);
+		$locations = $this->fetch($sql, $params);
 
 		return $locations;
 	}
@@ -48,12 +79,18 @@ class Roomlocation extends Base_model
 
 		$now = new \DateTime();
 		$now = $now->format('Y-m-d H:i:s');
-		// pprint($locations);
+
 		foreach($locations as $i => $location) {
 
 			// Get first roomlocation
-			$sql = "SELECT  {$this->table}.*
+			$sql = "SELECT  {$this->table}.*, 
+						location.name as locationName, 
+						room.name as roomName,
+						plantLocation.created_at as locationTime
 					FROM {$this->table} 
+					LEFT JOIN room on room.id = {$this->table}.room_id
+					LEFT JOIN location on location.id = {$this->table}.location_id
+					LEFT JOIN plantlocation on plantlocation.id = :plantLocationId
 					WHERE {$this->table}.location_id = :id
 					AND {$this->table}.created_at <= :from
 					ORDER BY created_at DESC
@@ -61,10 +98,12 @@ class Roomlocation extends Base_model
 			$params = [
 				"id" 	=> $location->location_id,
 				"from" 	=> $location->created_at,
+				"plantLocationId" => $location->id
 			];
-			$resultArray[] = $this->db->fetch($sql, $params);
+			$resultArray[] = $this->fetch($sql, $params);
 
 
+			
 
 			// Check if location was moved to other rooms
 			$dates = [
@@ -72,8 +111,15 @@ class Roomlocation extends Base_model
 				"to" => !isset($locations[$i + 1]) ? $now : $locations[$i+1]->created_at,
 			];
 
-			$sql = "SELECT  {$this->table}.*
-						FROM {$this->table} 
+			$sql = "SELECT  {$this->table}.*, 
+						location.name as locationName, 
+						room.name as roomName,
+						{$this->table}.created_at as locationTime
+
+						FROM {$this->table}
+						LEFT JOIN room on room.id = {$this->table}.room_id
+						LEFT JOIN location on location.id = {$this->table}.location_id
+
 						WHERE {$this->table}.location_id = :id
 						AND {$this->table}.created_at > :from
 						AND {$this->table}.created_at < :to
@@ -83,16 +129,15 @@ class Roomlocation extends Base_model
 				"from" 	=> $dates['from'],
 				"to" 	=> $dates['to'],
 			];
-			// l::og($sql);
-			// l::og($params);
-			// l::ogsql($sql, $params);
-			$other = $this->db->fetchAll($sql, $params);
+
+			$other = $this->fetchAll($sql, $params);
 			if (count($other)) {
 				$resultArray[] = $other;
 			}
 		}
 
 		$output = [];
+		// Flatten output array
 		array_walk_recursive($resultArray, function ($current) use (&$output) {
 			if (count($current) > 0 ) {
 				$output[] = $current;
@@ -110,7 +155,7 @@ class Roomlocation extends Base_model
 	// 				FROM {$this->table} 
 	// 				WHERE {$this->table}.name = :name";
 	// 	$params = ["name" => $name];
-	// 	$data = $this->db->fetch($sql, $params);
+	// 	$data = $this->fetch($sql, $params);
 
 	// 	return $data;
 	// }

@@ -43,28 +43,42 @@ class Test extends Basetest
 		$this->Lifecycle->testGet_byId();
 
 
-		$this->Location->testPost();
-		$this->Location->testGetAll();
-		$this->Location->testPut();
-		$this->Location->testGet_byId();
-
-
+			
 		$this->Room->testPost();
 		$this->Room->testGetAll();
 		$this->Room->testPut();
 		$this->Room->testGet_byId();
+	
+		
 
 
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-06"]);
+		$this->Location->testPost();
+		$this->Location->testGetAll();
+		$this->Location->testPut(0, [ "name" => "TEST_black" ]);
+		$this->Location->testGet_byId();
+
+		$this->Location->testPut(0, [ "room_id" => $this->Room->id[0] ]);
+		$this->Location->testPut(0, [ "room_id" => $this->Room->id[1] ]);
+
+		$this->Location->testPut(1, [ "room_id" => $this->Room->id[0] ]);
+		$this->Location->testPut(1, [ "room_id" => $this->Room->id[1] ]);
+		$this->Location->testPut(1, [ "room_id" => $this->Room->id[0] ]);
 		
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-01"]);
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-10"]);
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-14"]);
+		$this->Location->testPut(2, [ "room_id" => $this->Room->id[0] ]);
+		$this->Location->testPut(2, [ "room_id" => $this->Room->id[2] ]);
+		$this->Location->testPut(2, [ "room_id" => $this->Room->id[1] ]);
+
+
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-06"]);
 		
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-01"]);
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[2], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-04"]);
-		$this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-12"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-01"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-10"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-14"]);
+		
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-01"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[2], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-04"]);
+		// $this->RoomLocation->testPost(["room_id" => $this->Room->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-12"]);
 		$this->RoomLocation->testGetAll();
 		// $this->RoomLocation->testPut();
 		// $this->RoomLocation->testGet_byId();

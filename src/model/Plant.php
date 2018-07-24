@@ -57,10 +57,13 @@ class Plant extends Base_model
 		$plant->data = $data;
 		
 		$plantLocations = $this->locations->getPlantLocationHistoryByPlantId($plant->id);
-		pprint($plantLocations);
+		// pprint($plantLocations);
 		$rooms = $this->rooms->getRoomLocationHistoryByLocations($plantLocations);
+		// pprint($rooms);
 
-		pprint($rooms);
+		$roomData = $this->roomData->getRoomDataByLocationHistory($rooms);
+
+		// pprint($roomData);
 		// $roomData = $this->roomData->getByPlantHistory(($plant->room_id));
 		// $plant->roomData = $roomData;
 
@@ -83,7 +86,7 @@ class Plant extends Base_model
 			$sql .= " OFFSET {$options['offset']}";
 		}
 
-		$plants = $this->db->fetchAll($sql);
+		$plants = $this->fetchAll($sql);
 
 		return $plants;
 	}
@@ -96,7 +99,7 @@ class Plant extends Base_model
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
 
-		$plants = $this->db->fetch($sql, $params);
+		$plants = $this->fetch($sql, $params);
 
 
 		return $plants;
@@ -108,7 +111,7 @@ class Plant extends Base_model
 		$sql = "SELECT  {$this->table}.* FROM {$this->table} WHERE {$this->table}.serial = :serial";
 		$params = ["serial" => $params['serial']];
 
-		$plant = $this->db->fetch($sql, $params);
+		$plant = $this->fetch($sql, $params);
 
 		return $plant ? $plant : null;
 	}

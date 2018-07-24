@@ -78,15 +78,15 @@ class TestLocation extends Test
 		}
 	}
 
-	protected function testPut()
+	protected function testPut($index, $params)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">PUT - '.$this->resourceName.'</h3>';
 
 		$requestStr 	= "post: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[0]);
-		$params = [ "name" => "TEST_black" ];
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[$index]);
 
+		
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
 			$put = $request->put($params);

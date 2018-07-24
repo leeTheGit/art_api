@@ -19,10 +19,13 @@ class Roomlocation extends Base_controller
 
 	public function get(array $queryParams = [])
 	{
+		l::og($queryParams);
 
 		$resource 	= $this->getResourceFromUrl();
 
-		$accepts = [];
+		$accepts = [
+			"room" => false
+		];
 
 		$this->set_input_defaults($accepts, $queryParams);
 
@@ -30,9 +33,9 @@ class Roomlocation extends Base_controller
 			return $this->model->getRoomLocationById($resource['id']);
 		}
 
-		// if (!empty( $queryParams['name'] ) ) {
-		// 	return $this->model->getRoomLocationByName($queryParams['name']);
-		// }
+		if (!empty( $queryParams['room'] ) ) {
+			return $this->model->getRoomLocationByRoomId($queryParams['room']);
+		}
 
 
 		return $this->model->getRoomLocations();

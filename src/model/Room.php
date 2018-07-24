@@ -42,7 +42,7 @@ class Room extends Base_model
 			$params = ["id" => $room->id];
 			l::og($sql);
 			l::og($params);
-			$room->locations= $this->db->fetch($sql, $params);
+			$room->locations= $this->fetch($sql, $params);
 			l::og($room->locations);
 		}
 
@@ -75,7 +75,7 @@ class Room extends Base_model
 			ORDER BY
 				room.name";
 
-		$plants = $this->db->fetchAll($sql, $params);
+		$plants = $this->fetchAll($sql);
 
 
 		return $plants;
@@ -88,7 +88,7 @@ class Room extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.id = :id";
 		$params = ["id" => $id];
-		$plants = $this->db->fetch($sql, $params);
+		$plants = $this->fetch($sql, $params);
 
 		return $plants;
 	}
@@ -100,7 +100,7 @@ class Room extends Base_model
 					FROM {$this->table} 
 					WHERE {$this->table}.name = :name";
 		$params = ["name" => $name];
-		$data = $this->db->fetch($sql, $params);
+		$data = $this->fetch($sql, $params);
 
 		return $data;
 	}
