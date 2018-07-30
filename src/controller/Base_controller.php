@@ -17,7 +17,6 @@ class Base_controller
 		$this->db               = $request->db;
 		$this->mc               = $request->mc;
 		$this->auth_user        = $request->auth_user;
-		$this->mc               = $request->mc;
 		$this->_resourceParts   = $request->parts;
 	}
 

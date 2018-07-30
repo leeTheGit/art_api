@@ -71,11 +71,11 @@ class Request
         $this->parts  = explode('/', $urlArr['path']); // seperate path elements
 
         $resource = ($this->parts[1] != '') ? $this->parts[1] : 'home';
-
+        
+        $class = NS_CONT.'\\'.ucfirst( $resource );
+        
         if (strtolower( $resource ) == 'test')  {
             $class = NS_TEST.'\\'.ucfirst( $resource );
-        } else {
-            $class = NS_CONT.'\\'.ucfirst( $resource );
         }
         
         $time_start = microtime(true);

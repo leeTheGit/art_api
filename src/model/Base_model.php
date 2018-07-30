@@ -19,11 +19,12 @@ abstract class Base_model
 	public function __construct(\src\router\Request $request)
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 
-		$this->request = $request;
-		$this->mc = $request->mc;
-		$this->db = $request->db;
-		$this->user = $request->auth_user->userid;
-		$this->group = $request->auth_user->groupid;
+		$this->mc 		= $request->mc;
+		$this->db 		= $request->db;
+		$this->user 	= $request->auth_user->userid;
+		$this->group 	= $request->auth_user->groupid;
+		$this->request 	= $request;
+		$this->allowed_columns = [];
 		$this->setColumns($request->auth_user->access);
 		$this->table = strtolower( end( explode('\\', get_class($this) ) ) );
 	}
@@ -107,6 +108,7 @@ abstract class Base_model
 			$permitted_columns = !empty($this->data_view['edit']) ? $this->intersect( $this->getColumns(), $this->data_view['edit']) : $this->getColumns();
 		}
 
+		
 		$data = array_intersect_key((array)$data, $permitted_columns);
 
 		$fields  = array_keys($data);

@@ -42,22 +42,19 @@ class Plantdata extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-		// l::og($input);
-		// throw new \Exception($error);
-		
 
 		$result = False;
-		l::og($input);
+
 		$accepts = [
-			'conductivity' 	=> null,
-			'temperature' 	=> null,
+			"conductivity" 	=> null,
+			"temperature" 	=> null,
 			"light_hours" 	=> null,
 			"user_check"    => null,
 			"humidity"		=> null,
-			'location'		=> null,
+			"location"		=> null,
 			"user_id"		=> null,
 			"health"      	=> null,
-			'height' 		=> null,
+			"height" 		=> null,
 			"notes" 		=> null,
 			"time"  		=> null,
 			"lux" 			=> null,
@@ -75,7 +72,6 @@ class Plantdata extends Base_controller
 		}
 
 		if (!empty($input)) {
-			l::og($input);
 			$result = $this->model->update($resource['id'], $input);
 		}
 

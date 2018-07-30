@@ -51,8 +51,18 @@ class Plantdata extends Base_model
 	}
 
 
-	public function allowCheck(string $id, string $userid) : boolean 
+	public function allowCheck(string $id, string $userid) : bool 
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+
+		$sql = "SELECT user_id FROM {$this->table} WHERE id = :id";
+
+		$data = $this->fetch($sql, ["id"=>$id]);
+
+
+		if ($data->user_id === $userid) {
+			return false;
+		}
+
 		return true;
 	}
 }

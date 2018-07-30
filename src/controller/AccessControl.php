@@ -34,14 +34,14 @@ class AccessControl
 
 	function checkAuthLevel()
 	{
-		$access = array();
+		$access = [];
 
 		//checks a request against the current users access and retursn true or false
 		// if ($credentials->groupaccess == 'full') { //internal users
 		switch ($this->user->access) {
 			case 'admin':
 				return true;
-			case 'editor':
+			case 'edit':
 				$access = $this->internalEditor();
 				break;
 			case 'user':
@@ -49,15 +49,6 @@ class AccessControl
 				break;
 			case 'read':
 				$access = $this->internalRead();
-				break;
-			case 'read_all_meetings':
-				$access = $this->internalRead();
-				break;
-			case 'portal':
-				$access = $this->internalPortal();
-				break;
-			case 'selections':
-				$access = $this->meetingOnly();
 				break;
 		}
 		// } elseif ($credentials->groupaccess == 'self') {
@@ -88,7 +79,7 @@ class AccessControl
 
 		if (!$retval) {
 			header("Content-Type: application/json; charset=utf-8");
-			header('HTTP/1.1 550 Permission Denied');
+			header('HTTP/1.1 403 Permission Denied');
 			exit(json_encode(array('message'=>"You don't have permission for that task: ". $request->method . ' ' . $request->uri)));
 		}
 
@@ -129,32 +120,19 @@ class AccessControl
 		case 'get':
 			return array(".+");
 		case 'post':
-			return array("/meeting.*",
-						"/race.*",
-						"/track.*",
-						"/load.*",
-						"/output.*",
-						"/publication.*",
-						"/runner.*",
-						"/portal.*",
-						"/tipspanel.*",
-						);
+			return [
+				"/plantdata.*",
+			];
 		case 'put':
-			return array("/meeting.*",
-						"/race.*",
-						"/track.*",
-						"/load.*",
-						"/output.*",
-						"/publication.*",
-						"/runner.*",
-						"/user.*",
-						"/tipspanel.*",
-						);
+			return [
+				"/user.*",
+				"/plantdata.*",
+			];
 		case 'delete':
-			return array();
+			return [];
 		}
 
-		return array();
+		return [];
 	}
 
 	private function internalUser()
@@ -168,15 +146,13 @@ class AccessControl
 						"/track.*");
 		case 'put':
 			return array(
-						"/race.*",
-						"/runner.*",
 						"/output.*",
 						"/user.*");
 		case 'delete':
-			return array();
+			return [];
 		}
 
-		return array();
+		return [];
 	}
 
 	private function internalRead()
@@ -191,55 +167,13 @@ class AccessControl
 			return array("/user/self.*",
 						 "/user/".$this->user->userid.".*");
 		case 'delete':
-			return array();
+			return [];
 		}
 
-		return array();
+		return [];
 	}
 
-	private function internalPortal()
-	{
-		switch ($this->request->method) {
-		case 'get':
-			return array("/meeting.*",
-						 "/race.*",
-						 "/runner.*",
-						 "/portal.*",
-						 "/user/".$this->user->userid.".*",
-						 "/user/self"
-						);
-		case 'post':
-			return array("/user/self.*",
-						 "/user/".$this->user->userid.".*",
-						 "/portal.*",
-						 );
-		case 'put':
-			return array();
-		case 'delete':
-			return array();
-		}
 
-		return array();
-	}
-
-	private function meetingOnly()
-	{
-		switch ($this->request->method) {
-		case 'get':
-			return array("/meeting.*",
-						 "/user/".$this->user->userid.".*",
-						 "/user/self"
-						);
-		case 'post':
-			return array();
-		case 'put':
-			return array();
-		case 'delete':
-			return array();
-		}
-
-		return array();
-	}
 
 	// function externalAdmin ($request)
 	// {
@@ -265,7 +199,7 @@ class AccessControl
 	// 			break;
 	// 	}
 
-	// 	return array();
+	// 	return [];
 	// }
 
 	// function externalUser ($request) //is this even a sensible thing? its the same as read only
@@ -286,11 +220,11 @@ class AccessControl
 	// 			return array("/user/self.*");
 	// 			break;
 	// 		case 'delete':
-	// 			return array();
+	// 			return [];
 	// 			break;
 	// 		}
 
-	// 	return array();
+	// 	return [];
 	// }
 
 	// function externalRead ($request)
@@ -309,11 +243,11 @@ class AccessControl
 	// 			return array("/user/self.*");
 	// 			break;
 	// 		case 'delete':
-	// 			return array();
+	// 			return [];
 	// 			break;
 	// 	}
 
-	// 	return array();
+	// 	return [];
 	// }
 
 }
