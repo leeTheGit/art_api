@@ -20,17 +20,17 @@ class Request
 
     public function __construct(Database $db, Cache $mc, $auth_user, $redis, $di)
     {
+        $this->auth_user = $auth_user;
+        $this->headers   = apache_request_headers();
         $this->method    = strtolower( $_SERVER['REQUEST_METHOD']);
+        $this->redis     = $redis;
+        $this->date      = new \DateTime('now');
+        $this->data      = $this->getData();
         $this->uri       = rawurldecode( $_SERVER['REQUEST_URI'] );
         $this->db        = $db;
         $this->mc        = $mc;
-        $this->auth_user = $auth_user;
-        $this->redis     = $redis;
         $this->di        = $di;
-        $this->date      = new \DateTime('now');
         $this->date->setTime(23, 59, 59);
-        $this->headers   = apache_request_headers();
-        $this->data      = $this->getData();
     }
 
 
@@ -46,10 +46,13 @@ class Request
 
             case 'put':
                 $data = file_get_contents('php://input') ?? '';
+                
+                $result = [];
 
                 if ($this->headers['Content-Type'] == "application/x-www-form-urlencoded" ) {
-                    $result = [];
                     parse_str($data, $result);
+                } else {
+                    $result = json_decode($data, true);
                 }
 
                 return $result;
