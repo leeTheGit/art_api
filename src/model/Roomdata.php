@@ -7,6 +7,8 @@ use src\router\Request;
 class Roomdata extends Base_model
 {
 	protected $required = ['room_id'];
+	
+	const LIMIT = 5;
 
 	public function __construct(Request $request)
 	{
@@ -42,14 +44,21 @@ class Roomdata extends Base_model
 	}
 
 
-	public function getRoomDataByRoom(string $id) : array
+	public function getRoomDataByRoom(string $id, $params = []) : array
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
 		
-		$sql = "SELECT  {$this->table}.*
+		$limit  = !empty($params['limit'])  ? $params['limit']  : self::LIMIT;
+		$offset = !empty($params['offset']) ? " OFFSET {$params['offset']}" : "";
+
+		$sql = "SELECT  {$this->table}.* 
 					FROM {$this->table} 
                     WHERE {$this->table}.room_id = :id
-                    ORDER BY created_at DESC";
+					ORDER BY created_at DESC
+					LIMIT {$limit}{$offset}";
+
 		$params = ["id" => $id];
+		// l::og($sql);
+		// l::og($params);
 		$locations = $this->fetchAll($sql, $params);
 
 		return $locations;

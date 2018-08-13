@@ -33,7 +33,7 @@ class Roomdata extends Base_controller
 		}
 
 		if (!empty( $queryParams['room'] ) ) {
-			return $this->model->getRoomDataByRoom($queryParams['room']);
+			return $this->model->getRoomDataByRoom($queryParams['room'], $queryParams);
 		}
 
 

@@ -31,7 +31,6 @@ class Plantdata extends Base_controller
 		if ($resource['id']) {
 			return $this->model->getById($resource['id']);
 		}
-
 		return $this->model->getPlantdata();
 
 
