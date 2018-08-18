@@ -3,7 +3,7 @@ namespace src\controller;
 
 use src\model\Database;
 use src\service\l;
-
+use Lcobucci\JWT\Builder;
 // UPDATE users SET "password" = crypt('new password', gen_salt('bf')) where name = 'test';
 // insert into users(name, access, password) values ('bob', 'admin', crypt('new password', gen_salt('bf')))
 // SELECT "password" = crypt('new password', "password") success, id FROM users

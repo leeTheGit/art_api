@@ -90,16 +90,17 @@ class TestPlant extends Test
 
 
 
-	protected function testput($data)
+	protected function testput($index, $data)
 	{
 		echo '<h3 style="margin: 10px 0 0 0">PUT - '.$this->resourceName.'</h3>';
 
 		$requestStr = "put: /".$this->resourceName."/";
 		$method 	= $this->resourceName."::update():";
-		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName));
+		$this->request->parts	= array(DOMAIN, strtolower( $this->resourceName), $this->id[$index]);
 
 		try {
 			$request = $this->request->di->create(NS_CONT.'\\'.$this->resourceName);
+			l::og($data);
 			$put = $request->put($data);
 
 			$this->assertEquals(1, $put, $method);

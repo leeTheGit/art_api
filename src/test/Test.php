@@ -100,16 +100,25 @@ class Test extends Basetest
 		$this->Plant->testGet_byId();
 
 
+		// used for testing plantData across rooms
+		$this->Plant->testPut(0, [ "location" => $this->Location->id[0], "created_at" => "2018-06-01" ]);
+		$this->Plant->testPut(0, [ "location" => $this->Location->id[1], "created_at" => "2018-06-03" ]);
+		$this->Plant->testPut(0, [ "location" => $this->Location->id[2], "created_at" => "2018-06-08" ]);
 
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-03"]);
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-08"]);
+		$this->Plant->testPut(1, [ "location" => $this->Location->id[2], "created_at" => "2018-06-02" ]);
+		$this->Plant->testPut(1, [ "location" => $this->Location->id[1], "created_at" => "2018-06-05" ]);
+		$this->Plant->testPut(1, [ "location" => $this->Location->id[2], "created_at" => "2018-06-09" ]);
+		$this->Plant->testPut(1, [ "location" => $this->Location->id[0], "created_at" => "2018-06-20" ]);
+
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-01"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-03"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[0], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-08"]);
 		
 		// used for testing plantData across rooms
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-02"]);
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-05"]);
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-09"]);
-		$this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-20"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-02"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[1], "created_at" => "2018-06-05"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[2], "created_at" => "2018-06-09"]);
+		// $this->PlantLocation->testPost(["plant_id" => $this->Plant->id[1], "location_id"=> $this->Location->id[0], "created_at" => "2018-06-20"]);
 		$this->PlantLocation->testGetAll();
 
 

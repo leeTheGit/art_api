@@ -24,8 +24,6 @@ class Location extends Base_model
 
 	public function getLocations()
 	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
-		
-
 
 		$sql = "SELECT
 					location.*,
@@ -69,8 +67,8 @@ class Location extends Base_model
 			'roomid' => $room_id
 		];
 
-		// l::og($sql);
-		// l::og($params);
+		l::og($sql);
+		l::og($params);
 
 		$data = $this->fetchAll($sql, $params);
 

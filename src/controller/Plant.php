@@ -11,11 +11,12 @@ class Plant extends Base_controller
 	protected $resourceArray = ['domain', 'class', 'id'];
 	protected $users = null;
 
-	public function __construct(Request $request, \src\model\Plant $plant)
+	public function __construct(Request $request, \src\model\Plant $plant, \src\model\Plantlocation $location)
 	{
 		parent::__construct($request);
 
 		$this->model = $plant;
+		$this->plantLocation = $location;
 	}
 
 
@@ -43,6 +44,11 @@ class Plant extends Base_controller
 			
 			$plant = $this->model->getPlantBySerial($params);
 	
+
+		}  else if (!empty( $params['location'] ) ) {
+			
+			$plant = $this->model->getPlantByLocation($params);
+
 		} else {
 
 			$plant = $this->model->getPlants();
@@ -65,9 +71,6 @@ class Plant extends Base_controller
 	{
 
 		$resource 	= $this->getResourceFromUrl();
-		// l::og($input);
-		// throw new \Exception($error);
-		
 
 		$result = False;
 
@@ -85,16 +88,19 @@ class Plant extends Base_controller
 			$result = $this->model->update($resource['id'], $input);
 		}
 
+
+		// if changing location, store the history of the change in plantlocations
+		// which is used to match stats of plant data with location data over time.
+		if (!empty($input['location'])) {
+			$this->plantLocation->create(["location_id" => $input['location'], "plant_id"=> $resource['id']]);
+		}
+
 		return $result;
 
 	}
 
 	public function post(array $input)
 	{
-		// \src\service\l::og($input);
-		// $resource 	= $this->getResourceFromUrl();
-		// l::og('in the post for plant');
-		// l::og($input);
 
 		$defaults = [
 			'serial'    => false,

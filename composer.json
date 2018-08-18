@@ -4,7 +4,8 @@
 		"predis/predis": "^1.0",
 		"phpunit/php-token-stream": "^1.4",
 		"level-2/dice": "^2.0",
-		"robmorgan/phinx": "^0.9.2"
+		"robmorgan/phinx": "^0.9.2",
+		"lcobucci/jwt": "^3.2"
 	},
 
     "autoload": {

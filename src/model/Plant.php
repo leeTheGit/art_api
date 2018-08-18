@@ -116,6 +116,16 @@ class Plant extends Base_model
 		return $plant ? $plant : null;
 	}
 
+	public function getPlantByLocation(array $params) : array
+	{	global $functions;$functions[] = get_class($this).'->'.__FUNCTION__;
+		
+		$sql = "SELECT  {$this->table}.* FROM {$this->table} WHERE {$this->table}.location = :location";
+		$params = ["location" => $params['location']];
 
+		$plant = $this->fetchAll($sql, $params);
 
+		return $plant;
+	}
+
+	
 }
